@@ -16,6 +16,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call(ModalidadesSeeder::class);
         $this->call(CompeticoesSeeder::class);
+        $this->call(AtletasSeeder::class);
+        $this->call(CategoriasSeeder::class);
+        $this->call(FotosSeeder::class);
+        $this->call(ParticipacaoCompeticaoSeeder::class);
 
         Model::reguard();
     }

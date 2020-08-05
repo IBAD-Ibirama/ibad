@@ -15,8 +15,8 @@ class CreateModalidadesTable extends Migration
     {
         Schema::create('modalidades', function (Blueprint $table) {
             $table->id();
-            $table->smallInteger('numero_jogadores');
-            $table->smallInteger('genero');
+            $table->string('numero_jogadores');
+            $table->string('genero');
             $table->timestamps();
         });
     }
