@@ -16,5 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::resource('competicoes/relatorio', 'Grupo5\RelatorioCompeticoesController');
+Route::get('/atletas/desempenho/{id}', 'Grupo5\AtletasController@show');
 Route::get('/financeiro', 'Grupo5\FinanceiroController@index');

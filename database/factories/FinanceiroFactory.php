@@ -20,6 +20,6 @@ $factory->define(Financeiro::class, function (Faker $faker) {
         'outubro'   => $faker->randomElement([0, 1]),
         'novembro'  => $faker->randomElement([0, 1]),
         'dezembro'  => $faker->randomElement([0, 1]),
-        'atletas_id' => $faker->randomElement([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+        'atletas_id' => $faker->randomElement([1])
     ];
 });

@@ -12,7 +12,7 @@ class AtletasSeeder extends Seeder
      */
     public function run()
     {
-        factory(Atletas::class, 10)->create()->each(function($ret) {
+        factory(Atletas::class, 10)->create()->each(function ($ret) {
             $ret->save();
         });
     }

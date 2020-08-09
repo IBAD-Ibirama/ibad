@@ -1,3 +1,6 @@
+@extends('base')
+
+@section('content')
 <div class="container">
     <h1>Financeiro</h1>
     <table id="tabela" class="table table-striped">
@@ -26,7 +29,7 @@
     let tabela    = document.querySelector('#tabela');
     let pagamento = <?= $pagamento ?>;
 
-    let ignora    = ['id', 'atletas_id', 'created_at', 'updated_at'];
+    let ignora    = ['id', 'atleta_id', 'created_at', 'updated_at'];
     
     for(let i = 0; i < pagamento.length; i++) {
         let tr = document.createElement('tr');
@@ -47,3 +50,4 @@
         tabela.append(tr);
     }
 </script>
+@endsection

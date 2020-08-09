@@ -12,7 +12,7 @@ class FinanceiroSeeder extends Seeder
      */
     public function run()
     {
-        factory(Financeiro::class, 10)->create()->each(function($ret) {
+        factory(Financeiro::class, 3)->create()->each(function($ret) {
             $ret->save();
         });
     }
