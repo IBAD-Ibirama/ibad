@@ -24,7 +24,10 @@
                     <a class="nav-link" href="/competicoes/relatorio">Relatório de Competições<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/atletas/desempenho">Desempenho do atleta<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/atletas/desempenho/1">Desempenho do atleta<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/financeiro">Relatório Financeiro<span class="sr-only">(current)</span></a>
                 </li>
             </ul>
         </div>
