@@ -12,4 +12,8 @@ class Atletas extends Model
      * @var string
      */
     protected $table = 'atletas';
+
+    public function relFinanceiro() {
+        return $this->hasMany('App\Grupo5\Model\Financeiro');
+    }
 }

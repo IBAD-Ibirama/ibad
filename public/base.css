@@ -1,5 +1,6 @@
 .base_sistema {
     padding-top: 1em;
+    overflow: auto;
 }
 
 .titulo_sistema {

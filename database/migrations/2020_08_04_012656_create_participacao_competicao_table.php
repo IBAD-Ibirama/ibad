@@ -15,14 +15,14 @@ class CreateParticipacaoCompeticaoTable extends Migration
     {
         Schema::create('participacao_competicao', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('atletas_id');
-            $table->foreign('atletas_id')->references('id')->on('atletas');
-            $table->foreignId('modalidades_id');
-            $table->foreign('modalidades_id')->references('id')->on('modalidades');
-            $table->foreignId('competicoes_id');
-            $table->foreign('competicoes_id')->references('id')->on('competicoes');
-            $table->foreignId('categorias_id');
-            $table->foreign('categorias_id')->references('id')->on('categorias');
+            $table->foreignId('atleta_id');
+            $table->foreign('atleta_id')->references('id')->on('atletas');
+            $table->foreignId('modalidade_id');
+            $table->foreign('modalidade_id')->references('id')->on('modalidades');
+            $table->foreignId('competicao_id');
+            $table->foreign('competicao_id')->references('id')->on('competicoes');
+            $table->foreignId('categoria_id');
+            $table->foreign('categoria_id')->references('id')->on('categorias');
             $table->string('resultado')->nullable();
             $table->timestamps();
         });

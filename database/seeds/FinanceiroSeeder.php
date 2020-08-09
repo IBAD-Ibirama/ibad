@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Grupo5\Model\Atletas;
+use App\Grupo5\Model\Financeiro;
 
-class AtletasSeeder extends Seeder
+class FinanceiroSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,7 +12,7 @@ class AtletasSeeder extends Seeder
      */
     public function run()
     {
-        factory(Atletas::class, 10)->create()->each(function ($ret) {
+        factory(Financeiro::class, 3)->create()->each(function($ret) {
             $ret->save();
         });
     }
