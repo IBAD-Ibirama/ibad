@@ -17,3 +17,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::resource('competicoes/relatorio', 'Grupo5\RelatorioCompeticoesController');
+Route::resource('atletas/desempenho', 'Grupo5\AtletasController');
+Route::get('atletas/desempenho/{id}', 'Grupo5\AtletasController@show');
