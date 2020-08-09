@@ -16,4 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('competicoes/relatorio', 'Grupo5\RelatorioCompeticoesController');
+Route::get('competicoes/relatorio', 'Grupo5\RelatorioCompeticoesController@index');
+Route::post('competicoes/relatorio', 'Grupo5\RelatorioCompeticoesController@emitir');
