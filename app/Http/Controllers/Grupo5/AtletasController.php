@@ -21,6 +21,8 @@ class AtletasController extends Controller
         $participacoesAtleta = DB::table('atletas')
             ->join('participacao_competicao', 'atletas.id', '=', 'participacao_competicao.atleta_id')
             ->join('competicoes', 'competicoes.id', '=', "participacao_competicao.competicao_id")
+            ->join('categorias', 'categorias.id', '=', 'participacao_competicao.categoria_id')
+            ->join('modalidades', 'modalidades.id', '=', 'participacao_competicao.modalidade_id')
             ->where('atleta_id', $id)
             ->get();
 

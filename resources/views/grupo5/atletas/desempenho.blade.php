@@ -13,6 +13,10 @@
         margin-top: 50px;
         overflow-y: auto;
     }
+
+    .text-center {
+        text-align: center
+    }
 </style>
 
 <div class="divParticipacoes">
@@ -23,7 +27,9 @@
                 <tr>
                     <th scope="col">Data</th>
                     <th scope="col">Local</th>
-                    <th scope="col">Resultado</th>
+                    <th class="text-center" scope="col">Colocação</th>
+                    <th scope="col">Modalidade</th>
+                    <th scope="col">Categoria</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,7 +37,9 @@
                 <tr>
                     <td>{{$participacao->data}}</td>
                     <td>{{$participacao->local}}</td>
-                    <td>{{$participacao->resultado}}</td>
+                    <td class="text-center">{{$participacao->resultado}}</td>
+                    <td>{{$participacao->numero_jogadores}}</td>
+                    <td>{{$participacao->categoria}}</td>
                 </tr>
                 @endforeach
             </tbody>
