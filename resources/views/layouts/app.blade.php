@@ -33,7 +33,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li><a class="nav-link{{Request::is('/') ? ' active ' : ''}}" href="/">Home</a></li>
+                        <li><a class="nav-link{{Request::is('info') ? ' active ' : ''}}" href="/info">Info</a></li>  
+                        <li><a class="nav-link{{Request::is('systemUser*') ? ' active ' : ''}}" href="/systemUser">Users</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -73,7 +75,36 @@
         </nav>
 
         <main class="py-4">
-            @yield('content')
+        @isset($message_success)
+        <div class="container">
+            <div class="alert alert-success" role="alert">
+                {!! $message_success !!}
+            </div>
+        </div>
+        @endisset
+
+        @isset($message_warning)
+        <div class="container">
+            <div class="alert alert-warning" role="alert">
+                {!! $message_warning !!}
+            </div>
+        </div>
+        @endisset
+
+        @if($errors->any())
+        <div class="container">      
+            <div class="alert alert-danger" role="alert">
+                <ul class="mb-0">
+                @foreach($errors->all() as $error)
+                    <li>                
+                        {!! $error !!} 
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+        @endif
+        @yield('content')
         </main>
     </div>
 </body>
