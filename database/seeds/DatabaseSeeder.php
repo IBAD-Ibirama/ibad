@@ -14,13 +14,13 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->call(ModalidadesSeeder::class);
-        $this->call(CompeticoesSeeder::class);
-        $this->call(AtletasSeeder::class);
-        $this->call(CategoriasSeeder::class);
-        $this->call(FotosSeeder::class);
-        $this->call(ParticipacaoCompeticaoSeeder::class);
-        $this->call(FinanceiroSeeder::class);
+        $this->call(ModalitiesSeeder::class);
+        $this->call(CompetitionsSeeder::class);
+        $this->call(AthletesSeeder::class);
+        $this->call(CategoriesSeeder::class);
+        $this->call(PhotosSeeder::class);
+        $this->call(CompetitionParticipationSeeder::class);
+        $this->call(FinancesSeeder::class);
 
         Model::reguard();
     }

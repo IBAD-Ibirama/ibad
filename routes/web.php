@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('competicoes/relatorio', 'Grupo5\RelatorioCompeticoesController@index');
-Route::post('competicoes/relatorio', 'Grupo5\RelatorioCompeticoesController@emitir');
-Route::get('/atletas/desempenho/{id}', 'Grupo5\AtletasController@show');
-Route::get('/financeiro', 'Grupo5\FinanceiroController@index');
+Route::get('competicoes/relatorio', 'CompetitionsReportController@index');
+Route::post('competicoes/relatorio', 'CompetitionsReportController@emit');
+Route::get('/atletas/desempenho/{id}', 'AthletesCompetitionController@show');
+Route::get('/financeiro', 'FinancesController@index');
