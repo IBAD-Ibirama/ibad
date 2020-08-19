@@ -32,6 +32,8 @@
                     <td>{{$participacao->date}}</td>
                     <td>{{$participacao->place}}</td>
                     <td>{{$participacao->results}}</td>
+                    <td>{{$participacao->players_number}}</td>
+                    <td>{{$participacao->category}}</td>
                 </tr>
                 @endforeach
             </tbody>
