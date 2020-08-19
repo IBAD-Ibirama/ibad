@@ -24,6 +24,8 @@
                     <th scope="col">Data</th>
                     <th scope="col">Local</th>
                     <th scope="col">Resultado</th>
+                    <th scope="col">Modalidade</th>
+                    <th scope="col">Categoria</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,7 +34,7 @@
                     <td>{{$participacao->date}}</td>
                     <td>{{$participacao->place}}</td>
                     <td>{{$participacao->results}}</td>
-                    <td>{{$participacao->players_number}}</td>
+                    <td>{{$participacao->player_number}}</td>
                     <td>{{$participacao->category}}</td>
                 </tr>
                 @endforeach
