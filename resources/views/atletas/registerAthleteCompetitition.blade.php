@@ -1,3 +1,7 @@
+<?php
+
+use Illuminate\Support\Facades\URL;
+?>
 @extends('base')
 @section('content')
 @if ($errors->any())
@@ -9,199 +13,105 @@
         @endforeach
     </ul>
 </div>
-@endif
-<style>
-    .div-information {
-        padding-top: 50px;
-        display: flex;
-        flex-direction: column;
+@endif<style>
+    table, td, th {
+        border: 1px solid #ddd;
+        padding: 8px;
     }
 
-    .body-grid {
+    #root{
+        height: 300px;
         overflow-y: auto;
-        height: 40%;
     }
 
-    .div-filters {
-        margin-top: 35px;
-    }
-
-    .custom-table {
-        height: 200px;
-    }
-
-    .button-submit {
-        margin-bottom: 25px;
-    }
 </style>
-<div>
-
-    <h4>Registrar participação do atleta em uma competição</h4>
-
-    <div class="div-information">
-        <h6>Atletas</h6>
-        <div class="row div-filters">
-            <div class="col-6">
-                <form method="GET">
-                    @csrf
-                    <div class="form-group">
-                        <label for="AthleteName">Busca pelo nome do atleta</label>
-                        <input type="text" class="form-control" id="AthleteName" name="name" placeholder="Nome do atleta">
-                        <small class="form-text text-muted">Informe o nome do atleta para filtrar</small>
-                    </div>
-                    <button type="submit" class="btn btn-primary button-submit">Buscar</button>
-                </form>
-            </div>
-            <div class="col-6">
-                <div class="body-grid">
-                    <table class="table table-striped custom-table">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Nome</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($athletes as $athlete)
-                            <tr>
-                                <td>{{$athlete->id}}</td>
-                                <td>{{$athlete->name}}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="div-information">
-        <h6>Competições</h6>
-        <div class="row div-filters">
-            <div class="col-4">
-                <form method="GET">
-                    @csrf
-                    <div class="form-group">
-                        <label for="competitionDate">Busca pela data da competição</label>
-                        <input type="date" class="form-control" id="competitionDate" name="date" placeholder="Data da competição">
-                        <small class="form-text text-muted">Informe a data que ocorreu a competição para filtrar</small>
-                    </div>
-                    <button type="submit" class="btn btn-primary button-submit">Buscar</button>
-                </form>
-                <form method="GET">
-                    @csrf
-                    <div class="form-group">
-                        <label for="competitionPlace">Busca pelo local da competição</label>
-                        <input type="text" class="form-control" id="competitionPlace" name="date" placeholder="cep, logradouro - estado">
-                        <small class="form-text text-muted">Informe o local que ocorreu a competição para filtrar</small>
-                    </div>
-                    <button type="submit" class="btn btn-primary button-submit">Buscar</button>
-                </form>
-            </div>
-            <div class="col-8">
-                <div class="body-grid">
-                    <table class="table table-striped custom-table">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Data</th>
-                                <th scope="col">Local</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($competitions as $competition)
-                            <tr>
-                                <td>{{$competition->id}}</td>
-                                <td>{{$competition->date}}</td>
-                                <td>{{$competition->place}}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="div-information">
-        <h6>Registrar atleta na competição</h6>
-        <div class="div-filters">
-            <form method="POST" action="{{ URL::to('atletas/registerAthleteCompetition/register') }}">
-                @csrf
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="athleteId">ID do atleta</label>
-                            <input type="number" class="form-control" id="athleteId" name="athleteId" placeholder="ID do atleta">
-                            <small class="form-text text-muted">Informe o ID do atleta para registrar na competição</small>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="competitionId">ID da competição</label>
-                            <input type="number" class="form-control" id="competitionId" name="competitionId" placeholder="ID da competição">
-                            <small class="form-text text-muted">Informe o ID da competição para registrar um atleta</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="modalitiesSelect">Modalidade</label>
-                            <select class="form-control" id="modalitiesSelect" name="modalitiesSelect">
-                                @foreach($modalities as $modality)
-                                   <option value='<?= $modality->id ?>'>{{ $modality->player_number }}</option>
-                                @endforeach
-                            </select>
-                            <small class="form-text text-muted">Selecione a modalidiade do atleta na competição</small>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="CategorySelect">Categoria</label>
-                            <select class="form-control" id="CategorySelect" name="CategorySelect">
-                                @foreach($categories as $category)
-                                <option value='1'>{{ $category->category }}</option>
-                                @endforeach
-                            </select>
-                            <small class="form-text text-muted">Selecione a categoria do atleta na competição</small>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <button type="submit" class="btn btn-primary button-submit">Registrar</button>
-                </div>
-
-            </form>
-        </div>
-        <div class="body-grid" style="height: 400px; margin-bottom: 50px;">
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Atleta</th>
-                        <th scope="col">Data</th>
-                        <th scope="col">Local</th>
-                        <th scope="col">Modalidade</th>
-                        <th scope="col">Categoria</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($athletesCompetitions as $participation)
-                    <tr>
-                        <td>{{$participation->name}}</td>
-                        <td>{{$participation->date}}</td>
-                        <td>{{$participation->place}}</td>
-                        <td>{{$participation->player_number}}</td>
-                        <td>{{$participation->category}}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+<h1>Consulta Participação</h1>
+<button id="btn-registra">Registra Participação</button>
+<div id="root"></div>
 <script>
-    
+    let root = document.querySelector('#root');
+
+    document.querySelector('#btn-registra').addEventListener('click', function() {
+        window.location.href = '<?= URL::to('atletas/registro') ?>';
+    });
+
+    criaTabela();
+
+    function criaTabela() {
+        let table = new Tabela();
+        table.setColumns(['Atleta', 'Data', 'Local', 'Modalidade', 'Categoria']);
+        table.createTable();
+        root.append(table.getTable());
+
+        let aRegistros = <?= $athletesCompetitions ?>;
+
+        let ignora = [
+            'id',
+            'competitions_id',
+            'competition_level',
+            'athletes_id',
+            'categories_id',
+            'coordinator',
+            'created_at',
+            'genre',
+            'modalities_id',
+            'results',
+            'updated_at'
+        ];
+
+        for(let i = 0; i < aRegistros.length; i++) {
+            let data = aRegistros[i];
+            let tr = document.createElement('tr');
+            for(let [key, value] of Object.entries(data)) {
+                if(ignora.includes(key)) {
+                    continue;
+                }
+                let td = document.createElement('td');
+                td.append(document.createTextNode(value))
+                tr.append(td);
+            }
+            let td = document.createElement('td');
+            table.getTable().append(tr);
+        }
+    }
+
+    function Tabela() {
+        this.columns = null;
+        this.table   = null; 
+
+        this.setColumns = function(columns) {
+            this.columns = columns;
+        }
+
+        this.createTable = function() {
+            let table = this.getTable();
+            let thead = document.createElement('thead');
+            let tr    = document.createElement('tr');
+
+            for(let i = 0; i < this.columns.length; i++) {
+                let td = document.createElement('th');
+                td.append(document.createTextNode(this.columns[i]));
+
+                tr.append(td);
+            }
+            thead.append(tr);
+            table.append(thead);
+        }
+
+        this.clear = function() {
+            let table = this.getTable();
+            while (table.firstChild) {
+                table.removeChild(table.lastChild);
+            }
+        }
+
+        this.getTable = function() {
+            if(this.table == null) {
+                this.table = document.createElement('table');
+            }
+            return this.table;
+        }
+    }
+
 </script>
 @endsection
