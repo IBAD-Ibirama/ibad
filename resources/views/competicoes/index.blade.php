@@ -30,10 +30,10 @@ use Illuminate\Support\Facades\URL;
 <button id="btn-novo">Novo</button>
 <div id="root"></div>
 <script>
-    let root  = document.querySelector('#root');
+    let root    = document.querySelector('#root');
     let btnNovo = document.querySelector('#btn-novo');
     btnNovo.addEventListener('click', function() {
-        redirecionaTelaCadastro();
+        window.location.href = '<?= URL::to('competicao/cadastrar') ?>';
     });
 
     criaTabela();
@@ -58,17 +58,14 @@ use Illuminate\Support\Facades\URL;
                 td.append(document.createTextNode(value))
                 tr.append(td);
             }
-            // let btnAltera = criaBtn('altera', function() {
-                
-            // });
-            let btnExclui = criaBtn('exclui', function() {
-                // alert(`${data.id}`);
-                ajax('get', data.id, '<?= URL::to('competicao/remove') ?>', function(response) {
-                    alert('oi');
-                });
-            });
             let td = document.createElement('td');
-            td.append(btnExclui);
+
+            td.append(criaBtn('exclui', function() {
+                window.location.href = '<?= URL::to('competicao/remove') ?>/' + data.id;
+            }));
+            td.append(criaBtn('alterar', function() {
+                window.location.href = '<?= URL::to('competicao/alterar') ?>/' + data.id;
+            }));
             tr.append(td)
             table.getTable().append(tr);
         }
@@ -114,20 +111,11 @@ use Illuminate\Support\Facades\URL;
         }
     }
 
-    function redirecionaTelaCadastro() {
-        window.location.href = '<?= URL::to('competicao/form') ?>';
-    }
-
     function criaBtn(titulo, func) {
         let btn = document.createElement('button');
         btn.append(document.createTextNode(titulo));
         btn.addEventListener('click', func);
         return btn;
-    }
-
-    function ajax(type="GET", data, url, func){
-        fetch(`${url}/${data}`)
-        .then(response => alert(response));
     }
 
 </script>

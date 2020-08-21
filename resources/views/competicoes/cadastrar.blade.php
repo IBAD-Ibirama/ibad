@@ -10,7 +10,7 @@
         </ul>
     </div>
 @endif  
-<form action="{{ URL::to('competicao/criar') }}" method="POST">
+<form id="formulario" action="{{ URL::to('competicao/criar') }}" method="POST">
     @csrf
     <div class="form-group">
         <label for="data">Data</label>

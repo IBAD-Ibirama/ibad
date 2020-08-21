@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Competitions;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Cast\String_;
 
 class CompetitionController extends Controller
 {
@@ -17,8 +18,18 @@ class CompetitionController extends Controller
         return view('competicoes.index', compact('aRegistros'));
     }
 
-    public function form() {
-        return view('competicoes.form');
+    public function formCadastro() {
+        return view('competicoes.cadastrar');
+    }
+
+    public function formAlterar(String $id = null) {
+        $competicao = null;
+        if($id != null) {
+            $competicao = Competitions::find($id);
+            $competicao->created_at = null;
+            $competicao->updated_at = null;
+        }
+        return view('competicoes.alterar', compact('competicao'));
     }
 
     /**
@@ -42,48 +53,22 @@ class CompetitionController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Competition  $competition
-     * @return \Illuminate\Http\Response
-     */
-    public function show($competition)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Competition  $competition
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($competition)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Competition  $competition
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $competition)
-    {
-        //
+    public function update(Request $request, Competitions $competition) {
+        $competition->date              = $request->date;
+        $competition->place             = $request->place;
+        $competition->coordinator       = $request->coordinator;
+        $competition->competition_level = $request->competition_level;
+        if(!$competition->save()) {
+            dd('erro no update');
+            die;
+        }
+        return redirect()->action('CompetitionController@index');
     }
 
     /**
@@ -95,7 +80,13 @@ class CompetitionController extends Controller
     public function destroy(String $id) {
         $id;
         $competition = Competitions::find($id);
-        $competition->delete();
-        return 'lka';
+        
+        if ($competition->delete()) {
+            return redirect()
+                        ->action('CompetitionController@index')
+                        ->with('success', 'Categoria inserida com sucesso!');
+        } 
+
+        return redirect()->back()->with('error', 'Falha ao remover');
     }
 }

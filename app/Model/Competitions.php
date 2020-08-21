@@ -8,6 +8,7 @@ class Competitions extends Model
 {
     protected $fillable = ['title','body'];
     
+    
     /**
      * The table associated with the model.
      *
