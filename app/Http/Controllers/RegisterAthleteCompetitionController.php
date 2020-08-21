@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Athletes;
 use App\Model\Categories;
+use App\Model\CompetitionParticipation;
 use App\Model\Competitions;
 use App\Model\Modalities;
 use \Illuminate\Support\Facades\DB;
@@ -43,35 +44,15 @@ class RegisterAthleteCompetitionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, CompetitionParticipation $participation)
     {
-        // $aValue = $request->validate([
-        //     'athleteId' => 'required',
-        //     'competitionId' => 'required',
-        //     'modalityId' => 'required',
-        //     'categoryId' => 'required',
-        // ], [
-        //     'athleteId' => 'Identificador do Atleta',
-        //     'competitionId' => 'Identificador da Competição',
-        //     'modalityId' => 'Identificador da modalidade',
-        //     'categoriesId' => 'Identificador da categoria',
-        // ]);
-
-        echo 'console.log('
-            . 'atleta: ' . $request->input('athleteId')
-            . 'competitionId: ' . $request->input('competitionId')
-            . 'modalityId: ' . $request->input('modalitySelect')
-            . 'categoryId: ' . $request->input('CategorySelect')
-            . ')';
-
-        DB::table('competition_participation')->insert([
-            [
-                'athletes_id' => $request->input('athleteId'),
-                'competitions_id' => $request->input('competitionId'),
-                'modalities_id' => $request->input('modalitySelect'),
-                'categories_id' => $request->input('CategorySelect'),
-            ],
-        ]);
+        $participation->athletes_id     = $request->athleteId;
+        $participation->competitions_id = $request->competitionId;
+        $participation->modalities_id   = $request->modalitiesSelect;
+        $participation->modalities_id   = $request->CategorySelect;
+        $participation->categories_id   = $request->modalitiesSelect;
+        
+        $participation->save();
     }
 
     /**

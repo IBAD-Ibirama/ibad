@@ -151,7 +151,7 @@
                             <label for="modalitiesSelect">Modalidade</label>
                             <select class="form-control" id="modalitiesSelect" name="modalitiesSelect">
                                 @foreach($modalities as $modality)
-                                <option value='$modality->id'>{{ $modality->player_number }}</option>
+                                   <option value='<?= $modality->id ?>'>{{ $modality->player_number }}</option>
                                 @endforeach
                             </select>
                             <small class="form-text text-muted">Selecione a modalidiade do atleta na competição</small>
