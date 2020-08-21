@@ -27,3 +27,4 @@ Route::get('competicao/alterar/{id}', 'CompetitionController@formAlterar');
 Route::post('competicao/atualizar'  , 'CompetitionController@update');
 Route::post('competicao/criar'      , 'CompetitionController@create');
 Route::get('competicao/remove/{id}' , 'CompetitionController@destroy');
+

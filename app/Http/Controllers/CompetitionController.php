@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Model\Competitions;
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr\Cast\String_;
 
 class CompetitionController extends Controller
 {
