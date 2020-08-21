@@ -27,6 +27,9 @@
                     <a class="nav-link" href="/atletas/desempenho/1">Desempenho do atleta<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
+                    <a class="nav-link" href="/atletas/registerAthleteCompetition">Registrar participação do atleta<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
                     <a class="nav-link" href="/financeiro">Relatório Financeiro<span class="sr-only">(current)</span></a>
                 </li>
             </ul>

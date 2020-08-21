@@ -18,5 +18,7 @@ Route::get('/', function () {
 });
 Route::get('competicoes/relatorio', 'CompetitionsReportController@index');
 Route::post('competicoes/relatorio', 'CompetitionsReportController@emit');
+Route::get('atletas/registerAthleteCompetition', 'registerAthleteCompetitionController@index');
+Route::post('atletas/registerAthleteCompetition/register', 'registerAthleteCompetitionController@store');
 Route::get('/atletas/desempenho/{id}', 'AthletesCompetitionController@show');
 Route::get('/financeiro', 'FinancesController@index');
