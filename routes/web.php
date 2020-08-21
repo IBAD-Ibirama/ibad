@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('teste', 'registerAthleteCompetitionController@teste');
+
 Route::get('competicoes/relatorio', 'CompetitionsReportController@index');
 Route::post('competicoes/relatorio', 'CompetitionsReportController@emit');
 Route::get('atletas/registerAthleteCompetition', 'registerAthleteCompetitionController@index');

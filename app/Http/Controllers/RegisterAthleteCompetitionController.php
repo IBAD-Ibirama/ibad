@@ -17,15 +17,7 @@ class RegisterAthleteCompetitionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $athletes = Athletes::all();
-
-        $competitions = Competitions::all();
-
-        $categories = Categories::all();
-
-        $modalities = Modalities::all();
+    public function index() {
 
         $athletesCompetitions = DB::table('athletes')
             ->join('competition_participation', 'athletes.id', '=', 'competition_participation.athletes_id')
@@ -35,7 +27,15 @@ class RegisterAthleteCompetitionController extends Controller
             ->orderBy('competition_participation.created_at', 'desc')
             ->get();
 
-        return view('atletas.registerAthleteCompetitition', compact('athletes', 'competitions', 'athletesCompetitions', 'categories', 'modalities'));
+        return view('atletas.registerAthleteCompetitition', compact('athletesCompetitions'));
+    }
+
+    public function formCadastrar() {
+        $competitions = Competitions::all();
+        $athletes     = Athletes::all();
+        $categories   = Categories::all();
+        $modalities   = Modalities::all();
+        return view('atletas.cadastroRegistroCompeticao', compact('competitions', 'athletes', 'categories', 'modalities'));
     }
 
     /**
@@ -46,24 +46,13 @@ class RegisterAthleteCompetitionController extends Controller
      */
     public function store(Request $request, CompetitionParticipation $participation)
     {
-        $participation->athletes_id     = $request->athleteId;
-        $participation->competitions_id = $request->competitionId;
-        $participation->modalities_id   = $request->modalitiesSelect;
-        $participation->modalities_id   = $request->CategorySelect;
-        $participation->categories_id   = $request->modalitiesSelect;
+        $participation->athletes_id     = $request->athlete;
+        $participation->competitions_id = $request->competition;
+        $participation->modalities_id   = $request->modality;
+        $participation->categories_id   = $request->category;
         
         $participation->save();
         return redirect()->action('registerAthleteCompetitionController@index')->with('success', 'Categoria inserida com sucesso!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 }

@@ -12,4 +12,6 @@ class Competitions extends Model
      * @var string
      */
     protected $table = 'competitions';
+
+    public $timestamps = false;
 }
