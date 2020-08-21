@@ -53,7 +53,7 @@ class RegisterAthleteCompetitionController extends Controller
         $participation->categories_id   = $request->modalitiesSelect;
         
         $participation->save();
-        // return redirect()->
+        return redirect()->action('registerAthleteCompetitionController@index')->with('success', 'Categoria inserida com sucesso!');
     }
 
     /**
