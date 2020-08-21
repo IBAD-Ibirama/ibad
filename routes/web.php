@@ -20,3 +20,8 @@ Route::get('competicoes/relatorio', 'CompetitionsReportController@index');
 Route::post('competicoes/relatorio', 'CompetitionsReportController@emit');
 Route::get('/atletas/desempenho/{id}', 'AthletesCompetitionController@show');
 Route::get('/financeiro', 'FinancesController@index');
+//competicoes
+Route::get('competicao'       , 'CompetitionController@index');
+Route::get('competicao/form'  , 'CompetitionController@form');
+Route::post('competicao/criar', 'CompetitionController@create');
+Route::get('competicao/remove/{id}', 'CompetitionController@destroy');
