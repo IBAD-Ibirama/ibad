@@ -29,8 +29,8 @@
     let tabela    = document.querySelector('#tabela');
     let pagamento = <?= $pagamento ?>;
 
-    let ignora    = ['id', 'atletas_id', 'created_at', 'updated_at'];
-    
+    let ignora    = ['id', 'athletes_id', 'created_at', 'updated_at'];
+    debugger
     for(let i = 0; i < pagamento.length; i++) {
         let tr = document.createElement('tr');
         for (var [key, value] of Object.entries(pagamento[i])) {

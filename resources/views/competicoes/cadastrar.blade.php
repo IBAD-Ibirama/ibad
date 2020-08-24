@@ -13,23 +13,27 @@
 <form id="formulario" action="{{ URL::to('competicao/criar') }}" method="POST">
     @csrf
     <div class="form-group">
-        <label for="data">Data</label>
-        <input type="text" class="form-control" id="data" name="data" placeholder="00/00/0000">
+        <label for="date">Data</label>
+        <input type="date" class="form-control" id="date" name="date" placeholder="00/00/0000" required>
         <small class="form-text text-muted">Data da realização da competição</small>
     </div>
     <div class="form-group">
-        <label for="coordenador">Coordenador</label>
-        <input type="text" class="form-control" id="coordenador" name="coordenador" placeholder="Fulano da silva">
+        <label for="coordinator">Coordenador</label>
+        <input type="text" class="form-control" id="coordinator" name="coordinator" placeholder="Fulano da silva">
         <small class="form-text text-muted">Nome do coordenador da competição</small>
     </div>
     <div class="form-group">
-        <label for="nivelCompeticao">Nivel da Competicao</label>
-        <input type="text" class="form-control" id="nivelCompeticao" name="nivelCompeticao" placeholder="Médio">
-        <small class="form-text text-muted">Médio, Altao, Baixo</small>
+        <label for="competition_level">Nivel da Competicao</label>
+        <select name="competition_level" id="competition_level" required>
+            <option value="1">Alto</option>
+            <option value="2">Médio</option>
+            <option value="3">Baixo</option>
+        </select>
+        <small class="form-text text-muted">Médio, Alto, Baixo</small>
     </div>
     <div class="form-group">
-        <label for="local">Local</label>
-        <textarea class="form-control" id="local" name="local" placeholder="Texto do Relatório"></textarea>
+        <label for="place">Local</label>
+        <textarea class="form-control" id="place" name="place" placeholder="Texto do Relatório" required></textarea>
         <small class="form-text text-muted">Informe o local onde foi realizada a competição</small>
     </div>
     <button type="submit" class="btn btn-primary">Salvar</button>
