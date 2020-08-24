@@ -12,7 +12,7 @@ class CompetitionParticipationSeeder extends Seeder
      */
     public function run()
     {
-        factory(CompetitionParticipation::class, 10)->create()->each(function ($ret) {
+        factory(CompetitionParticipation::class, 30)->create()->each(function ($ret) {
             $ret->save();
         });
     }

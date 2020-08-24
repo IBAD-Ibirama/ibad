@@ -12,6 +12,10 @@ class Competitions extends Model
      * @var string
      */
     protected $table = 'competitions';
-
-    public $timestamps = false;
+    
+    protected $dateFormat = 'd/m/y H:m:s';
+   
+    protected $dates = [
+        'date',
+    ];
 }
