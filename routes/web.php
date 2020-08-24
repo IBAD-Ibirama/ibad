@@ -22,6 +22,14 @@ Route::post('competicoes/relatorio', 'CompetitionsReportController@emit');
 Route::get('/atletas/desempenho/{id}', 'AthletesCompetitionController@show');
 Route::get('/financeiro', 'FinancesController@index');
 
+//competicoes
+Route::get('competicao'             , 'CompetitionController@index');
+Route::get('competicao/cadastrar'   , 'CompetitionController@formCadastro');
+Route::get('competicao/alterar/{id}', 'CompetitionController@formAlterar');
+Route::post('competicao/atualizar'  , 'CompetitionController@update');
+Route::post('competicao/criar'      , 'CompetitionController@create');
+Route::get('competicao/remove/{id}' , 'CompetitionController@destroy');
+
 //Registro da participação em competição
 Route::get('atletas/registerAthleteCompetition'          , 'registerAthleteCompetitionController@index');
 Route::get('atletas/registro'                            , 'registerAthleteCompetitionController@formCadastrar');
