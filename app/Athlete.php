@@ -25,12 +25,3 @@ class Athlete extends Model
     }
 
 }
-
-$athletes = Athlete::all();
-if (!count($athletes))
-{
-    foreach(factory(Athlete::class, 10)->make() as $athlete)
-    {
-        Athlete::create(['name' => $athlete->name]);
-    }
-}
