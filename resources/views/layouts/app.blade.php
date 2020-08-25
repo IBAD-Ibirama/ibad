@@ -24,6 +24,7 @@
             <li><a class="nav-link{{Request::is('/') ? ' active ' : ''}}" href="/">Dashboard</a></li>
             @role('admin')
             <li><a class="nav-link{{Request::is('User*') ? ' active ' : ''}}" href="/usuarios">Usuários</a></li>
+            <li><a class="nav-link{{Request::is('Moves*') ? ' active ' : ''}}" href="/moves">Movimentações</a></li>
             @endrole
           </ul>
 
