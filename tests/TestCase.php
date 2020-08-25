@@ -2,9 +2,21 @@
 
 namespace Tests;
 
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Tests\Builders\SponsorBuilder;
+use Tests\Builders\UserBuilder;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication;
+    use CreatesApplication, DatabaseTransactions;
+
+    public function sponsor(): SponsorBuilder
+    {
+        return new SponsorBuilder;
+    }
+    public function user()
+    {
+        return new UserBuilder;
+    }
 }
