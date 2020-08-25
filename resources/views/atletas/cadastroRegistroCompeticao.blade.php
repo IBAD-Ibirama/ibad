@@ -119,7 +119,16 @@
         select.addEventListener('change', function() {
             let optionSelected = this.options[this.selectedIndex];//pega o option selecionado
             //pega a competição q foi seleciona no select
-            let obj = competitions.find(competition => competition.id == optionSelected.value);
+            debugger
+            let obj  = competitions.find(competition => competition.id == optionSelected.value);
+
+            var data = new Date(obj.date);
+            let dia  = data.getDate().toString().padStart(2, '0');
+            let mes  = (data.getMonth()+1).toString().padStart(2, '0');
+            let ano  = data.getFullYear();
+            let min  = (data.getMinutes() < 10 )? "0" + data.getMinutes() : data.getMinutes();
+            let hora = ((data.getHours() < 10 )? "0" + data.getHours(): data.getHours()) + ':' + min;
+            obj.date = dia+"/"+mes+"/"+ano + ' ' + hora;
             //pega o formulario
             const elements = document.querySelector('#formulario');
             /*
