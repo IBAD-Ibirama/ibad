@@ -6,15 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Competitions extends Model
 {
-    protected $fillable = ['title','body'];
-    
-    
     /**
      * The table associated with the model.
      *
      * @var string
      */
     protected $table = 'competitions';
-
-    public $timestamps = false;
+    
+    protected $fillable = ['title','body'];
+    
+    protected $dateFormat = 'd/m/y H:m:s';
+   
+    protected $dates = [
+        'date',
+    ];
 }
