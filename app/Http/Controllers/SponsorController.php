@@ -14,7 +14,11 @@ class SponsorController extends Controller
      */
     public function index()
     {
-        //
+        $sponsors = Sponsor::all();
+
+        return view('sponsors.index')->with([
+            'sponsors' => $sponsors,
+        ]);
     }
 
     /**
@@ -24,6 +28,7 @@ class SponsorController extends Controller
      */
     public function create()
     {
+        return view('sponsors.create');
     }
 
     /**
@@ -51,10 +56,10 @@ class SponsorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Sponsor $sponsor)
+    public function show(Sponsor $sponsor, $id)
     {
 
-        // $sponsor = Sponsor::find($id);
+        $sponsor = Sponsor::find($id);
 
         return view('sponsors.show')->with([
             'sponsors' => $sponsor
@@ -67,9 +72,11 @@ class SponsorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Sponsor $sponsors)
     {
-        //
+        return view('sponsors.edit')->with([
+            'sponsors' => $sponsors
+        ]);
     }
 
     /**
@@ -81,7 +88,21 @@ class SponsorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validated = $this->validate($request, [
+            'cnpj' => 'required|unique:sponsors',
+            'value' => 'required|integer|min:0',
+            'email' => 'nullable|string'
+        ]);
+
+        $sponsor = new Sponsor([
+            'cnpj' => $request->cnpj,
+            'value' => $request->value,
+            'email' => $request->email,
+        ]);
+
+        return $this->index()->with([
+            'message_success'=> "Patrocinador atualizado com sucesso." 
+        ]);
     }
 
     /**
@@ -92,6 +113,12 @@ class SponsorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $sponsor = Sponsor::find($id);
+
+        $sponsor->delete();
+
+        return $this->index()->with([
+            'message_success'=> "Patrocinador deletado com sucesso" 
+        ]);
     }
 }
