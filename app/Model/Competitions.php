@@ -18,6 +18,6 @@ class Competitions extends Model
     protected $dateFormat = 'd/m/y H:m:s';
    
     protected $dates = [
-        'date',
+       'date',
     ];
 }
