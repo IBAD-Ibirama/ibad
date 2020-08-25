@@ -25,6 +25,7 @@
             @role('admin')
             <li><a class="nav-link{{Request::is('User*') ? ' active ' : ''}}" href="/usuarios">Usuários</a></li>
             <li><a class="nav-link{{Request::is('Moves*') ? ' active ' : ''}}" href="/moves">Movimentações</a></li>
+            <li><a class="nav-link" href="{ route('sponsors.create') }">Recebimentos</a></li>
             @endrole
           </ul>
 
