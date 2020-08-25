@@ -54,11 +54,6 @@ use Illuminate\Support\Facades\URL;
                 if(aIgnora.includes(key)) {
                     continue;
                 }
-                if(key == 'date') {
-                    let data  = new Date(value);
-                    let dataFormatada = `${data.getDay()}/${data.getMonth()}/${data.getFullYear()}`;
-                    value = dataFormatada;
-                }
                 let td = document.createElement('td');
                 td.append(document.createTextNode(value))
                 tr.append(td);

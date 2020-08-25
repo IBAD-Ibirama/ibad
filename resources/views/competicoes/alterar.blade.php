@@ -50,7 +50,7 @@
         function formatDate(date) {
             var data  = new Date(date);
             var month = '' + (data.getMonth() + 1);
-            var day   = '' + data.getDate();
+            var day   = '' + (data.getDate() + 1);
             var year  = data.getFullYear();
 
             if (month.length < 2) 
