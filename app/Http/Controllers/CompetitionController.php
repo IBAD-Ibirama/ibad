@@ -21,13 +21,6 @@ class CompetitionController extends Controller
      */
     public function index() {
         $aRegistros = Competitions::all();
-        foreach($aRegistros as $registro){
-            $date = new DateTime($registro->date);
-            $date = $date->format('d/m/Y');
-            
-            $registro->date=$date;
-            $registro->competition_level = self::COMPETITION_LEVEL[$registro->competition_level];
-        }
         return view('competicoes.index', compact('aRegistros'));
     }
 
@@ -39,9 +32,6 @@ class CompetitionController extends Controller
         $competicao = null;
         if($id != null) {
             $competicao = Competitions::find($id);
-            $date = new DateTime($competicao->date);
-            $date = $date->format('Y-m-d');
-            $competicao->date = $date;
             $competicao->created_at = null;
             $competicao->updated_at = null;
         }

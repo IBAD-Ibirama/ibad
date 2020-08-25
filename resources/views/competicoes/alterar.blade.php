@@ -43,11 +43,24 @@
     loadData();
 
     function loadData() {
-        debugger
         const data = <?= $competicao ?>;
         if(data == null){
             return;
         }
+        function formatDate(date) {
+            var data  = new Date(date);
+            var month = '' + (data.getMonth() + 1);
+            var day   = '' + data.getDate();
+            var year  = data.getFullYear();
+
+            if (month.length < 2) 
+                month = '0' + month;
+            if (day.length < 2) 
+                day = '0' + day;
+
+            return [year, month, day].join('-');
+        }
+        data.date = formatDate(data.date);
         const elements = document.querySelector('#formulario').elements;
         for(let i=0; i<elements.length; i++){
             const element = elements[i];
