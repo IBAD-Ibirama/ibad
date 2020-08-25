@@ -15,9 +15,9 @@ class Competitions extends Model
     
     protected $fillable = ['title','body'];
     
-    protected $dateFormat = 'd/m/y H:m:s';
+    //protected $dateFormat = 'd/m/y H:m:s';
    
-    protected $dates = [
-        'date',
-    ];
+   // protected $dates = [
+    //    'date',
+    //];
 }

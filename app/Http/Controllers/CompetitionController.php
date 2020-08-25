@@ -24,6 +24,7 @@ class CompetitionController extends Controller
         foreach($aRegistros as $registro){
             $date = new DateTime($registro->date);
             $date = $date->format('d/m/Y');
+            
             $registro->date=$date;
             $registro->competition_level = self::COMPETITION_LEVEL[$registro->competition_level];
         }
