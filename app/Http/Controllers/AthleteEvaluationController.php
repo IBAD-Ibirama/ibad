@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Athlete;
 use App\AthleteEvaluation;
 use App\PhysicalTest;
+use App\BodyIndex;
 use App\AthleteEvaluationPhysicalTest;
+use App\AthleteEvaluationBodyIndex;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use \Exception as Exception;
@@ -35,9 +37,12 @@ class AthleteEvaluationController extends Controller
 
         //Finds all physical tests to define evaluation's options
         $physicalTests = PhysicalTest::all();
+        
+        //Finds all body indexes to define evaluation's options
+        $bodyIndexes = BodyIndex::all();
 
         //Shows evaluation's create view
-        return view('athlete_evaluation.create', compact('athletes', 'physicalTests'));
+        return view('athlete_evaluation.create', compact('athletes', 'physicalTests', 'bodyIndexes'));
     }
 
     /**
@@ -63,13 +68,13 @@ class AthleteEvaluationController extends Controller
     
             //Receives physical test's values
             $physicalTests = $request->input('physical_tests');
-            $values = $request->input('values');
+            $physicalTestsValues = $request->input('physical_tests_values');
 
             //Assigns entered input values to physical test record
             foreach($physicalTests as $i => $physicalTest) {
 
                 //Checks if this physical test received value
-                if(!empty($value = $values[$i])) {
+                if(!empty($value = $physicalTestsValues[$i])) {
 
                     //Organizes data to inser
                     $rowData = ['physical_test_id' => $physicalTest, 'value' => $value];
@@ -79,10 +84,29 @@ class AthleteEvaluationController extends Controller
                     $athleteEvaluation->physicalTests()->save($athleteEvaluationPhysicalTest);
                 }
             }
+    
+            //Receives physical test's values
+            $bodyIndexes = $request->input('body_indexes');
+            $bodyIndexesValues = $request->input('body_indexes_values');
+
+            //Assigns entered input values to physical test record
+            foreach($bodyIndexes as $i => $bodyIndex) {
+
+                //Checks if this body index received value
+                if(!empty($value = $bodyIndexesValues[$i])) {
+
+                    //Organizes data to inser
+                    $rowData = ['body_index_id' => $bodyIndex, 'value' => $value];
+                    $athleteEvaluationBodyIndex = new AthleteEvaluationBodyIndex($rowData);
+
+                    //Inserts value in database
+                    $athleteEvaluation->bodyIndexes()->save($athleteEvaluationBodyIndex);
+                }
+            }
 
             //If there is 1 or more physical tests, then the evaluation is completed
-            if($athleteEvaluation->physicalTests()->count() == 0) {
-                throw new Exception('Nenhum teste físico foi inserido.');
+            if($athleteEvaluation->physicalTests()->count() == 0 && $athleteEvaluation->bodyIndexes()->count() == 0) {
+                throw new Exception('Nenhuma avaliação foi inserida.');
             }
 
             DB::commit();

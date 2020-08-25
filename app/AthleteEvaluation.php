@@ -33,4 +33,12 @@ class AthleteEvaluation extends Model
         return $this->hasMany(AthleteEvaluationPhysicalTest::class);
     }
 
+    /**
+     * Get evaluation's body indexes.
+     */
+    public function bodyIndexes()
+    {
+        return $this->hasMany(AthleteEvaluationBodyIndex::class);
+    }
+
 }
