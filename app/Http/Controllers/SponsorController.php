@@ -41,7 +41,7 @@ class SponsorController extends Controller
     {
         $validated = $this->validate($request, [
             'cnpj' => 'required|unique:sponsors',
-            'value' => 'required|integer|min:0',
+            'name' => 'nullable|string',
             'email' => 'nullable|string'
         ]);
 
@@ -56,7 +56,7 @@ class SponsorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Sponsor $sponsor, $id)
+    public function show($id)
     {
 
         $sponsor = Sponsor::find($id);
@@ -88,15 +88,17 @@ class SponsorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $this->validate($request, [
+        $sponsor = Sponsor::find($id);
+
+        $request->validate([
             'cnpj' => 'required|unique:sponsors',
-            'value' => 'required|integer|min:0',
+            'name' => 'nullable|string',
             'email' => 'nullable|string'
         ]);
 
-        $sponsor = new Sponsor([
+        $sponsor -> update([
             'cnpj' => $request->cnpj,
-            'value' => $request->value,
+            'name' => $request->name,
             'email' => $request->email,
         ]);
 

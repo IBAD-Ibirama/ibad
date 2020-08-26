@@ -16,7 +16,7 @@ class CreateSponsorsTable extends Migration
         Schema::create('sponsors', function (Blueprint $table) {
             $table->id();
             $table->string('cnpj');
-            $table->unsignedInteger('value');
+            $table->string('name');
             $table->string('email') -> nullable();
             $table->timestamps();
         });
