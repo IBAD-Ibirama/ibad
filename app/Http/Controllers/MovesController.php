@@ -65,8 +65,10 @@ class MovesController extends Controller
      * @param  \App\Moves  $moves
      * @return \Illuminate\Http\Response
      */
-    public function show(Moves $moves)
+    public function show($id)
     {
+        $moves = Moves::find($id);
+
         return view('moves.show')->with([
             'moves' => $moves
         ]);
@@ -78,8 +80,10 @@ class MovesController extends Controller
      * @param  \App\Moves  $moves
      * @return \Illuminate\Http\Response
      */
-    public function edit(Moves $moves)
+    public function edit($id)
     {
+        $moves = Moves::find($id);
+
         return view('moves.edit')->with([
             'moves' => $moves
         ]);
@@ -92,8 +96,10 @@ class MovesController extends Controller
      * @param  \App\Moves  $moves
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Moves $moves)
+    public function update(Request $request, $id)
     {
+        $moves = Moves::find($id);
+
         $request->validate([
             'descricao' => 'required',
             'data' => 'required',
@@ -101,7 +107,8 @@ class MovesController extends Controller
             'tipo' => 'required',
             'especificacao' => 'required'
         ]);
-        $moves = new Moves([
+
+        $moves -> update([
             'descricao' => $request->descricao,
             'data' => $request->data,
             'valor' => $request->data,
@@ -120,8 +127,10 @@ class MovesController extends Controller
      * @param  \App\Moves  $moves
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Moves $moves)
+    public function destroy($id)
     {
+        $moves = Moves::find($id);
+        
         $moves->delete();
 
         return $this->index()->with([
