@@ -5,9 +5,13 @@
   <div class="row justify-content-center">
     <div class="col-md-12">
       <div class="card">
-        <div class="card-header">Criar um patrocinador</div>
+        <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
+          <span>Criar novo patrocinador</span>
+          <a class="btn btn-warning btn-sm" href="/patrocinadores"><i class="fas fa-arrow-circle-up"></i> Voltar</a>
+        </div>
+
         <div class="card-body">
-          <form action="/sponsors" method="post">
+          <form action="/patrocinadores" method="post">
             @csrf
             <div class="form-group">
               <label for="cnpj">CNPJ</label>
@@ -26,7 +30,6 @@
             </div>
             <input class="btn btn-primary mt-4" type="submit" value="Salvar registro">
           </form>
-          <a class="btn btn-primary float-right" href="/sponsors"><i class="fas fa-arrow-circle-up"></i> Back</a>
         </div>
       </div>
     </div>

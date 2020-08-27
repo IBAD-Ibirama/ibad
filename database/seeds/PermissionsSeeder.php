@@ -16,7 +16,7 @@ use Spatie\Permission\PermissionRegistrar;
  * Para mais informações:
  * https://docs.spatie.be/laravel-permission/v3/advanced-usage/seeding/#flush-cache-before-seeding
  *
-*/
+ */
 
 class PermissionsSeeder extends Seeder
 {

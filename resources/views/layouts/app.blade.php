@@ -21,11 +21,11 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left Side Of Navbar -->
           <ul class="navbar-nav mr-auto">
-            <li><a class="nav-link{{Request::is('/') ? ' active ' : ''}}" href="/">Dashboard</a></li>
+            <li><a class="nav-link{{Request::is('dashboard') ? ' active' : ''}}" href="/">Dashboard</a></li>
             @role('admin')
-            <li><a class="nav-link{{Request::is('User*') ? ' active ' : ''}}" href="/usuarios">Usuários</a></li>
-            <li><a class="nav-link{{Request::is('Moves*') ? ' active ' : ''}}" href="/moves">Movimentações</a></li>
-            <li><a class="nav-link{{Request::is('sponsors*') ? 'active' : ''}}" href="/sponsors">Patrocinadores</a></li>
+            <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}" href="/usuarios">Usuários</a></li>
+            <li><a class="nav-link{{Request::is('movimentacoes*') ? ' active' : ''}}" href="/movimentacoes">Movimentações</a></li>
+            <li><a class="nav-link{{Request::is('patrocinadores*') ? ' active' : ''}}" href="/patrocinadores">Patrocinadores</a></li>
             @endrole
           </ul>
 

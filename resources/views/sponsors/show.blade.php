@@ -10,7 +10,7 @@
       <div class="card">
         <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
           <span>Detalhes do patrocinador</span>
-          <a class='btn btn-success btn-sm' href="/sponsors">Voltar</a>
+          <a class='btn btn-success btn-sm' href="/patrocinadores">Voltar</a>
         </div>
 
         <div class="card-body">

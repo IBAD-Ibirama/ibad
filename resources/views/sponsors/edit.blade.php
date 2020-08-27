@@ -5,9 +5,13 @@
   <div class="row justify-content-center">
     <div class="col-md-12">
       <div class="card">
-        <div class="card-header">Editar patrocinador</div>
+        <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
+          <span>Editar patrocinador</span>
+          <a class="btn btn-warning btn-sm" href="/patrocinadores"><i class="fas fa-arrow-circle-up"></i> Voltar</a>
+        </div>
+
         <div class="card-body">
-          <form action="/sponsors/{{$sponsors->id}}" method="post">
+          <form action="/patrocinadores/{{$sponsors->id}}" method="post">
             @csrf
             @method('PUT')
             <div class="form-group">
@@ -25,9 +29,8 @@
               <input type="text" class="form-control{{$errors->has('email') ? ' border-danger' : '' }}" id="email" name="email" value="{{$sponsors->email ?? old('email')}}">
               <small class="form-text text-danger">{!! $errors->first('email') !!}</small>
             </div>
-            <input class="btn btn-primary mt-4" type="submit" value="Update Sponsor">
+            <input class="btn btn-primary mt-4" type="submit" value="Atualizar patrocinador">
           </form>
-          <a class="btn btn-primary float-right" href="/sponsors"><i class="fas fa-arrow-circle-up"></i> Back</a>
         </div>
       </div>
     </div>

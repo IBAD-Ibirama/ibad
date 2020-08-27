@@ -2,30 +2,34 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-11">
-            <div class="card">
-                <div class="card-header">{{ __('All the moves') }}</div>
-                    <div class="card-body">
-                        <ul class="list-group">
-                            @foreach($moves as $move)
-                                <li class="list-group-item">
-                                   <a href="/moves/{{$move->id}}" title="Show Details">{{$move->descricao}}</a> 
-                                   <a class="btn btn-sm btn-light ml-2" href="/moves/{{$move->id}}/edit">Edit move</a> 
-                                   <form class="float-right" style="display: inline" action="/moves/{{$move->id}}" method="post">
-                                        @csrf 
-                                        @method('DELETE')
-                                        <input class="btn btn-sm btn-outline-danger" type="submit" value="Delete">
-                                   </form>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-            </div>
-            <div class="mt-2">
-                <a class='btn btn-success btn-sm' href="/moves/create">Create new move</a>
-            </div>
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
+          <span>Todas as movimentações</span>
+          <a class='btn btn-success btn-sm' href="/movimentacoes/create">Criar nova movimentação</a>
         </div>
+        <div class="card-body">
+          <ul class="list-group">
+            @foreach($moves as $move)
+            <li class="list-group-item">
+              <a href="/movimentacoes/{{$move->id}}" title="Mostrar detalhes">{{$move->descricao}}</a>
+
+              <div class="float-right flex">
+                <a class="btn btn-sm btn-light mr-2" href="/movimentacoes/{{$move->id}}/edit">Editar</a>
+
+                <form style="display: inline" action="/movimentacoes/{{$move->id}}" method="post">
+                  @csrf
+                  @method('DELETE')
+                  <input class="btn btn-sm btn-outline-danger" type="submit" value="Deletar">
+                </form>
+              </div>
+            </li>
+            @endforeach
+          </ul>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 @endsection
