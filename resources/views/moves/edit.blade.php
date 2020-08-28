@@ -15,31 +15,31 @@
             @csrf
             @method('PUT')
             <div class="form-group">
-              <label for="descricao">Descrição</label>
-              <input type="text" class="form-control{{$errors->has('descricao') ? ' border-danger' : '' }}" id="descricao" name="descricao" value="{{$moves->descricao ?? old('descricao')}}">
-              <small class="form-text text-danger">{!! $errors->first('descricao') !!}</small>
+              <label for="description">Descrição</label>
+              <input type="text" class="form-control{{$errors->has('description') ? ' border-danger' : '' }}" id="description" name="description" value="{{$moves->description ?? old('description')}}">
+              <small class="form-text text-danger">{!! $errors->first('description') !!}</small>
             </div>
             <div class="form-group">
-              <label for="data">Data</label>
-              <input type="date" class="form-control{{$errors->has('data') ? ' border-danger' : '' }}" id="data" name="data" value="{{$moves->data ?? old('data')}}">
-              <small class="form-text text-danger">{!! $errors->first('data') !!}</small>
+              <label for="date">Data</label>
+              <input type="date" class="form-control{{$errors->has('date') ? ' border-danger' : '' }}" id="date" name="date" value="{{$moves->date ?? old('date')}}">
+              <small class="form-text text-danger">{!! $errors->first('date') !!}</small>
             </div>
             <div class="form-group">
-              <label for="valor">Valor</label>
-              <input type="text" class="form-control{{$errors->has('valor') ? ' border-danger' : '' }}" id="valor" name="valor" value="{{$moves->valor ?? old('valor')}}">
-              <small class="form-text text-danger">{!! $errors->first('valor') !!}</small>
+              <label for="value">Valor</label>
+              <input type="text" class="form-control{{$errors->has('value') ? ' border-danger' : '' }}" id="value" name="value" value="{{$moves->value ?? old('value')}}">
+              <small class="form-text text-danger">{!! $errors->first('value') !!}</small>
             </div>
             <div class="form-group">
-              <label for="tipo">Tipo</label>
-              <select name="tipo" id="tipo" class="form-control">
-                <option value="entrada" selected>Entrada</option>
-                <option value="saida">Saída</option>
+              <label for="type">Tipo</label>
+              <select name="type" id="type" class="form-control">
+                <option value="entrada" {{ $moves->type == 'entrada' ? 'selected' : '' }}>Entrada</option>
+                <option value="saida" {{ $moves->type == 'saida' ? 'selected' : '' }}>Saída</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="especificacao">Especificação</label>
-              <input type="text" class="form-control{{$errors->has('especificacao') ? ' border-danger' : '' }}" id="especificacao" name="especificacao" value="{{$moves->especificacao ?? old('especificacao')}}">
-              <small class="form-text text-danger">{!! $errors->first('especificacao') !!}</small>
+              <label for="specification">Especificação</label>
+              <input type="text" class="form-control{{$errors->has('specification') ? ' border-danger' : '' }}" id="specification" name="specification" value="{{$moves->specification ?? old('specification')}}">
+              <small class="form-text text-danger">{!! $errors->first('specification') !!}</small>
             </div>
             <input class="btn btn-primary mt-4" type="submit" value="Atualizar movimentação">
           </form>

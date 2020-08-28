@@ -11,11 +11,11 @@
         </div>
 
         <div class="card-body">
-          <p>Descrição: {{$moves->descricao}}</p>
-          <p>Data: {{$moves->data}}</p>
-          <p>Tipo: {{$moves->tipo}}</p>
-          <p>Valor: {{$moves->valor}}</p>
-          <p>Especificação: {{$moves->especificacao}}</p>
+          <p>Descrição: {{$moves->description}}</p>
+          <p>Data: {{$moves->date}}</p>
+          <p>Tipo: {{$moves->type}}</p>
+          <p>Valor: {{$moves->value}}</p>
+          <p>Especificação: {{$moves->specification}}</p>
         </div>
       </div>
     </div>

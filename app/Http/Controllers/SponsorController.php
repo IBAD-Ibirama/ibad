@@ -45,9 +45,11 @@ class SponsorController extends Controller
             'email' => 'nullable|string'
         ]);
 
-        $sponsor = Sponsor::create($validated);
+        Sponsor::create($validated);
 
-        return redirect()->to(route('sponsors.show', $sponsor));
+        return $this->index()->with([
+            'message_success' => "Patrocinador cadastrado com sucesso"
+        ]);
     }
 
     /**
@@ -96,14 +98,14 @@ class SponsorController extends Controller
             'email' => 'nullable|string'
         ]);
 
-        $sponsor -> update([
+        $sponsor->update([
             'cnpj' => $request->cnpj,
             'name' => $request->name,
             'email' => $request->email,
         ]);
 
         return $this->index()->with([
-            'message_success'=> "Patrocinador atualizado com sucesso." 
+            'message_success' => "Patrocinador atualizado com sucesso"
         ]);
     }
 
@@ -120,7 +122,7 @@ class SponsorController extends Controller
         $sponsor->delete();
 
         return $this->index()->with([
-            'message_success'=> "Patrocinador deletado com sucesso" 
+            'message_success' => "Patrocinador deletado com sucesso"
         ]);
     }
 }

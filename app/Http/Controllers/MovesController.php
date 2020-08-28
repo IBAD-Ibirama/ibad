@@ -39,23 +39,23 @@ class MovesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'descricao' => 'required',
-            'data' => 'required',
-            'valor' => 'required',
-            'tipo' => 'required',
-            'especificacao' => 'required'
+            'description' => 'required',
+            'date' => 'required',
+            'value' => 'required',
+            'type' => 'required',
+            'specification' => 'required'
         ]);
         $moves = new Moves([
-            'descricao' => $request->descricao,
-            'data' => $request->data,
-            'valor' => $request->data,
-            'tipo' => $request->tipo,
-            'especificacao' => $request->especificacao
+            'description' => $request->description,
+            'date' => $request->date,
+            'value' => $request->value,
+            'type' => $request->type,
+            'specification' => $request->specification
         ]);
         $moves->save();
 
         return $this->index()->with([
-            'message_success'=> "The move was created successfully" 
+            'message_success' => "A movimentação foi cadastrada com sucesso"
         ]);
     }
 
@@ -101,23 +101,23 @@ class MovesController extends Controller
         $moves = Moves::find($id);
 
         $request->validate([
-            'descricao' => 'required',
-            'data' => 'required',
-            'valor' => 'required',
-            'tipo' => 'required',
-            'especificacao' => 'required'
+            'description' => 'required',
+            'date' => 'required',
+            'value' => 'required',
+            'type' => 'required',
+            'specification' => 'required'
         ]);
 
-        $moves -> update([
-            'descricao' => $request->descricao,
-            'data' => $request->data,
-            'valor' => $request->data,
-            'tipo' => $request->tipo,
-            'especificacao' => $request->especificacao
+        $moves->update([
+            'description' => $request->description,
+            'date' => $request->date,
+            'value' => $request->value,
+            'type' => $request->type,
+            'specification' => $request->specification
         ]);
 
         return $this->index()->with([
-            'message_success'=> "The move was updated successfully." 
+            'message_success' => "A movimentação foi atualizada com sucesso"
         ]);
     }
 
@@ -130,11 +130,11 @@ class MovesController extends Controller
     public function destroy($id)
     {
         $moves = Moves::find($id);
-        
+
         $moves->delete();
 
         return $this->index()->with([
-            'message_success'=> "The move was deleted" 
+            'message_success' => "A movimentação foi apagada"
         ]);
     }
 }

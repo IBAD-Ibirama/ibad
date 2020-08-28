@@ -13,7 +13,7 @@
           <ul class="list-group">
             @foreach($moves as $move)
             <li class="list-group-item">
-              <a href="/movimentacoes/{{$move->id}}" title="Mostrar detalhes">{{$move->descricao}}</a>
+              <a href="/movimentacoes/{{$move->id}}" title="Mostrar detalhes">{{$move->description}}</a>
 
               <div class="float-right flex">
                 <a class="btn btn-sm btn-light mr-2" href="/movimentacoes/{{$move->id}}/edit">Editar</a>
