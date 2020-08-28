@@ -7,35 +7,20 @@ use Illuminate\Http\Request;
 
 class MovesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $moves = Moves::all();
+
         return view('moves.index')->with([
             'moves' => $moves
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('moves.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -45,6 +30,7 @@ class MovesController extends Controller
             'type' => 'required',
             'specification' => 'required'
         ]);
+
         $moves = new Moves([
             'description' => $request->description,
             'date' => $request->date,
@@ -59,12 +45,6 @@ class MovesController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Moves  $moves
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $moves = Moves::find($id);
@@ -74,12 +54,6 @@ class MovesController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Moves  $moves
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $moves = Moves::find($id);
@@ -89,13 +63,6 @@ class MovesController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Moves  $moves
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $moves = Moves::find($id);
@@ -121,12 +88,6 @@ class MovesController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Moves  $moves
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $moves = Moves::find($id);

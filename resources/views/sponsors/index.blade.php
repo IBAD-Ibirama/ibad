@@ -21,7 +21,7 @@
               <div class="float-right flex">
                 <a class="btn btn-sm btn-light mr-2" href="/patrocinadores/{{$sponsor->id}}/edit">Editar</a>
 
-                <form style="display: inline" action="sponsors/{{$sponsor->id}}" method="post">
+                <form style="display: inline" action="/patrocinadores/{{$sponsor->id}}" method="post">
                   @csrf
                   @method('DELETE')
                   <input class="btn btn-sm btn-outline-danger" type="submit" value="Deletar">

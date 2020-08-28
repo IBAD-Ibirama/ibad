@@ -20,9 +20,9 @@
               <small class="form-text text-danger">{!! $errors->first('cnpj') !!}</small>
             </div>
             <div class="form-group">
-              <label for="newname">Nome</label>
-              <input type="text" class="form-control{{$errors->has('newname') ? ' border-danger' : '' }}" id="newname" name="newname" value="{{$sponsors->name ?? old('name')}}">
-              <small class="form-text text-danger">{!! $errors->first('newname') !!}</small>
+              <label for="name">Nome</label>
+              <input type="text" class="form-control{{$errors->has('name') ? ' border-danger' : '' }}" id="name" name="name" value="{{$sponsors->name ?? old('name')}}">
+              <small class="form-text text-danger">{!! $errors->first('name') !!}</small>
             </div>
             <div class="form-group">
               <label for="email">Email</label>
