@@ -3,7 +3,9 @@
 @section('content')
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-md-11">
+    <div class="col-md-12">
+      @role('financeiro')
+
       <div class="card">
         <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
           <span>Detalhes da movimentação</span>
@@ -18,6 +20,11 @@
           <p>Especificação: {{$moves->specification}}</p>
         </div>
       </div>
+      @else
+
+      <p>Você não tem permissão para acessar essa funcionalidade.</p>
+
+      @endrole
     </div>
   </div>
 </div>
