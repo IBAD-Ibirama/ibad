@@ -130,8 +130,7 @@ class UserController extends Controller
 
         $user->delete();
 
-        return $this->index()->with([
-            'message_success' => "O usuário <b>" . $oldName . "</b> foi apagado."
-        ]);
+        session()->flash('success', "O usuário <b>" . $oldName . "</b> foi apagado.");
+        return Redirect::back();
     }
 }

@@ -56,13 +56,13 @@
     </nav>
 
     <main class="py-4">
-      @isset($message_success)
+      @if(isset($message_success) || Session::has('success'))
       <div class="container">
         <div class="alert alert-success" role="alert">
-          {!! $message_success !!}
+          {!! isset($message_success) ? $message_success : Session::get("success") !!}
         </div>
       </div>
-      @endisset
+      @endif
 
       @isset($message_warning)
       <div class="container">
