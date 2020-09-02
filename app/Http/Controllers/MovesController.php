@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Moves;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class MovesController extends Controller
 {
@@ -94,8 +95,7 @@ class MovesController extends Controller
 
         $moves->delete();
 
-        return $this->index()->with([
-            'message_success' => "A movimentação foi apagada"
-        ]);
+        session()->flash('success', "Movimentação deletada com sucesso");
+        return Redirect::back();
     }
 }
