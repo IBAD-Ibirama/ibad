@@ -18,4 +18,21 @@ class UserBuilder
     {
         return factory(User::class, $Quantity)->make($this->attributes);
     }
+
+    public function setName($name): self
+    {
+        $this->attributes['name'] = $name;
+        return $this;
+    }
+
+    public function setPassword($password): self
+    {
+        $this->attributes['password'] = $password;
+        return $this;
+    }
+    public function setEmail($email): self
+    {
+        $this->attributes['email'] = $email;
+        return $this;
+    }
 }
