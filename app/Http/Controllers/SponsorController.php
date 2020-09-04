@@ -59,7 +59,7 @@ class SponsorController extends Controller
         $sponsor = Sponsor::find($id);
 
         $request->validate([
-            'cnpj' => 'required',
+            'cnpj' => 'required|unique:sponsors',
             'name' => 'nullable|string',
             'email' => 'nullable|string'
         ]);
