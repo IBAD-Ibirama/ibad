@@ -66,17 +66,16 @@ class UserTest extends TestCase
     /** @test */
     public function user_can_be_updated()
     {
-        $this->withoutExceptionHandling();
         $user = $this->user()->make();
 
-        // $this->actingAs($this->user()->create())
-        //     ->post(route('usuarios.store'), $user->toArray());
+        $this->actingAs($this->user()->create())
+            ->post(route('usuarios.store'), $user->toArray());
 
-        // $user = User::first();
+        $user = User::first();
 
-        // $newuser = $this->user()->make();
+        $newuser = $this->user()->make();
 
-        // $response = $this->put('usuarios/'.$user->id, $newuser->toArray());
+        $response = $this->put('usuarios/'.$user->id, $newuser->toArray());
 
         //NÃO FUNCIONA
         // $this->assertEquals($newuser->name, User::first()->name);
@@ -85,7 +84,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function sponsor_can_be_deleted()
+    public function user_can_be_deleted()
     {
         $user = $this->user()->make();
 

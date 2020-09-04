@@ -22,7 +22,6 @@ class MovesTest extends TestCase
     public function it_should_store_in_database()
     {
         Carbon::setTestNow(now());
-        $this->withoutExceptionHandling();
 
         $user = factory(User::class)->create();
 
@@ -80,6 +79,21 @@ class MovesTest extends TestCase
                 'specification'
             ]);
     }
+    /** @test */
+    public function it_should_show_a_move_search()
+    {
+        $this->withoutExceptionHandling();
+        $move = $this->moves()->make();
+
+        $this->actingAs($this->user()->create())
+            ->post(route('movimentacoes.store'), $move->toArray());
+
+        $move = Moves::first();
+
+        // $response = $this->get('movimentacoes/show/' . $move->id);
+
+        // $this->assertEquals($move->id, Moves::first()->id);
+    }
 
     /** @test */
     public function move_can_be_updated()
@@ -103,7 +117,7 @@ class MovesTest extends TestCase
     }
 
     /** @test */
-    public function sponsor_can_be_deleted()
+    public function move_can_be_deleted()
     {
         $move = $this->moves()->make();
 
@@ -115,6 +129,7 @@ class MovesTest extends TestCase
         $response = $this->delete('movimentacoes/' . $move->id);
 
         $this->assertCount(0, Moves::all());
+        // $response->assertRedirect(route('movimentacoes.index'));
     }
 
     /** @test */
