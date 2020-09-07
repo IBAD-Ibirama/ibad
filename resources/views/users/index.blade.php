@@ -19,10 +19,9 @@
               <a href="/usuarios/{{$user->id}}" title="Consultar">{{$user->name}}</a>
 
               <div class="float-right flex">
-                <a class="btn btn-sm btn-light ml-2" href="/usuarios/{{$user->id}}/edit">Editar</a>
+                <a class="btn btn-sm btn-light mr-2" href="/usuarios/{{$user->id}}/edit">Editar</a>
 
                 <form style="display: inline" action="usuarios/{{$user->id}}" method="post">
-
                   @csrf
                   @method('DELETE')
                   <input class="btn btn-sm btn-outline-danger" type="submit" value="Deletar">

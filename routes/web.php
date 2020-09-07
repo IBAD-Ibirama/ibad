@@ -10,12 +10,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::resource('usuarios', 'UserController');
-Route::resource('moves','MovesController');
-
 Route::get('/dashboard', 'HomeController@index')->name('home');
 Route::get('/moves-report', 'MovesReportController@create');
 
 Route::middleware('auth')->group(function () {
-    Route::resource('sponsors', 'SponsorController');
+    Route::resource('usuarios', 'UserController');
+    Route::resource('movimentacoes', 'MovesController');
+    Route::resource('patrocinadores', 'SponsorController');
 });
