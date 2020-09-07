@@ -12,9 +12,12 @@ class MovesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        // $moves = Moves::whereDate('data', '2020-09-06');
         $moves = Moves::all();
+        $date = $request->query('month');
+        error_log($date);
         return view('moves.index')->with([
             'moves' => $moves
         ]);
@@ -55,7 +58,7 @@ class MovesController extends Controller
         $moves->save();
 
         return $this->index()->with([
-            'message_success'=> "The move was created successfully" 
+            'message_success' => "The move was created successfully"
         ]);
     }
 
@@ -110,7 +113,7 @@ class MovesController extends Controller
         ]);
 
         return $this->index()->with([
-            'message_success'=> "The move was updated successfully." 
+            'message_success' => "The move was updated successfully."
         ]);
     }
 
@@ -125,7 +128,7 @@ class MovesController extends Controller
         $moves->delete();
 
         return $this->index()->with([
-            'message_success'=> "The move was deleted" 
+            'message_success' => "The move was deleted"
         ]);
     }
 }
