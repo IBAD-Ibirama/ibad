@@ -15,7 +15,7 @@ class CreateAthleteEvaluationBodyIndexTable extends Migration
     {
         Schema::create('athlete_evaluation_body_index', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('athlete_evaluation_id')->constrained();
+            $table->foreignId('athlete_evaluation_id')->constrained()->onDelete('cascade');
             $table->foreignId('body_index_id')->references('id')->on('body_indexes')->constrained();
             $table->double('value');
             $table->timestamps();

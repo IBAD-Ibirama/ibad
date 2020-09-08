@@ -2,27 +2,21 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('index');
+})->name('index');
 
-<<<<<<< HEAD
-Route::resource('avaliacao_atleta', 'AthleteEvaluationController');
-=======
-Route::resource('avaliacao_atleta', 'AthleteEvaluationController');
+//Atletas
+Route::get('/atletas', 'AthleteController@index')->name('athletes.index');
+//Atletas x Avaliações
+Route::get('/atletas/{athlete}/avaliacoes', 'AthleteEvaluationController@index')->name('evaluations.index');
+Route::get('/atletas/{athlete}/avaliacoes/create', 'AthleteEvaluationController@create')->name('evaluations.create');
+Route::get('/atletas/{athlete}/avaliacoes/{evaluation}/edit', 'AthleteEvaluationController@edit')->name('evaluations.edit');
+Route::post('/atletas/avaliacoes', 'AthleteEvaluationController@store')->name('evaluations.store');
+Route::put('/atletas/avaliacoes/{evaluation}', 'AthleteEvaluationController@update')->name('evaluations.update');
+Route::delete('/atletas/avaliacoes/{evaluation}', 'AthleteEvaluationController@destroy')->name('evaluations.destroy');
 
+//Atletas x Evolução
 Route::get('evolucao-atleta', 'AthleteEvaluationChartController@index');
 Route::get('evolucao-atleta/ajax/indices-corporais', 'AthleteEvaluationChartController@bodyIndexChartAjax')->name('charts.evolucao-atleta-ajax-indices-corporais');
 Route::get('evolucao-atleta/ajax/testes-fisicos', 'AthleteEvaluationChartController@physicalTestChartAjax')->name('charts.evolucao-atleta-ajax-testes-fisicos');
->>>>>>> 45d288f5edbf700131b4ea6408c72e1532d89721
