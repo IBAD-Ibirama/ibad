@@ -21,12 +21,15 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left Side Of Navbar -->
           <ul class="navbar-nav mr-auto">
-            <li><a class="nav-link{{Request::is('/') ? ' active ' : ''}}" href="/">Dashboard</a></li>
+            <li><a class="nav-link{{Request::is('dashboard') ? ' active' : ''}}" href="/">Dashboard</a></li>
             @role('admin')
-            <li><a class="nav-link{{Request::is('User*') ? ' active ' : ''}}" href="/usuarios">Usuários</a></li>
-            <li><a class="nav-link{{Request::is('Moves*') ? ' active ' : ''}}" href="/moves">Movimentações</a></li>
-            <li><a class="nav-link" href="{ route('sponsors.create') }">Recebimentos</a></li>
+            <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}" href="/usuarios">Usuários</a></li>
             @endrole
+
+            @can('financeiro')
+            <li><a class="nav-link{{Request::is('movimentacoes*') ? ' active' : ''}}" href="/movimentacoes">Movimentações</a></li>
+            <li><a class="nav-link{{Request::is('patrocinadores*') ? ' active' : ''}}" href="/patrocinadores">Patrocinadores</a></li>
+            @endcan
           </ul>
 
           <!-- Right Side Of Navbar -->
@@ -53,13 +56,13 @@
     </nav>
 
     <main class="py-4">
-      @isset($message_success)
+      @if(isset($message_success) || Session::has('success'))
       <div class="container">
         <div class="alert alert-success" role="alert">
-          {!! $message_success !!}
+          {!! isset($message_success) ? $message_success : Session::get("success") !!}
         </div>
       </div>
-      @endisset
+      @endif
 
       @isset($message_warning)
       <div class="container">

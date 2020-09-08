@@ -24,82 +24,51 @@ class PermissionsSeeder extends Seeder
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        Permission::create(['name' => 'edit']);
-        Permission::create(['name' => 'delete']);
-        Permission::create(['name' => 'create']);
-        Permission::create(['name' => 'view']);
+        Permission::create(['name' => 'responsavel']);
+        Permission::create(['name' => 'atleta']);
+        Permission::create(['name' => 'financeiro']);
+        Permission::create(['name' => 'treinador']);
 
+        $parentsRole = $this->createRole('responsavel');
+        $athleteRole = $this->createRole('atleta');
+        $financialRole = $this->createRole('financeiro');
+        $coachRole = $this->createRole('treinador');
         $adminRole = Role::create(['name' => 'admin']);
-        $user = Factory(App\User::class)->create([
-            'name' => 'Teste',
-            'email' => 'teste@teste.com',
-            'password' => Hash::make('teste123'),
-            'remember_token' => null,
-        ]);
+
+        $user = $this->createUser('Teste', 'teste@teste.com', 'teste123');
         $user->assignRole($adminRole);
 
-        $user = Factory(App\User::class)->create([
-            'name' => 'Admin',
-            'email' => 'admin@admin.com',
-            'password' => Hash::make('admin123'),
-            'remember_token' => null,
-        ]);
+        $user = $this->createUser('Admin', 'admin@admin.com', 'admin123');
         $user->assignRole($adminRole);
 
-        $parentsRole = Role::create(['name' => 'pais']);
-        $parentsRole->givePermissionTo('edit');
-        $parentsRole->givePermissionTo('delete');
-        $parentsRole->givePermissionTo('create');
-        $parentsRole->givePermissionTo('view');
-
-        $athleteRole = Role::create(['name' => 'atleta']);
-        $athleteRole->givePermissionTo('edit');
-        $athleteRole->givePermissionTo('delete');
-        $athleteRole->givePermissionTo('create');
-        $athleteRole->givePermissionTo('view');
-
-        $financialRole = Role::create(['name' => 'financeiro']);
-        $financialRole->givePermissionTo('edit');
-        $financialRole->givePermissionTo('delete');
-        $financialRole->givePermissionTo('create');
-        $financialRole->givePermissionTo('view');
-
-        $coachRole = Role::create(['name' => 'treinador']);
-        $coachRole->givePermissionTo('edit');
-        $coachRole->givePermissionTo('delete');
-        $coachRole->givePermissionTo('create');
-        $coachRole->givePermissionTo('view');
-
-        $user = Factory(App\User::class)->create([
-            'name' => 'Pais',
-            'email' => 'pais@pais.com',
-            'password' => Hash::make('pais123'),
-            'remember_token' => null,
-        ]);
+        $user = $this->createUser('Responsável', 'responsavel@responsavel.com', 'responsavel123');
         $user->assignRole($parentsRole);
 
-        $user = Factory(App\User::class)->create([
-            'name' => 'Atleta',
-            'email' => 'atleta@atleta.com',
-            'password' => Hash::make('atleta123'),
-            'remember_token' => null,
-        ]);
+        $user = $this->createUser('Atleta', 'atleta@atleta.com', 'atleta123');
         $user->assignRole($athleteRole);
 
-        $user = Factory(App\User::class)->create([
-            'name' => 'Financeiro',
-            'email' => 'financeiro@financeiro.com',
-            'password' => Hash::make('financeiro123'),
-            'remember_token' => null,
-        ]);
+        $user = $this->createUser('Financeiro', 'financeiro@financeiro.com', 'financeiro123');
         $user->assignRole($financialRole);
 
-        $user = Factory(App\User::class)->create([
-            'name' => 'Treinador',
-            'email' => 'treinador@treinador.com',
-            'password' => Hash::make('treinador123'),
+        $user = $this->createUser('Treinador', 'treinador@treinador.com', 'treinador123');
+        $user->assignRole($coachRole);
+    }
+
+    private function createUser($name, $email, $password)
+    {
+        return Factory(App\User::class)->create([
+            'name' => $name,
+            'email' => $email,
+            'password' => Hash::make($password),
             'remember_token' => null,
         ]);
-        $user->assignRole($coachRole);
+    }
+
+    private function createRole($name)
+    {
+        $role = Role::create(['name' => $name]);
+        $role->givePermissionTo($name);
+
+        return $role;
     }
 }

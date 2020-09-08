@@ -10,7 +10,7 @@
       <div class="card">
         <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
           <span>Editar usuário</span>
-          <a class="btn btn-primary" href="/usuarios"><i class="fas fa-arrow-circle-up"></i> Voltar</a>
+          <a class="btn btn-warning btn-sm" href="/usuarios"><i class="fas fa-arrow-circle-up"></i> Voltar</a>
         </div>
 
         <div class="card-body">
@@ -58,7 +58,6 @@
       <p>Você não tem permissão para acessar essa funcionalidade.</p>
 
       @endrole
-
     </div>
   </div>
 </div>

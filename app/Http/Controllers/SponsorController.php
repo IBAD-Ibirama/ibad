@@ -3,15 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use App\Sponsor;
 
 class SponsorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $sponsors = Sponsor::all();
@@ -21,44 +17,28 @@ class SponsorController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('sponsors.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $validated = $this->validate($request, [
             'cnpj' => 'required|unique:sponsors',
-            'value' => 'required|integer|min:0',
+            'name' => 'nullable|string',
             'email' => 'nullable|string'
         ]);
 
-        $sponsor = Sponsor::create($validated);
+        Sponsor::create($validated);
 
-        return redirect()->to(route('sponsors.show', $sponsor));
+        return $this->index()->with([
+            'message_success' => "Patrocinador cadastrado com sucesso"
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Sponsor $sponsor, $id)
+    public function show($id)
     {
-
         $sponsor = Sponsor::find($id);
 
         return view('sponsors.show')->with([
@@ -66,59 +46,43 @@ class SponsorController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Sponsor $sponsors)
+    public function edit($id)
     {
+        $sponsor = Sponsor::find($id);
+
         return view('sponsors.edit')->with([
-            'sponsors' => $sponsors
+            'sponsors' => $sponsor
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update($id, Request $request)
     {
-        $validated = $this->validate($request, [
-            'cnpj' => 'required|unique:sponsors',
-            'value' => 'required|integer|min:0',
+        $sponsor = Sponsor::find($id);
+
+        $request->validate([
+            'cnpj' => 'required',
+            'name' => 'nullable|string',
             'email' => 'nullable|string'
         ]);
 
-        $sponsor = new Sponsor([
+        $sponsor->update([
             'cnpj' => $request->cnpj,
-            'value' => $request->value,
+            'name' => $request->name,
             'email' => $request->email,
         ]);
 
         return $this->index()->with([
-            'message_success'=> "Patrocinador atualizado com sucesso." 
+            'message_success' => "Patrocinador atualizado com sucesso"
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $sponsor = Sponsor::find($id);
 
         $sponsor->delete();
 
-        return $this->index()->with([
-            'message_success'=> "Patrocinador deletado com sucesso" 
-        ]);
+        session()->flash('success', "Patrocinador deletado com sucesso");
+        return Redirect::back();
     }
 }

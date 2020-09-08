@@ -15,11 +15,11 @@ class CreateMovesTable extends Migration
     {
         Schema::create('moves', function (Blueprint $table) {
             $table->id();
-            $table->string("descricao");
-            $table->date("data");
-            $table->string("valor");
-            $table->string("tipo");
-            $table->string("especificacao");
+            $table->string("description");
+            $table->date("date");
+            $table->string("value");
+            $table->string("type");
+            $table->string("specification");
             $table->timestamps();
         });
     }
