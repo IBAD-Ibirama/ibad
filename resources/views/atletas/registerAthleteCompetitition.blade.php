@@ -39,7 +39,7 @@ use Illuminate\Support\Facades\URL;
 
     function criaTabela() {
         let table = new Tabela();
-        table.setColumns(['Atleta', 'Data', 'Local', 'Modalidade', 'Categoria']);
+        table.setColumns(['Atleta', 'Data', 'Local', 'Descrição', 'Categoria','Modalidade']);
         table.createTable();
         root.append(table.getTable());
 

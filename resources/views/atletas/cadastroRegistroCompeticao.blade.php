@@ -9,7 +9,53 @@
             @endforeach
         </ul>
     </div>
-@endif  
+@endif
+<style>
+.dropdown-check-list {
+  display: inline-block;
+}
+.dropdown-check-list .anchor {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 50px 5px 10px;
+  border: 1px solid #ccc;
+}
+.dropdown-check-list .anchor:after {
+  position: absolute;
+  content: "";
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  padding: 5px;
+  right: 10px;
+  top: 20%;
+  -moz-transform: rotate(-135deg);
+  -ms-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}    
+.dropdown-check-list .anchor:active:after {
+  right: 8px;
+  top: 21%;
+}
+.dropdown-check-list ul.items {
+  padding: 2px;
+  display: none;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+.dropdown-check-list ul.items li {
+  list-style: none;
+}
+.dropdown-check-list.visible .anchor {
+  color: #0094ff;
+}
+.dropdown-check-list.visible .items {
+  display: block;
+}
+</style>  
 <div class="information">
     <div class="filters">
         <form id="formulario" method="POST" action="{{ URL::to('atletas/registerAthleteCompetition/register') }}">
@@ -35,8 +81,12 @@
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="athlete">Atleta</label>
-                        <select class="form-control" id="athlete" name="athlete"></select>
+                        <div id="list1" class="dropdown-check-list" tabindex="100">
+                            <span class="anchor">Selecione os atletas: </span>
+                            <ul id="athlete" class="items">
+                               
+                             </ul>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="modality">Modalidade</label>
@@ -102,11 +152,16 @@
         //cria um option e anexa ele no append com as informações q queremos
         for(let i = 0; i < athletes.length; i++) {
             let obj    = athletes[i];
-            let option = document.createElement('option');
-
-            option.value     = obj.id;
-            option.innerText = obj.name;
-            select.append(option);
+            let li = document.createElement('li');
+            let input=document.createElement('input');
+            input.type='checkbox';
+            input.value=obj.id;
+            input.name='athletes[]';
+            let textNode=document.createTextNode(" "+obj.name);
+            li.append(input);
+            li.append(textNode);
+            select.append(li);
+           
         }
     }
 
@@ -154,4 +209,15 @@
     }
 
 </script>
+<script type="text/javascript">
+
+var checkList = document.getElementById('list1');
+checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
+    if (checkList.classList.contains('visible'))
+        checkList.classList.remove('visible');
+    else
+        checkList.classList.add('visible');
+}
+</script>
+
 @endsection

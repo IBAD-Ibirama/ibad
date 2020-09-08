@@ -47,14 +47,22 @@ class RegisterAthleteCompetitionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, CompetitionParticipation $participation)
+    public function store(Request $request)
     {
-        $participation->athletes_id     = $request->athlete;
-        $participation->competitions_id = $request->competition;
-        $participation->modalities_id   = $request->modality;
-        $participation->categories_id   = $request->category;
+        $athletes=$request->athletes;
         
-        $participation->save();
+        foreach($athletes as $athlete){
+            
+            
+            $participation=new CompetitionParticipation();
+            $participation->athletes_id=$athlete;
+            $participation->competitions_id = $request->competition;
+            $participation->modalities_id   = $request->modality;
+            $participation->categories_id   = $request->category;
+            $participation->save();
+        }
+       
+        
         return redirect()->action('registerAthleteCompetitionController@index')->with('success', 'Categoria inserida com sucesso!');
     }
 
