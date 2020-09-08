@@ -14,15 +14,14 @@ class AthleteEvaluationChartController extends Controller
     /**
      * Exibe a tela com os graficos de evolucao.
      *
+     * @param  \App\Athlete $athlete
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Athlete $athlete)
     {
-        $athletes = Athlete::all()->sortBy('name');
         $bodyIndexes = BodyIndex::all()->sortBy('name');
         $physicalTests = PhysicalTest::all()->sortBy('name');
-
-        return view('athlete_evaluation_chart.index', compact('athletes', 'bodyIndexes', 'physicalTests'));
+        return view('athlete_evaluation_chart.index', compact('athlete', 'bodyIndexes', 'physicalTests'));
     }
 
     /**

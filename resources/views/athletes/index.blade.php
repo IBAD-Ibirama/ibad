@@ -9,8 +9,8 @@
         <thead>
         <tr>
             <th scope="col" width="10%">#</th>
-            <th scope="col" width="80%">Nome do Atleta</th>
-            <th scope="col" width="10%">Ações</th>
+            <th scope="col" width="65%">Nome do Atleta</th>
+            <th scope="col" width="25%">Ações</th>
         </tr>
         </thead>
         <tbody>
@@ -21,6 +21,7 @@
                         <td>{{ $athlete->name }}</td>
                         <td>
                             <a class="btn btn-primary" href={{ route('evaluations.index', compact('athlete')) }} role="button">Avaliações</a>
+                            <a class="btn btn-warning" href={{ route('evolution-charts.index', compact('athlete')) }} role="button">Gráficos de Evolução</a>
                         </td>
                     </tr>
                 @endforeach

@@ -1,85 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Evolução do Atleta</title>
-    <style>
-      .container {
-        padding: 10px;
-      }
-      .evolution-charts {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-      }
-      .chart-container {
-        height: 300px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="athlete row">
-        <div>
-          <label for="athlete-id">Atleta</label>
-          <select name="athlete_id" id="athlete-id">
-            <option value="">Selecione um atleta</option>
-            @foreach ($athletes as $athlete)
-                <option value="{{ $athlete->id }}">{{ $athlete->name }}</option>
-            @endforeach
-          </select>
-        </div>
-      </div>
-      <div class="evolution-charts">
-        <div class="body-index-charts">
-          <h5>Índices Corporais</h5>
-          <div class="evolution-charts-container">
-            @foreach ($bodyIndexes as $bodyIndex)
-              <div class="chart-container" data-type="body-index" data-id="{{ $bodyIndex->id }}"></div>
-            @endforeach
+@extends('layouts.master')
+
+@section('title', 'Gráficos de Evolução')
+@section('subtitle', $athlete->name)
+
+@section('content')
+<style>
+  .card-body {
+    height: 300px;
+  }
+</style>
+<div class="text-left">
+  <a class="btn btn-secondary mb-1" href={{ route('index') }} role="button">Início</a>
+  <a class="btn btn-primary mb-1" href={{ route('athletes.index') }} role="button">Voltar para Atletas</a>
+  <div class="row mt-2">
+    <div class="col">
+      <div id="accordionPhyisicalTests">
+        @foreach ($physicalTests as $physicalTest)
+          <div class="card">
+            <div class="card-header" id="physicalTestHead_{{$physicalTest->id}}">
+              <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#physicalTestCollapse_{{$physicalTest->id}}" aria-expanded="true" aria-controls="collapseOne">
+                  {{ $physicalTest->name }}
+                </button>
+              </h5>
+            </div>
+        
+            <div id="physicalTestCollapse_{{$physicalTest->id}}" data-type="physical-test" data-id="{{ $physicalTest->id }}" class="collapse collapse-chart" aria-labelledby="physicalTestHead_{{$physicalTest->id}}" data-parent="#accordionPhyisicalTests">
+              <div class="card-body"></div>
+            </div>
           </div>
-        </div>
-        <div class="physical-test-charts">
-          <h5>Testes Físicos</h5>
-          <div class="evolution-charts-container">
-            @foreach ($physicalTests as $physicalTest)
-              <div class="chart-container" data-type="physical-test" data-id="{{ $physicalTest->id }}"></div>
-            @endforeach
-          </div>
-        </div>
+        @endforeach
       </div>
     </div>
+    <div class="col">
+      <div id="accordionBodyIndexes">
+        @foreach ($bodyIndexes as $bodyIndex)
+          <div class="card">
+            <div class="card-header" id="bodyIndexHead_{{$bodyIndex->id}}">
+              <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#bodyIndexCollapse_{{$bodyIndex->id}}" aria-expanded="true" aria-controls="collapseOne">
+                  {{ $bodyIndex->name }}
+                </button>
+              </h5>
+            </div>
+        
+            <div id="bodyIndexCollapse_{{$bodyIndex->id}}" data-type="body-index" data-id="{{ $bodyIndex->id }}" class="collapse collapse-chart" aria-labelledby="bodyIndexHead_{{$bodyIndex->id}}" data-parent="#accordionBodyIndexes">
+              <div class="card-body"></div>
+            </div>
+          </div>
+        @endforeach
+      </div>
+    </div>
+  </div>
+</div>
+@endsection
 
-    <!-- Charting library -->
-    <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
-    <!-- Chartisan -->
-    <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
-    <!-- Your application script -->
-    <script>
-      (function() {
-        document.addEventListener('DOMContentLoaded', () => {
-          const athleteField = document.querySelector('#athlete-id');
-          const charts = document.querySelectorAll('.chart-container');
+@section('scripts')
+<!-- Charting library -->
+<script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
+<!-- Chartisan -->
+<script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
 
-          const onChangeAthleteField = () => {
-            const athleteId = athleteField.value;
-            charts.forEach(chartBody => {
-              chartBody.innerHTML = '';
-              if(athleteId) {
-                const chartType = chartBody.getAttribute('data-type');
-                const chartId = chartBody.getAttribute('data-id');
-                const chartUrl = (chartType == 'body-index') ? '@chart("evolucao-atleta-ajax-indices-corporais")' : '@chart("evolucao-atleta-ajax-testes-fisicos")';
-                const chart = new Chartisan({
-                  el: chartBody,
-                  url: `${chartUrl}?athlete=${athleteId}&id=${chartId}`
-                });
-              }
-            });
-          };
+<script>
+(function(document) {
 
-          athleteField.addEventListener('change', onChangeAthleteField);
+  document.addEventListener('DOMContentLoaded', () => {
+
+    const collapseCharts = document.querySelectorAll('.collapse-chart');
+
+    const onShowCollapseChart = collapseChart => {
+      const chartBody = collapseChart.querySelector('.card-body');
+      if(!chartBody.childElementCount) {
+        const chartType = collapseChart.getAttribute('data-type');
+        const chartId = collapseChart.getAttribute('data-id');
+        const chartUrl = (chartType == 'body-index') ? '@chart("evolucao-atleta-ajax-indices-corporais")' : '@chart("evolucao-atleta-ajax-testes-fisicos")';
+        const chart = new Chartisan({
+          el: chartBody,
+          url: `${chartUrl}?athlete={{ $athlete->id }}&id=${chartId}`
         });
-      }());
-    </script>
-  </body>
-</html>
+      }
+    };
+
+    const setCollapseEvent = () => {
+      if(typeof $ !== 'undefined') {
+        collapseCharts.forEach(collapseChart => {
+          $(collapseChart).on('show.bs.collapse', () => onShowCollapseChart(collapseChart));
+        });
+      } else {
+        setTimeout(setCollapseEvent, 500);
+      }
+    };
+
+    setCollapseEvent();
+
+  });
+
+}(document));
+</script>
+@endsection
