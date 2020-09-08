@@ -11,6 +11,9 @@
 <body>
     <div class="p-3 text-center">
         <h1>@yield('title')</h1>
+        @hasSection('subtitle')
+            <h5>@yield('subtitle')</h5>
+        @endif
         @yield('content')
     </div>
 </body>
