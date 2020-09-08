@@ -62,44 +62,69 @@ class SponsorTest extends TestCase
         //     ]);
     }
 
-        /** @test */
-        public function sponsor_can_be_updated()
-        {
-            $sponsor = $this->sponsor()->make();
-    
-            $this->actingAs($this->user()->create())
-                ->post(route('patrocinadores.store'), $sponsor->toArray());
-    
-            $sponsor = Sponsor::first();
-    
-            $newSponsor = [
-                'cnpj' =>'32.185.346/0001-06',
-                'name' => 'New Sponsor',
-                'email' => 'outro@email.com'
-            ];
-    
-            $response = $this->put('patrocinadores/'.$sponsor->id, $newSponsor);
-    
-            $this->assertEquals('32.185.346/0001-06', Sponsor::first()->cnpj);
-            $this->assertEquals('New Sponsor', Sponsor::first()->name);
-            $this->assertEquals('outro@email.com', Sponsor::first()->email);
-        }
+    /** @test */
+    public function it_should_show_a_move_search()
+    {
+        $this->withoutExceptionHandling();
+        $sponsor = $this->sponsor()->make();
 
-        /** @test */
-        public function sponsor_can_be_deleted()
-        {
-            $sponsor = $this->sponsor()->make();
-    
-            $this->actingAs($this->user()->create())
-                ->post(route('patrocinadores.store'), $sponsor->toArray());
-    
-            $sponsor = Sponsor::first();
-    
-            $response = $this->delete('patrocinadores/'.$sponsor->id);
-    
-            $this->assertCount(0, Sponsor::all());
-        }
-    
+        $this->actingAs($this->user()->create())
+            ->post(route('patrocinadores.store'), $sponsor->toArray());
+
+        $sponsor = Sponsor::first();
+
+        $this->assertEquals($sponsor->id, Sponsor::first()->id);
+    }
+
+    /** @test */
+    public function it_should_list_allSponsors()
+    {
+        Carbon::setTestNow(now());
+
+        $this->actingAs($this->user()->create());
+
+        $response = $this->get('/patrocinadores')
+            ->assertOk();
+    }
+
+    /** @test */
+    public function sponsor_can_be_updated()
+    {
+        $sponsor = $this->sponsor()->make();
+
+        $this->actingAs($this->user()->create())
+            ->post(route('patrocinadores.store'), $sponsor->toArray());
+
+        $sponsor = Sponsor::first();
+
+        $newSponsor = [
+            'cnpj' => '32.185.346/0001-06',
+            'name' => 'New Sponsor',
+            'email' => 'outro@email.com'
+        ];
+
+        $response = $this->put('patrocinadores/' . $sponsor->id, $newSponsor);
+
+        $this->assertEquals('32.185.346/0001-06', Sponsor::first()->cnpj);
+        $this->assertEquals('New Sponsor', Sponsor::first()->name);
+        $this->assertEquals('outro@email.com', Sponsor::first()->email);
+    }
+
+    /** @test */
+    public function sponsor_can_be_deleted()
+    {
+        $sponsor = $this->sponsor()->make();
+
+        $this->actingAs($this->user()->create())
+            ->post(route('patrocinadores.store'), $sponsor->toArray());
+
+        $sponsor = Sponsor::first();
+
+        $response = $this->delete('patrocinadores/' . $sponsor->id);
+
+        $this->assertCount(0, Sponsor::all());
+    }
+
 
 
     // public function check_if_sponsor_dbcolumns_is_correct()

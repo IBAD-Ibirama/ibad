@@ -82,17 +82,33 @@ class MovesTest extends TestCase
     /** @test */
     public function it_should_show_a_move_search()
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         $move = $this->moves()->make();
 
         $this->actingAs($this->user()->create())
             ->post(route('movimentacoes.store'), $move->toArray());
 
-        $move = Moves::first();
+        $show = Moves::first();
+        $response = $this->actingAs($this->user()->create())
+            ->get('movimentacoes/show/' . $show->id);
+        // dd($response->description);
 
-        // $response = $this->get('movimentacoes/show/' . $move->id);
+        // $this->assertEquals($move->description, $response->description);
+        // $this->assertEquals($move->date, Moves::first()->date);
+        // $this->assertEquals($move->value, Moves::first()->value);
+        // $this->assertEquals($move->type, Moves::first()->type);
+        // $this->assertEquals($move->specification, Moves::first()->specification);
+    }
 
-        // $this->assertEquals($move->id, Moves::first()->id);
+    /** @test */
+    public function it_should_list_allMoves()
+    {
+        Carbon::setTestNow(now());
+
+        $this->actingAs($this->user()->create());
+
+        $response = $this->get('/movimentacoes')
+            ->assertOk();
     }
 
     /** @test */

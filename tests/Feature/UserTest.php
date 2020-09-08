@@ -64,6 +64,20 @@ class UserTest extends TestCase
     }
 
     /** @test */
+    public function it_should_show_a_move_search()
+    {
+        // $this->withoutExceptionHandling();
+        $user = $this->user()->make();
+
+        $this->actingAs($this->user()->create())
+            ->post(route('usuarios.store'), $user->toArray());
+
+        $user = User::first();
+
+        // $this->assertEquals($user->id, User::first()->id);
+    }
+
+    /** @test */
     public function user_can_be_updated()
     {
         $user = $this->user()->make();
@@ -75,7 +89,7 @@ class UserTest extends TestCase
 
         $newuser = $this->user()->make();
 
-        $response = $this->put('usuarios/'.$user->id, $newuser->toArray());
+        $response = $this->put('usuarios/' . $user->id, $newuser->toArray());
 
         //NÃO FUNCIONA
         // $this->assertEquals($newuser->name, User::first()->name);
@@ -99,24 +113,13 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function it_should_list_posts()
+    public function it_should_list_allUsers()
     {
         Carbon::setTestNow(now());
 
-        $user = factory(User::class)->create();
-        $users = factory(User::class)->make();
+        $this->actingAs($this->user()->create());
 
-        $response = $this->actingAs($user)
-            ->post(route('usuarios.store'), $users->toArray());
-
-        //     $response
-        //     ->assertJson([
-        //         'success' => true
-        //         // 'data' => true,
-        //     ]);
-        // $this->get(route('usuarios.index'))
-        //     ->assertJsonStructure([
-        //         '*' => [ 'name', 'email', 'email_verified_at', 'password','remember_token'],
-        //     ]);
+        $response = $this->get('/usuarios')
+            ->assertOk();
     }
 }
