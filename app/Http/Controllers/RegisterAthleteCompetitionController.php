@@ -27,6 +27,9 @@ class RegisterAthleteCompetitionController extends Controller
             ->orderBy('competition_participation.created_at', 'desc')
             ->get();
 
+        foreach($athletesCompetitions as $registro){
+                $registro->date=date('d/m/Y', strtotime($registro->date));
+        }
         return view('atletas.registerAthleteCompetitition', compact('athletesCompetitions'));
     }
 

@@ -21,6 +21,10 @@ class CompetitionController extends Controller
      */
     public function index() {
         $aRegistros = Competitions::all();
+        foreach($aRegistros as $registro){
+            $registro->date=date('d/m/Y', strtotime($registro->date));
+        }
+        
         return view('competicoes.index', compact('aRegistros'));
     }
 
@@ -46,13 +50,13 @@ class CompetitionController extends Controller
     public function create(Request $request, Competitions $competition) {
         $request->validate([
             'date' => 'required',
-            'coordinator' => 'required',
+            'descricao' => 'required',
             'competition_level' => 'required',
             'place' => 'required'
         ] );
         $competition->date              = $request->date;
         $competition->place             = $request->place;
-        $competition->coordinator       = $request->coordinator;
+        $competition->descricao       = $request->descricao;
         $competition->competition_level = $request->competition_level;
 
         if ($competition->save()) {
@@ -76,14 +80,14 @@ class CompetitionController extends Controller
         $request->validate([
             'id'=> 'required',
             'date' => 'required',
-            'coordinator' => 'required',
+            'descricao' => 'required',
             'competition_level' => 'required',
             'place' => 'required'
         ] );
         $competition=Competitions::find($request->id);
         $competition->date              = $request->date;
         $competition->place             = $request->place;
-        $competition->coordinator       = $request->coordinator;
+        $competition->descricao       = $request->descricao;
         $competition->competition_level = $request->competition_level;
         if(!$competition->save()) {
             dd('Erro ao Alterar');

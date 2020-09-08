@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\URL;
     }
 
 </style>
-<h1>Consulta index competicao</h1>
+<h1>Consulta competição</h1>
 <button id="btn-novo">Novo</button>
 <div id="root"></div>
 <script>
@@ -40,7 +40,7 @@ use Illuminate\Support\Facades\URL;
 
     function criaTabela() {
         let table = new Tabela();
-        table.setColumns(['Data', 'Local', 'Coordenador', 'Nível competição', 'Opções']);
+        table.setColumns(['Data', 'Local', 'Descrição', 'Nível competição', 'Opções']);
         table.createTable();
         root.append(table.getTable());
 

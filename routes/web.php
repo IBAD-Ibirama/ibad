@@ -34,3 +34,6 @@ Route::get('competicao/remove/{id}' , 'CompetitionController@destroy');
 Route::get('atletas/registerAthleteCompetition'          , 'registerAthleteCompetitionController@index');
 Route::get('atletas/registro'                            , 'registerAthleteCompetitionController@formCadastrar');
 Route::post('atletas/registerAthleteCompetition/register', 'registerAthleteCompetitionController@store');
+
+//Frequencia Atleta
+Route::get('frequencia','FrequencyAthlete@index');

@@ -17,7 +17,7 @@ class CreateCompetitionsTable extends Migration
             $table->id();
             $table->dateTime('date');
             $table->string('place');
-            $table->string('coordinator');
+            $table->string('descricao');
             $table->smallInteger('competition_level');
             $table->timestamps();
         });

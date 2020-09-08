@@ -19,9 +19,9 @@
         <small class="form-text text-muted">Data da realização da competição</small>
     </div>
     <div class="form-group">
-        <label for="coordinator">Coordenador</label>
-        <input type="text" class="form-control" id="coordinator" name="coordinator" placeholder="Fulano da silva" required>
-        <small class="form-text text-muted">Nome do coordenador da competição</small>
+        <label for="descricao">Descrição</label>
+        <textarea class="form-control" id="descricao" name="descricao" placeholder="Informe a Descrição" required></textarea>
+        <small class="form-text text-muted">Informe a descrição da competição</small>
     </div>
     <div class="form-group">
         <label for="competition_level">Nivel da Competicao</label>

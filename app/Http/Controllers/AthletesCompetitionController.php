@@ -20,6 +20,10 @@ class AthletesCompetitionController extends Controller
             ->join('modalities', 'modalities.id', '=', 'competition_participation.modalities_id')
             ->where('athletes_id', $id)
             ->get();
+            
+        foreach($participacoesAtleta as $registro){
+            $registro->date=date('d/m/Y', strtotime($registro->date));
+        }
         return view('atletas.desempenho', compact('participacoesAtleta'));
     }
 }
