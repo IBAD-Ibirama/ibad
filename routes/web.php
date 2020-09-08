@@ -11,7 +11,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/dashboard', 'HomeController@index')->name('home');
-Route::get('/moves-report', 'MovesReportController@create');
+Route::get('/relatorio-movimentacoes', 'MovesReportController@create');
 
 Route::middleware('auth')->group(function () {
     Route::resource('usuarios', 'UserController');
