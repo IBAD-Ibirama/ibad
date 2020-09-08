@@ -15,7 +15,7 @@ class CreateAthleteEvaluationPhysicalTestTable extends Migration
     {
         Schema::create('athlete_evaluation_physical_test', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('athlete_evaluation_id')->constrained();
+            $table->foreignId('athlete_evaluation_id')->constrained()->onDelete('cascade');
             $table->foreignId('physical_test_id')->constrained();
             $table->double('value');
             $table->timestamps();

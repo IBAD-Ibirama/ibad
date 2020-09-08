@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Athlete extends Model
 {
-    
     /**
      * Athlete's fields.
      * 
@@ -23,5 +22,4 @@ class Athlete extends Model
     {
         return $this->hasMany(AthleteEvaluation::class);
     }
-
 }

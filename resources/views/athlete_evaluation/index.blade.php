@@ -1,95 +1,47 @@
-<style>
-    * {
-        font-family: Arial, Helvetica, sans-serif;
-    }
-    a{
-        border: 1px solid #cccc;
-        padding: 10px;
-        border-radius: 5px;
-        color: #000;
-        text-decoration: none;
-    }
-    a:hover {
-        background: #cccc;
-    }
-    tr:nth-child(even) {
-        background-color: #f0f0f0;
-    }
-    #container{
-        margin-top: 50px;
-    }
-    #tabela{
-        border-collapse: collapse;
-        text-align: center;
-    }
-    th{
-        background: #cccc;
-    }
-    td, th{
-        border: 1px solid #cccc;
-        padding: 5px;
-        min-width: 100px;
-    }
-    #tabelaContainer{
-        margin-top: 30px;
-    }
-</style>
+@extends('layouts.master')
 
-<div id="container">
-    <a href="{{ route('avaliacao_atleta.create') }}">Novo</a>
-</div>
+@section('title', 'Consultar Avaliações')
+@section('subtitle', $athlete->name)
 
-<div id="tabelaContainer">
-    <table id="tabela">
-        <theader>
-            <tr>
-                <th width="20%">
-                    Atleta
-                </th>
-                <th width="10%">
-                    Data
-                </th>
-                <th width="35%">
-                    Testes Físicos
-                </th>
-                <th width="35%">
-                    Índices Corporais
-                </th>
-            </tr>
-        </theader>
+@section('content')
+<div class="text-left">
+    <a class="btn btn-secondary mb-1" href={{ route('index') }} role="button">Início</a>
+    <a class="btn btn-primary mb-1" href={{ route('athletes.index') }} role="button">Voltar para Atletas</a>
+    <a class="btn btn-success mb-1" href={{ route('evaluations.create', compact('athlete')) }} role="button">Cadastrar</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col" width="10%">#</th>
+            <th scope="col" width="30%">Data da Avaliação</th>
+            <th scope="col" width="20%">Testes Físicos</th>
+            <th scope="col" width="20%">Índices Corporais</th>
+            <th scope="col" width="20%">Ações</th>
+        </tr>
+        </thead>
         <tbody>
-            @foreach ($athleteEvaluations as $athleteEvaluation)
+            @if (count($evaluations) > 0)
+                @foreach ($evaluations as $evaluation)
+                    <tr>
+                        <th scope="row">{{ $evaluation->id }}</th>
+                        <td>{{ date('d/m/Y', strtotime($evaluation->realization_date)) }}</td>
+                        <td>{{ $evaluation->physicalTests()->count() }}</td>
+                        <td>{{ $evaluation->bodyIndexes()->count() }}</td>
+                        <td>
+                            <a class="btn btn-warning" href={{ route('evaluations.edit', compact('athlete', 'evaluation')) }} role="button">Alterar</a>
+                            <button class="btn btn-danger" onclick="document.getElementById('delete_{{ $evaluation->id }}').submit()">Excluir</button>
+                            <form id="delete_{{ $evaluation->id }}" action={{ route('evaluations.destroy', compact('evaluation')) }} method="POST">
+                                @csrf
+                                @method('DELETE')
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            @else
                 <tr>
-                    <td>
-                        {{ $athleteEvaluation->athlete->name }}
-                    </td>
-                    <td>
-                        {{ $athleteEvaluation->realization_date }}
-                    </td>
-                    <td>
-                        @if ($athleteEvaluation->physicalTests()->count() > 0)
-                            @foreach ($athleteEvaluation->physicalTests as $athleteEvaluationPhysicalTest)
-                                <div>
-                                    {{ $athleteEvaluationPhysicalTest->physicalTest->name }}: {{ $athleteEvaluationPhysicalTest->value }}
-                                </div>
-                            @endforeach
-                        @else
-                            Não informado
-                        @endif
-                    </td>
-                    <td>
-                        @if ($athleteEvaluation->bodyIndexes()->count() > 0) 
-                            @foreach ($athleteEvaluation->bodyIndexes as $athleteEvaluationBodyIndex)
-                                <div>
-                                    {{ $athleteEvaluationBodyIndex->bodyIndex->name }}: {{ $athleteEvaluationBodyIndex->value }} <br/>
-                                </div>
-                            @endforeach
-                        @else
-                            Não informado                            
-                        @endif
-                    </td>
+                    <td colspan="5">Nenhuma avaliação cadastrada</td>
                 </tr>
-            @endforeach
+            @endif
         </tbody>
     </table>
 </div>
+@endsection
