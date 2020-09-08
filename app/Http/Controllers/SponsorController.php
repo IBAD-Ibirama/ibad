@@ -55,7 +55,7 @@ class SponsorController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update($id, Request $request)
     {
         $sponsor = Sponsor::find($id);
 

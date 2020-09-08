@@ -27,7 +27,7 @@ class MovesController extends Controller
         $request->validate([
             'description' => 'required',
             'date' => 'required',
-            'value' => 'required',
+            'value' => 'required|min:0',
             'type' => 'required',
             'specification' => 'required'
         ]);
