@@ -45,37 +45,37 @@ class AthleteController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'dataNasc' => 'required',
-            'sexo' => 'required',
+            'birthdate' => 'required',
+            'gender' => 'required',
             'rg' => 'required|min:9',
-            'fone' => 'required|min:14',
-            'periodo' => 'required',
-            'serie' => 'required',
-            'problemaSaude' => 'required',
-            'medicacao' => 'required',
-            'tamanhoUniforme' => 'required',
-            'tipoSangue' => 'required',
-            'escola' => 'required'
+            'telephone' => 'required|min:14',
+            'shift' => 'required',
+            'grade' => 'required',
+            'health_problem' => 'required',
+            'medication' => 'required',
+            'cloth_size' => 'required',
+            'blood_type' => 'required',
+            'school' => 'required'
         ]);
 
         $athlete = new Athlete([
-            'dataNasc' => $request->dataNasc,
-            'sexo' => $request->sexo,
+            'birthdate' => $request->birthdate,
+            'gender' => $request->gender,
             'rg' => $request->rg,
-            'fone' => $request->fone,
-            'periodo' => $request->periodo,
-            'serie' => $request->serie,
-            'problemaSaude' => $request->problemaSaude,
-            'medicacao' => $request->medicacao,
-            'tamanhoUniforme' => $request->tamanhoUniforme,
-            'tipoSangue' => $request->tipoSangue,
-            'escola' => $request->escola,
+            'telephone' => $request->telephone,
+            'shift' => $request->shift,
+            'grade' => $request->grade,
+            'health_problem' => $request->health_problem,
+            'medication' => $request->medication,
+            'cloth_size' => $request->cloth_size,
+            'blood_type' => $request->blood_type,
+            'school' => $request->school,
             'user_id' => $request->usuario
         ]);
         $athlete->save();
-        
-        if($request->imagem){
-            $this->saveImages($request->imagem,$athlete->id);
+
+        if ($request->imagem) {
+            $this->saveImages($request->imagem, $athlete->id);
         }
 
         return $this->index()->with([
@@ -108,6 +108,9 @@ class AthleteController extends Controller
     {
         $athlete = Athlete::find($id);
         $users = User::all();
+
+        $athlete->blood_type = str_replace(' ', '', $athlete->blood_type);
+
         return view('athletes.edit')->with([
             'athlete' => $athlete,
             'users' => $users
@@ -126,38 +129,38 @@ class AthleteController extends Controller
         $athlete = Athlete::find($id);
 
         $request->validate([
-            'dataNasc' => 'required',
-            'sexo' => 'required',
+            'birthdate' => 'required',
+            'gender' => 'required',
             'rg' => 'required|min:9',
-            'fone' => 'required|min:14',
-            'periodo' => 'required',
-            'serie' => 'required',
-            'problemaSaude' => 'required',
-            'medicacao' => 'required',
-            'tamanhoUniforme' => 'required',
-            'tipoSangue' => 'required',
-            'escola' => 'required'
+            'telephone' => 'required|min:14',
+            'shift' => 'required',
+            'grade' => 'required',
+            'health_problem' => 'required',
+            'medication' => 'required',
+            'cloth_size' => 'required',
+            'blood_type' => 'required',
+            'school' => 'required'
         ]);
 
 
 
         $athlete->update([
-            'dataNasc' => $request->dataNasc,
-            'sexo' => $request->sexo,
+            'birthdate' => $request->birthdate,
+            'gender' => $request->gender,
             'rg' => $request->rg,
-            'fone' => $request->fone,
-            'periodo' => $request->periodo,
-            'serie' => $request->serie,
-            'problemaSaude' => $request->problemaSaude,
-            'medicacao' => $request->medicacao,
-            'tamanhoUniforme' => $request->tamanhoUniforme,
-            'tipoSangue' => $request->tipoSangue,
-            'escola' => $request->escola,
+            'telephone' => $request->telephone,
+            'shift' => $request->shift,
+            'grade' => $request->grade,
+            'health_problem' => $request->health_problem,
+            'medication' => $request->medication,
+            'cloth_size' => $request->cloth_size,
+            'blood_type' => $request->blood_type,
+            'school' => $request->school,
             'user_id' => $request->usuario
         ]);
 
-        if($request->imagem){
-            $this->saveImages($request->imagem,$athlete->id);
+        if ($request->imagem) {
+            $this->saveImages($request->imagem, $athlete->id);
         }
 
         return $this->index()->with([
@@ -178,45 +181,47 @@ class AthleteController extends Controller
         $athlete->delete();
 
         return $this->index()->with([
-            'message_success'=> "O atleta foi excluido" 
+            'message_success' => "O atleta foi excluido"
         ]);
     }
 
-    public function saveImages($imageInput, $athlete_id){
+    public function saveImages($imageInput, $athlete_id)
+    {
+
         $image = Image::make($imageInput);
-            if($image->width() > $image->height()){ //Landscape
-                $image->widen(1200)
+        if ($image->width() > $image->height()) { //Landscape
+            $image->widen(1200)
                 ->save(public_path() . "/images/athletes/" . $athlete_id . "_large.jpg")
                 ->widen(400)->pixelate(12)
                 ->save(public_path() . "/images/athletes/" . $athlete_id . "_pixelated.jpg");
-                $image = Image::make($imageInput);
-                $image->widen(60)
+            $image = Image::make($imageInput);
+            $image->widen(60)
                 ->save(public_path() . "/images/athletes/" . $athlete_id . "_thumb.jpg");
-            }else{ //Portrait
-                $image->heighten(900)
+        } else { //Portrait
+            $image->heighten(900)
                 ->save(public_path() . "/images/athletes/" . $athlete_id . "_large.jpg")
                 ->heighten(400)->pixelate(12)
                 ->save(public_path() . "/images/athletes/" . $athlete_id . "_pixelated.jpg");
-                $image = Image::make($imageInput);
-                $image->heighten(60)
+            $image = Image::make($imageInput);
+            $image->heighten(60)
                 ->save(public_path() . "/images/athletes/" . $athlete_id . "_thumb.jpg");
-            }
+        }
     }
 
-    public function deleteImages($athlete_id){
-        if(file_exists(public_path() . "/images/athletes/" . $athlete_id . "_large.jpg")){
+    public function deleteImages($athlete_id)
+    {
+        if (file_exists(public_path() . "/images/athletes/" . $athlete_id . "_large.jpg")) {
             unlink(public_path() . "/images/athletes/" . $athlete_id . "_large.jpg");
         }
-        if(file_exists(public_path() . "/images/athletes/" . $athlete_id . "_thumb.jpg")){
+        if (file_exists(public_path() . "/images/athletes/" . $athlete_id . "_thumb.jpg")) {
             unlink(public_path() . "/images/athletes/" . $athlete_id . "_thumb.jpg");
         }
-        if(file_exists(public_path() . "/images/athletes/" . $athlete_id . "_pixelated.jpg")){
+        if (file_exists(public_path() . "/images/athletes/" . $athlete_id . "_pixelated.jpg")) {
             unlink(public_path() . "/images/athletes/" . $athlete_id . "_pixelated.jpg");
         }
 
         return back()->with([
-            'message_success'=> "The image was deleted."
+            'message_success' => "A imagem foi apagada."
         ]);
-
     }
 }

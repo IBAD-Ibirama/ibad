@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Athlete extends Model
 {
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo('App\User');
     }
     protected $fillable = [
-        'dataNasc', 'sexo', 'rg', 'fone', 'periodo', 'serie', 'problemaSaude', 'medicacao', 'tamanhoUniforme', 'tipoSangue', 'imagem', 'escola', 'user_id'
+        'birthdate', 'gender', 'rg', 'telephone', 'shift', 'grade', 'health_problem', 'medication', 'cloth_size', 'blood_type', 'imagem', 'school', 'user_id'
     ];
 }

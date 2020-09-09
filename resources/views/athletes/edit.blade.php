@@ -16,86 +16,86 @@
             @csrf
             @method('PUT')
             <div class="form-group">
-            <label for="user">Usuário</label>
-            <select name="usuario" id="usuario" class="form-control">
-              @foreach($users as $user)
+              <label for="user">Usuário</label>
+              <select name="usuario" id="usuario" class="form-control">
+                @foreach($users as $user)
                 <option value="{{$user->id}}">{{$user->name}}</option>
-              @endforeach
+                @endforeach
               </select>
             </div>
             <div class="form-group">
-              <label for="dataNasc">Data de Nascimento</label>
-              <input type="date" class="form-control{{$errors->has('dataNasc') ? ' border-danger' : '' }}" id="dataNasc" name="dataNasc" value="{{$athlete->dataNasc ?? old('dataNasc')}}">
-              <small class="form-text text-danger">{!! $errors->first('dataNasc') !!}</small>
+              <label for="birthdate">Data de Nascimento</label>
+              <input type="date" class="form-control{{$errors->has('birthdate') ? ' border-danger' : '' }}" id="birthdate" name="birthdate" value="{{$athlete->birthdate ?? old('birthdate')}}">
+              <small class="form-text text-danger">{!! $errors->first('birthdate') !!}</small>
             </div>
             <div class="form-group">
-              <label for="sexo">Sexo</label>
-              <select name="sexo" id="sexo" class="form-control">
+              <label for="gender">Sexo</label>
+              <select name="gender" id="gender" class="form-control">
                 <option value="M">Masculino</option>
                 <option value="F">Feminino</option>
                 <option value="O">Outros</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="rg">Rg</label>
+              <label for="rg">RG</label>
               <input type="text" class="form-control{{$errors->has('rg') ? ' border-danger' : '' }}" id="rg" name="rg" value="{{$athlete->rg ?? old('rg')}}">
               <small class="form-text text-danger">{!! $errors->first('rg') !!}</small>
             </div>
             <div class="form-group">
-              <label for="fone">Fone</label>
-              <input type="text" class="form-control{{$errors->has('fone') ? ' border-danger' : '' }}" id="fone" name="fone" value="{{$athlete->fone ?? old('fone')}}">
-              <small class="form-text text-danger">{!! $errors->first('fone') !!}</small>
+              <label for="telephone">Telefone</label>
+              <input type="text" class="form-control{{$errors->has('telephone') ? ' border-danger' : '' }}" id="telephone" name="telephone" value="{{$athlete->telephone ?? old('telephone')}}">
+              <small class="form-text text-danger">{!! $errors->first('telephone') !!}</small>
             </div>
             <div class="form-group">
-              <label for="periodo">Periodo</label>
-              <select name="periodo" id="periodo" class="form-control">
-                <option value="M">Matutino</option>
-                <option value="V">Vespertino</option>
-                <option value="N">Noturno</option>
+              <label for="shift">Período</label>
+              <select name="shift" id="shift" class="form-control">
+                <option value="M" {{ $athlete->shift == 'M' ? 'selected' : '' }}>Matutino</option>
+                <option value="V" {{ $athlete->shift == 'V' ? 'selected' : '' }}>Vespertino</option>
+                <option value="N" {{ $athlete->shift == 'N' ? 'selected' : '' }}>Noturno</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="serie">Serie</label>
-              <input type="text" class="form-control{{$errors->has('serie') ? ' border-danger' : '' }}" id="serie" name="serie" value="{{$athlete->serie ?? old('serie')}}">
-              <small class="form-text text-danger">{!! $errors->first('serie') !!}</small>
+              <label for="grade">Série</label>
+              <input type="text" class="form-control{{$errors->has('grade') ? ' border-danger' : '' }}" id="grade" name="grade" value="{{$athlete->grade ?? old('grade')}}">
+              <small class="form-text text-danger">{!! $errors->first('grade') !!}</small>
             </div>
             <div class="form-group">
-              <label for="problemaSaude">Problema de saude</label>
-              <input type="text" class="form-control{{$errors->has('problemaSaude') ? ' border-danger' : '' }}" id="problemaSaude" name="problemaSaude" value="{{$athlete->problemaSaude ?? old('problemaSaude')}}">
-              <small class="form-text text-danger">{!! $errors->first('problemaSaude') !!}</small>
+              <label for="health_problem">Problema de Saúde</label>
+              <input type="text" class="form-control{{$errors->has('health_problem') ? ' border-danger' : '' }}" id="health_problem" name="health_problem" value="{{$athlete->health_problem ?? old('health_problem')}}">
+              <small class="form-text text-danger">{!! $errors->first('health_problem') !!}</small>
             </div>
             <div class="form-group">
-              <label for="medicacao">Medicacao</label>
-              <input type="text" class="form-control{{$errors->has('medicacao') ? ' border-danger' : '' }}" id="medicacao" name="medicacao" value="{{$athlete->medicacao ?? old('medicacao')}}">
-              <small class="form-text text-danger">{!! $errors->first('medicacao') !!}</small>
+              <label for="medication">Medicação</label>
+              <input type="text" class="form-control{{$errors->has('medication') ? ' border-danger' : '' }}" id="medication" name="medication" value="{{$athlete->medication ?? old('medication')}}">
+              <small class="form-text text-danger">{!! $errors->first('medication') !!}</small>
             </div>
             <div class="form-group">
-              <label for="tamanhoUniforme">Tamanho uniforme</label>
-              <select name="tamanhoUniforme" id="tamanhoUniforme" class="form-control">
-                <option value="PP">PP</option>
-                <option value="P">P</option>
-                <option value="M">M</option>
-                <option value="G">G</option>
-                <option value="GG">GG</option>
+              <label for="cloth_size">Tamanho do Uniforme</label>
+              <select name="cloth_size" id="cloth_size" class="form-control">
+                <option value="PP" {{ $athlete->cloth_size == 'PP' ? 'selected' : '' }}>PP</option>
+                <option value="P" {{ $athlete->cloth_size == 'P' ? 'selected' : '' }}>P</option>
+                <option value="M" {{ $athlete->cloth_size == 'M' ? 'selected' : '' }}>M</option>
+                <option value="G" {{ $athlete->cloth_size == 'G' ? 'selected' : '' }}>G</option>
+                <option value="GG" {{ $athlete->cloth_size == 'GG' ? 'selected' : '' }}>GG</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="tipoSangue">Tipo Sanguineo</label>
-              <select name="tipoSangue" id="tipoSangue" class="form-control">
-                <option value="A+">A+</option>
-                <option value="A-">A-</option>
-                <option value="B+">B+</option>
-                <option value="AB+">AB+</option>
-                <option value="AB-">AB-</option>
-                <option value="O+">O+</option>
-                <option value="O">O</option>
-                <option value="O-">O-</option>
+              <label for="blood_type">Tipo Sanguíneo</label>
+              <select name="blood_type" id="blood_type" class="form-control">
+                <option value="A+" {{ $athlete->blood_type === 'A+' ? 'selected' : '' }}>A+</option>
+                <option value="A-" {{ $athlete->blood_type === 'A-' ? 'selected' : '' }}>A-</option>
+                <option value="B+" {{ $athlete->blood_type === 'B+' ? 'selected' : '' }}>B+</option>
+                <option value="AB+" {{ $athlete->blood_type === 'AB+' ? 'selected' : '' }}>AB+</option>
+                <option value="AB-" {{ $athlete->blood_type === 'AB-' ? 'selected' : '' }}>AB-</option>
+                <option value="O+" {{ $athlete->blood_type === 'O+' ? 'selected' : '' }}>O+</option>
+                <option value="O" {{ $athlete->blood_type === 'O' ? 'selected' : '' }}>O</option>
+                <option value="O-" {{ $athlete->blood_type === 'O-' ? 'selected' : '' }}>O-</option>
               </select>
             </div>
             @if(file_exists('images/athletes/'. $athlete->id . '_large.jpg'))
-            <div class="mb-2">             
-              <img style="max-width: 400px; max-height: 300px;" src="/images/athletes/{{$athlete->id}}_large.jpg" alt="">                              
-              <a class="btn btn-outline-danger float-right" href="/delete-images/athlete/{{$athlete->id}}">Delete image</a>
+            <div class="mb-2">
+              <img style="max-width: 400px; max-height: 300px;" src="/images/athletes/{{$athlete->id}}_large.jpg" alt="">
+              <a class="btn btn-outline-danger float-right" href="/delete-images/athlete/{{$athlete->id}}">Apagar imagem</a>
             </div>
             @endif
             <div class="form-group">
@@ -104,9 +104,9 @@
               <small class="form-text text-danger">{!! $errors->first('imagem') !!}</small>
             </div>
             <div class="form-group">
-              <label for="escola">Escola</label>
-              <input type="text" class="form-control{{$errors->has('escola') ? ' border-danger' : '' }}" id="escola" name="escola" value="{{$athlete->escola ?? old('escola')}}">
-              <small class="form-text text-danger">{!! $errors->first('escola') !!}</small>
+              <label for="school">Escola</label>
+              <input type="text" class="form-control{{$errors->has('school') ? ' border-danger' : '' }}" id="school" name="school" value="{{$athlete->school ?? old('school')}}">
+              <small class="form-text text-danger">{!! $errors->first('school') !!}</small>
             </div>
             <input class="btn btn-primary mt-4" type="submit" value="Atualizar atleta">
           </form>
@@ -120,4 +120,14 @@
     </div>
   </div>
 </div>
+@endsection
+
+@section('script')
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" defer></script>
+<script>
+  $(document).ready(function() {
+    $('#telephone').mask('(00)00000-0000');
+    $('#rg').mask('0.000.000');
+  });
+</script>
 @endsection

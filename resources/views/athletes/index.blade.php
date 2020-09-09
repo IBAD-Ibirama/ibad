@@ -15,11 +15,11 @@
           <ul class="list-group">
             @foreach($athletes as $athlete)
             <li class="list-group-item">
-            @if(file_exists('images/athletes/'. $athlete->id . '_thumb.jpg'))
+              @if(file_exists('images/athletes/'. $athlete->id . '_thumb.jpg'))
               <a title="Show Details" href="/athlete/{{ $athlete->id }}">
                 <img src="/images/athletes/{{$athlete->id}}_thumb.jpg" alt="User Thumb">
               </a>
-            @endif
+              @endif
               <a href="/atletas/{{$athlete->id}}" title="Mostrar detalhes">{{$athlete->user->name}}</a>
 
               <div class="float-right flex">

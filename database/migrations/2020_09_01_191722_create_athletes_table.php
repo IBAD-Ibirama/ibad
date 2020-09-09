@@ -15,17 +15,17 @@ class CreateAthletesTable extends Migration
     {
         Schema::create('athletes', function (Blueprint $table) {
             $table->id();
-            $table->date('dataNasc');
-            $table->char('sexo',1);
+            $table->date('birthdate');
+            $table->char('gender', 1);
             $table->string('rg');
-            $table->string('fone');
-            $table->char('periodo',1);
-            $table->string('serie');
-            $table->string('problemaSaude');
-            $table->string('medicacao');
-            $table->char('tamanhoUniforme',2); //Não sei muito sobre roupa, mas acredito que vá até GG
-            $table->char('tipoSangue',5); //Apenas segui conforme a diagramação
-            $table->string('escola');
+            $table->string('telephone');
+            $table->char('shift', 1);
+            $table->string('grade');
+            $table->string('health_problem');
+            $table->string('medication');
+            $table->char('cloth_size', 2);
+            $table->char('blood_type', 5);
+            $table->string('school');
             $table->timestamps();
         });
     }

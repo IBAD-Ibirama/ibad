@@ -15,62 +15,62 @@
           <form autocomplete="off" action="/atletas" method="post" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-            <label for="user">Usuário</label>
-            <select name="usuario" id="usuario" class="form-control">
-              @foreach($users as $user)
+              <label for="user">Usuário</label>
+              <select name="usuario" id="usuario" class="form-control">
+                @foreach($users as $user)
                 <option value="{{$user->id}}">{{$user->name}}</option>
-              @endforeach
+                @endforeach
               </select>
             </div>
             <div class="form-group">
-              <label for="dataNasc">Data de Nascimento</label>
-              <input type="date" class="form-control{{$errors->has('dataNasc') ? ' border-danger' : '' }}" id="dataNasc" name="dataNasc" value="{{old('dataNasc')}}">
-              <small class="form-text text-danger">{!! $errors->first('dataNasc') !!}</small>
+              <label for="birthdate">Data de Nascimento</label>
+              <input type="date" class="form-control{{$errors->has('birthdate') ? ' border-danger' : '' }}" id="birthdate" name="birthdate" value="{{old('birthdate')}}">
+              <small class="form-text text-danger">{!! $errors->first('birthdate') !!}</small>
             </div>
             <div class="form-group">
-              <label for="sexo">Sexo</label>
-              <select name="sexo" id="sexo" class="form-control">
+              <label for="gender">Sexo</label>
+              <select name="gender" id="gender" class="form-control">
                 <option value="M">Masculino</option>
                 <option value="F">Feminino</option>
                 <option value="O">Outros</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="rg">Rg</label>
+              <label for="rg">RG</label>
               <input type="text" class="form-control{{$errors->has('rg') ? ' border-danger' : '' }}" id="rg" name="rg" value="">
               <small class="form-text text-danger">{!! $errors->first('rg') !!}</small>
             </div>
             <div class="form-group">
-              <label for="fone">Fone</label>
-              <input type="text" class="form-control{{$errors->has('fone') ? ' border-danger' : '' }}" id="fone" name="fone" value="">
-              <small class="form-text text-danger">{!! $errors->first('fone') !!}</small>
+              <label for="telephone">Telefone</label>
+              <input type="text" class="form-control{{$errors->has('telephone') ? ' border-danger' : '' }}" id="telephone" name="telephone" value="">
+              <small class="form-text text-danger">{!! $errors->first('telephone') !!}</small>
             </div>
             <div class="form-group">
-              <label for="periodo">Periodo</label>
-              <select name="periodo" id="periodo" class="form-control">
+              <label for="shift">Período</label>
+              <select name="shift" id="shift" class="form-control">
                 <option value="M">Matutino</option>
                 <option value="V">Vespertino</option>
                 <option value="N">Noturno</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="serie">Serie</label>
-              <input type="text" class="form-control{{$errors->has('serie') ? ' border-danger' : '' }}" id="serie" name="serie" value="">
-              <small class="form-text text-danger">{!! $errors->first('serie') !!}</small>
+              <label for="grade">Série</label>
+              <input type="text" class="form-control{{$errors->has('grade') ? ' border-danger' : '' }}" id="grade" name="grade" value="">
+              <small class="form-text text-danger">{!! $errors->first('grade') !!}</small>
             </div>
             <div class="form-group">
-              <label for="problemaSaude">Problema de saude</label>
-              <input type="text" class="form-control{{$errors->has('problemaSaude') ? ' border-danger' : '' }}" id="problemaSaude" name="problemaSaude" value="">
-              <small class="form-text text-danger">{!! $errors->first('problemaSaude') !!}</small>
+              <label for="health_problem">Problema de Saúde</label>
+              <input type="text" class="form-control{{$errors->has('health_problem') ? ' border-danger' : '' }}" id="health_problem" name="health_problem" value="">
+              <small class="form-text text-danger">{!! $errors->first('health_problem') !!}</small>
             </div>
             <div class="form-group">
-              <label for="medicacao">Medicacao</label>
-              <input type="text" class="form-control{{$errors->has('medicacao') ? ' border-danger' : '' }}" id="medicacao" name="medicacao" value="">
-              <small class="form-text text-danger">{!! $errors->first('medicacao') !!}</small>
+              <label for="medication">Medicação</label>
+              <input type="text" class="form-control{{$errors->has('medication') ? ' border-danger' : '' }}" id="medication" name="medication" value="">
+              <small class="form-text text-danger">{!! $errors->first('medication') !!}</small>
             </div>
             <div class="form-group">
-              <label for="tamanhoUniforme">Tamanho uniforme</label>
-              <select name="tamanhoUniforme" id="tamanhoUniforme" class="form-control">
+              <label for="cloth_size">Tamanho do Uniforme</label>
+              <select name="cloth_size" id="cloth_size" class="form-control">
                 <option value="PP">PP</option>
                 <option value="P">P</option>
                 <option value="M">M</option>
@@ -79,8 +79,8 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="tipoSangue">Tipo Sanguineo</label>
-              <select name="tipoSangue" id="tipoSangue" class="form-control">
+              <label for="blood_type">Tipo Sanguíneo</label>
+              <select name="blood_type" id="blood_type" class="form-control">
                 <option value="A+">A+</option>
                 <option value="A-">A-</option>
                 <option value="B+">B+</option>
@@ -97,9 +97,9 @@
               <small class="form-text text-danger">{!! $errors->first('imagem') !!}</small>
             </div>
             <div class="form-group">
-              <label for="escola">Escola</label>
-              <input type="text" class="form-control{{$errors->has('escola') ? ' border-danger' : '' }}" id="escola" name="escola" value="">
-              <small class="form-text text-danger">{!! $errors->first('escola') !!}</small>
+              <label for="school">Escola</label>
+              <input type="text" class="form-control{{$errors->has('school') ? ' border-danger' : '' }}" id="school" name="school" value="">
+              <small class="form-text text-danger">{!! $errors->first('school') !!}</small>
             </div>
             <input class="btn btn-primary mt-4" type="submit" value="Salvar atleta">
           </form>
@@ -113,4 +113,15 @@
     </div>
   </div>
 </div>
+@endsection
+
+@section('script')
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" defer></script>
+<script>
+  $(document).ready(function() {
+    $('#telephone').mask('(00)00000-0000');
+    $('#rg').mask('0.000.000');
+  });
+
+</script>
 @endsection

@@ -1,6 +1,8 @@
 /node_modules
 /public/hot
 /public/storage
+/public/images/athletes/*
+!/public/images/athletes/.gitkeep
 /public/css/app.css
 /public/js/app.js
 /public/mix-manifest.json
