@@ -5,7 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>IBAD</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" defer></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <script>
+    $( document ).ready(function() {
+       $('#fone').mask('(00)00000-0000');
+       $('#rg').mask('0.000.000');
+    });
+  </script>
 </head>
 <body>
   <div id="app">
@@ -24,12 +32,15 @@
             <li><a class="nav-link{{Request::is('dashboard') ? ' active' : ''}}" href="/">Dashboard</a></li>
             @role('admin')
             <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}" href="/usuarios">Usuários</a></li>
-            @endrole
-
-            @role('financeiro')
             <li><a class="nav-link{{Request::is('movimentacoes*') ? ' active' : ''}}" href="/movimentacoes">Movimentações</a></li>
             <li><a class="nav-link{{Request::is('patrocinadores*') ? ' active' : ''}}" href="/patrocinadores">Patrocinadores</a></li>
+            <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a></li>
             @endrole
+
+            @can('financeiro')
+            <li><a class="nav-link{{Request::is('movimentacoes*') ? ' active' : ''}}" href="/movimentacoes">Movimentações</a></li>
+            <li><a class="nav-link{{Request::is('patrocinadores*') ? ' active' : ''}}" href="/patrocinadores">Patrocinadores</a></li>
+            @endcan
           </ul>
 
           <!-- Right Side Of Navbar -->

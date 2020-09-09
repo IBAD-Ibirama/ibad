@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            @role('financeiro')
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      @can('financeiro')
 
             <div class="card">
                 <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
@@ -42,8 +42,12 @@
 
             <p>Você não tem permissão para acessar essa funcionalidade.</p>
 
+<<<<<<< HEAD
             @endrole
         </div>
+=======
+      @endcan
+>>>>>>> cd207a6649fecfcfed951ae348d541b99b9ffc88
     </div>
 
     <script>

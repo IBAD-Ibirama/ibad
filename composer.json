@@ -15,9 +15,10 @@
         "fruitcake/laravel-cors": "^1.0",
         "fzaninotto/faker": "^1.9",
         "guzzlehttp/guzzle": "^6.3",
+        "intervention/image": "^2.5",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
-        "spatie/laravel-permission": "^3.13"
+        "spatie/laravel-permission": "3.6"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

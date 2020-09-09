@@ -24,16 +24,16 @@ class PermissionsSeeder extends Seeder
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        Permission::create(['name' => 'edit']);
-        Permission::create(['name' => 'delete']);
-        Permission::create(['name' => 'create']);
-        Permission::create(['name' => 'view']);
+        Permission::create(['name' => 'responsavel']);
+        Permission::create(['name' => 'atleta']);
+        Permission::create(['name' => 'financeiro']);
+        Permission::create(['name' => 'treinador']);
 
-        $adminRole = $this->createRole('admin');
         $parentsRole = $this->createRole('responsavel');
         $athleteRole = $this->createRole('atleta');
         $financialRole = $this->createRole('financeiro');
         $coachRole = $this->createRole('treinador');
+        $adminRole = Role::create(['name' => 'admin']);
 
         $user = $this->createUser('Teste', 'teste@teste.com', 'teste123');
         $user->assignRole($adminRole);
@@ -67,10 +67,7 @@ class PermissionsSeeder extends Seeder
     private function createRole($name)
     {
         $role = Role::create(['name' => $name]);
-        $role->givePermissionTo('edit');
-        $role->givePermissionTo('delete');
-        $role->givePermissionTo('create');
-        $role->givePermissionTo('view');
+        $role->givePermissionTo($name);
 
         return $role;
     }

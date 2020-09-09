@@ -48,7 +48,6 @@
       <p>Você não tem permissão para acessar essa funcionalidade.</p>
 
       @endrole
-
     </div>
   </div>
 </div>
