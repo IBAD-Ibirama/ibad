@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MovesSeeder::class);
         $this->call(PermissionsSeeder::class);
         $this->call(SponsorSeeder::class);
+        $this->call(AthleteSeeder::class);
 
         Model::reguard();
     }
