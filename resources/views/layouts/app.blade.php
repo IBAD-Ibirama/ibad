@@ -37,10 +37,10 @@
             <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a></li>
             @endrole
 
-            @role('financeiro')
+            @can('financeiro')
             <li><a class="nav-link{{Request::is('movimentacoes*') ? ' active' : ''}}" href="/movimentacoes">Movimentações</a></li>
             <li><a class="nav-link{{Request::is('patrocinadores*') ? ' active' : ''}}" href="/patrocinadores">Patrocinadores</a></li>
-            @endrole
+            @endcan
           </ul>
 
           <!-- Right Side Of Navbar -->
