@@ -51,15 +51,6 @@ class SponsorTest extends TestCase
             ->assertSessionHasErrors([
                 'cnpj'
             ]);
-
-        // $this->sponsor()->setCnpj('68.250.251/0001-68')->create();
-        // $sponsor = $this->sponsor()->setCnpj('68.250.251/0001-68')->make();
-
-        // $this->actingAs($this->user()->create())
-        //     ->post(route('sponsors.store'), $sponsor->toArray())
-        //     ->assertSessionHasErrors([
-        //         'cnpj' => trans('validation.unique', ['attribute' => 'cnpj'])
-        //     ]);
     }
 
     /** @test */
@@ -124,42 +115,4 @@ class SponsorTest extends TestCase
 
         $this->assertCount(0, Sponsor::all());
     }
-
-
-
-    // public function check_if_sponsor_dbcolumns_is_correct()
-    // {
-    //     $user = factory(User::class)->create();
-    //     $sponsor = factory(Sponsor::class)->make();
-
-    //     $expected =[
-    //         'id',
-    //         'name',
-    //         'email',
-    //         'cnpj'
-    //     ];
-
-    //     $arrayCompared =  $this->actingAs($user)
-    //         ->post(route('patrocinadores.store'), $sponsor->toArray());
-
-    //     $arrayCompared = array_diff($expected, $sponsor -> getFillable());
-
-    //     $this -> assertEquals(0, count($arrayCompared));
-    // }
-
-
-    /** @test */
-    // public function email_field_is_optional()
-    // {
-    //     $this->withoutExceptionHandling();
-    //     $sponsor = $this->sponsor()->setEmail(null)->make();
-    //     $this->actingAs($this->user()->create())
-    //         ->post(route('patrocinadores.store'), $sponsor->toArray())
-    //         ->assertRedirect();
-
-    //     $this->assertDatabaseHas($sponsor->getTable(), [
-    //         'email' => null
-    //     ]);
-    // }
-
 }

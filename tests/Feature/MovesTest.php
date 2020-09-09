@@ -147,15 +147,4 @@ class MovesTest extends TestCase
         $this->assertCount(0, Moves::all());
         // $response->assertRedirect(route('movimentacoes.index'));
     }
-
-    /** @test */
-    // public function value_field_is_positive_integer_and_is_required()
-    // {
-    // $moves = $this->moves()->setValue(-1)->make();
-    // $this->actingAs($this->user()->create())
-    //     ->post(route('movimentacoes.store'), $moves->toArray())
-    //     ->assertSessionHasErrors([
-    //         'value'
-    //     ]);
-    // }
 }
