@@ -10,8 +10,8 @@ class MovesController extends Controller
 {
     public function index()
     {
+        // $moves = Moves::whereDate('data', '2020-09-06');
         $moves = Moves::all();
-
         return view('moves.index')->with([
             'moves' => $moves
         ]);
