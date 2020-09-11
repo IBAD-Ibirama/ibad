@@ -19,4 +19,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('atletas', 'AthleteController');
     Route::get('/relatorio-movimentacoes', 'MovesReportController@create');
     Route::get('/delete-images/athlete/{athlete_id}', 'AthleteController@deleteImages');
+
+    Route::resource('turmas', 'TeamController');
 });
