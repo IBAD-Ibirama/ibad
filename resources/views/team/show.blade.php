@@ -24,6 +24,7 @@
       <div class="card mt-3">
         <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
           <span>Atletas da Turma</span>
+          <a class='btn btn-success btn-sm' href="{{route('team.matriculate', $team->id)}}">Vincular Atleta</a>
         </div>
 
         <div class="card-body">
@@ -33,7 +34,9 @@
               <a href="/usuarios/{{$athlete->id}}" title="Consultar">{{$athlete->name}}</a>
 
               <div class="float-right flex">
-                <form style="display: inline" action="" method="post">
+                <form style="display: inline"
+                  action="{{ route('team.dematriculate', ['team' => $team->id, 'athlete' => $athlete->athleste_id]) }}"
+                  method="post">
                   @csrf
                   @method('DELETE')
                   <input class="btn btn-sm btn-outline-danger" type="submit" value="Desmatricular">

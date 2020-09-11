@@ -1,5 +1,6 @@
 <?php
 
+use App\Athlete;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -18,7 +19,7 @@ class AthleteSeeder extends Seeder
 
     private function createAthlete($birthdate, $gender, $rg, $telephone, $shift, $grade, $health_problem, $medication, $cloth_size, $blood_type, $school, $user_id)
     {
-        DB::table('athletes')->insert([
+      Athlete::create([
             'birthdate' => $birthdate,
             'gender' => $gender,
             'rg' => $rg,

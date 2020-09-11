@@ -59,6 +59,13 @@ class TeamController extends Controller
     {
       $team = Team::find($teamID);
       $athletes = DB::table('athletes')
+        ->select(
+          [
+            'users.name as name',
+            'users.id as id',
+            'athletes.id as athleste_id'
+          ]
+        )
         ->join('users', 'athletes.user_id', '=', 'users.id')
         ->where('athletes.team_id', '=', $team->id)
         ->orderBy('users.name')
@@ -111,6 +118,12 @@ class TeamController extends Controller
     public function destroy(int $teamID)
     {
       $team = Team::find($teamID);
+
+      foreach ($team->athletes()->get() as $athlete){
+        $athlete->team()->dissociate();
+        $athlete->save();
+      }
+
       $teamName = $team->name;
       $team->delete();
       session()->flash('success', "A turma <b>" . $teamName . "</b> foi removida.");
