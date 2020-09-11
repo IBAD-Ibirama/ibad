@@ -10,7 +10,7 @@
       <div class="card">
         <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
           <span>Editar turma</span>
-          <a class="btn btn-warning btn-sm" href="/usuarios"><i class="fas fa-arrow-circle-up"></i> Voltar</a>
+          <a class="btn btn-warning btn-sm" href="/turmas"><i class="fas fa-arrow-circle-up"></i> Voltar</a>
         </div>
 
         <div class="card-body">
@@ -94,42 +94,42 @@
       </div>
     </div>
   </div>
+</div>
+@endsection
 
-  <script>
-    const nivelsCadastrados =  {!! json_encode($allTeamLevels) !!};
-    console.log(nivelsCadastrados);
-    const inputNome = document.querySelector('#inputName');
-    const checkAuxiliar = document.querySelector('#auxiliar');
-    const checkPodeAuxiliar = document.querySelector('#pode_auxiliar');
-    const optionNivel = document.querySelector('#nivelOption');
+@section('script')
+<script>
+  const nivelsCadastrados =  {!! json_encode($allTeamLevels) !!};
+  const inputNome = document.querySelector('#inputName');
+  const checkAuxiliar = document.querySelector('#auxiliar');
+  const checkPodeAuxiliar = document.querySelector('#pode_auxiliar');
+  const optionNivel = document.querySelector('#nivelOption');
 
-    inputNome.onchange = () => cleanSelectOption();
-    checkAuxiliar.onclick = () => cleanSelectOption();
-    checkPodeAuxiliar.onclick = () => cleanSelectOption();
+  inputNome.onchange = () => cleanSelectOption();
+  checkAuxiliar.onclick = () => cleanSelectOption();
+  checkPodeAuxiliar.onclick = () => cleanSelectOption();
 
-    function cleanSelectOption() {
-      optionNivel.selectedIndex = "0";
+  function cleanSelectOption() {
+    optionNivel.selectedIndex = "0";
+  }
+
+  optionNivel.onchange = () => setOptionNivel();
+
+  function setOptionNivel () {
+    if(!optionNivel.value) {
+      return;
     }
+    const [nivel] = nivelsCadastrados.filter((nivel) => nivel.id == optionNivel.value);
+    inputNome.value = nivel.name;
+    checkAuxiliar.checked = nivel.requires_auxiliary;
+    checkPodeAuxiliar.checked = nivel.can_be_auxiliary;
+  }
 
-    optionNivel.onchange = () => setOptionNivel();
+  function init(){
+    optionNivel.selectedIndex = "1";
+    setOptionNivel();
+  }
 
-    function setOptionNivel () {
-      if(!optionNivel.value) {
-        return;
-      }
-      const [nivel] = nivelsCadastrados.filter((nivel) => nivel.id == optionNivel.value);
-      inputNome.value = nivel.name;
-      checkAuxiliar.checked = nivel.requires_auxiliary;
-      checkPodeAuxiliar.checked = nivel.can_be_auxiliary;
-    }
-
-    function init(){
-
-      optionNivel.selectedIndex = "1";
-      setOptionNivel();
-    }
-
-    init();
-
-  </script>
-  @endsection
+  init();
+</script>
+@endsection
