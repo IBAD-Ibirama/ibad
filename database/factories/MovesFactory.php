@@ -13,4 +13,5 @@ $factory->define(Moves::class, function (Faker $faker) {
         'type' => $faker-> word,
         'specification' => $faker -> word
     ];
+        
 });

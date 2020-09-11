@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Moves;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class MovesController extends Controller
 {
     public function index()
     {
+        // $moves = Moves::whereDate('data', '2020-09-06');
         $moves = Moves::all();
-
         return view('moves.index')->with([
             'moves' => $moves
         ]);
@@ -24,11 +25,11 @@ class MovesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'description' => 'required|string',
-            'date' => 'required|date',
-            'value' => 'required|numeric',
-            'type' => 'required|string',
-            'specification' => 'required|string',
+            'description' => 'required',
+            'date' => 'required',
+            'value' => 'required|min:0',
+            'type' => 'required',
+            'specification' => 'required'
         ]);
 
         $moves = new Moves([
@@ -94,8 +95,7 @@ class MovesController extends Controller
 
         $moves->delete();
 
-        return $this->index()->with([
-            'message_success' => "A movimentação foi apagada"
-        ]);
+        session()->flash('success', "Movimentação deletada com sucesso");
+        return Redirect::back();
     }
 }

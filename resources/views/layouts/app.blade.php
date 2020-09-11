@@ -24,12 +24,13 @@
             <li><a class="nav-link{{Request::is('dashboard') ? ' active' : ''}}" href="/">Dashboard</a></li>
             @role('admin')
             <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}" href="/usuarios">Usuários</a></li>
+            <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a></li>
             @endrole
 
-            @role('financeiro')
+            @can('financeiro')
             <li><a class="nav-link{{Request::is('movimentacoes*') ? ' active' : ''}}" href="/movimentacoes">Movimentações</a></li>
             <li><a class="nav-link{{Request::is('patrocinadores*') ? ' active' : ''}}" href="/patrocinadores">Patrocinadores</a></li>
-            @endrole
+            @endcan
           </ul>
 
           <!-- Right Side Of Navbar -->
@@ -56,13 +57,13 @@
     </nav>
 
     <main class="py-4">
-      @isset($message_success)
+      @if(isset($message_success) || Session::has('success'))
       <div class="container">
         <div class="alert alert-success" role="alert">
-          {!! $message_success !!}
+          {!! isset($message_success) ? $message_success : Session::get("success") !!}
         </div>
       </div>
-      @endisset
+      @endif
 
       @isset($message_warning)
       <div class="container">
@@ -79,5 +80,6 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  @yield('script')
 </body>
 </html>

@@ -4,12 +4,16 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-12">
-      @role('financeiro')
+      @can('financeiro')
 
       <div class="card">
         <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
           <span>Todas as movimentações</span>
-          <a class='btn btn-success btn-sm' href="/movimentacoes/create">Criar nova movimentação</a>
+          <div>
+            <input type="month" id="month" name="month">
+            <a class='btn btn-primary btn-sm' href="javascript:navigateToMovesReport('month');">Gerar relatório</a>
+            <a class='btn btn-success btn-sm' href="/movimentacoes/create">Criar nova movimentação</a>
+          </div>
         </div>
         <div class="card-body">
           <ul class="list-group">
@@ -35,8 +39,15 @@
 
       <p>Você não tem permissão para acessar essa funcionalidade.</p>
 
-      @endrole
+      @endcan
     </div>
+
+    <script>
+      function navigateToMovesReport(inputid) {
+        var url = 'relatorio-movimentacoes' + "/?data=" + document.getElementById(inputid).value;
+        window.location.href = url
+      }
+
+    </script>
   </div>
-</div>
-@endsection
+  @endsection

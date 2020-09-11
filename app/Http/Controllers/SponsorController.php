@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use App\Sponsor;
 
 class SponsorController extends Controller
@@ -54,7 +55,7 @@ class SponsorController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update($id, Request $request)
     {
         $sponsor = Sponsor::find($id);
 
@@ -81,8 +82,7 @@ class SponsorController extends Controller
 
         $sponsor->delete();
 
-        return $this->index()->with([
-            'message_success' => "Patrocinador deletado com sucesso"
-        ]);
+        session()->flash('success', "Patrocinador deletado com sucesso");
+        return Redirect::back();
     }
 }
