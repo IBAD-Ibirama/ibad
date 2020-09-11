@@ -17,4 +17,9 @@ class Team extends Model
     {
         return $this->belongsTo(TeamLevel::class, 'team_level_id', 'id');
     }
+
+    public function athletes()
+    {
+        return $this->hasMany(Athlete::class, 'team_id', 'id');
+    }
 }

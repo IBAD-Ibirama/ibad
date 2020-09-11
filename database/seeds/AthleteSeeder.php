@@ -30,7 +30,7 @@ class AthleteSeeder extends Seeder
             'cloth_size' => $cloth_size,
             'blood_type' => $blood_type,
             'school' => $school,
-            'user_id' => $user_id,
+            'user_id' => $user_id
         ]);
     }
 }

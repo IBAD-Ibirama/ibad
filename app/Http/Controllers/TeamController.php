@@ -6,6 +6,8 @@ use App\Team;
 use App\TeamLevel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
+
 
 class TeamController extends Controller
 {
@@ -56,6 +58,12 @@ class TeamController extends Controller
     public function show(int $teamID)
     {
       $team = Team::find($teamID);
+      $athletes = DB::table('athletes')
+        ->join('users', 'athletes.user_id', '=', 'users.id')
+        ->where('athletes.team_id', '=', $team->id)
+        ->orderBy('users.name')
+        ->get();
+      $team->athletes = $athletes;
       return view('team.show', compact('team'));
     }
 

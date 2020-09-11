@@ -14,9 +14,6 @@ class TeamSeeder extends Seeder
      */
     public function run()
     {
-      DB::table('teams')->truncate();
-      DB::table('team_levels')->truncate();
-
       $basicLevel = TeamLevel::create([
         'name' => 'Basico',
         'requires_auxiliary' => true,
