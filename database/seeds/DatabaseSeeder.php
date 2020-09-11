@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(AthleteSeeder::class);
         $this->call(TeamSeeder::class);
         $this->call(TeamAthleteSeeder::class);
+        $this->call(FaultLimitSeeder::class);
+        $this->call(TrainingSeeder::class);
 
         Model::reguard();
     }

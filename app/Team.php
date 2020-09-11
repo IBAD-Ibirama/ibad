@@ -22,4 +22,10 @@ class Team extends Model
     {
         return $this->hasMany(Athlete::class, 'team_id', 'id');
     }
+
+    public function trainings()
+    {
+        return $this->hasMany(Training::class, 'team_id', 'id');
+    }
+
 }

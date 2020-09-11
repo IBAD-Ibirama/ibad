@@ -19,4 +19,9 @@ class Athlete extends Model
     {
       return $this->belongsTo(Team::class, 'team_id', 'id');
     }
+
+    public function frequencies()
+    {
+        return $this->hasMany(Frequency::class, 'athlete_id', 'id');
+    }
 }
