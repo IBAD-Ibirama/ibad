@@ -131,11 +131,11 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
-        $oldName = $user->name;
 
         $user->delete();
 
-        session()->flash('success', "O usuário <b>" . $oldName . "</b> foi apagado.");
+        session()->flash('success', "O usuário foi apagado.");
+
         return Redirect::back();
     }
 }
