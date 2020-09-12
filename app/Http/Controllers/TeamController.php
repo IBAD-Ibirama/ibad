@@ -30,10 +30,10 @@ class TeamController extends Controller
         'teamLevel_name' => 'required|min:3'
       ]);
 
-      $teamLevel_id = $request['level_select'];
+      $teamLevelId = $request['level_select'];
       $level;
-      if($teamLevel_id != ''){
-        $level = TeamLevel::find($teamLevel_id);
+      if($teamLevelId != ''){
+        $level = TeamLevel::find($teamLevelId);
       } else {
         $level= new TeamLevel();
         $level->name = $request['teamLevel_name'];
@@ -90,11 +90,11 @@ class TeamController extends Controller
       ]);
 
       $team = Team::find($teamID);
-      $teamLevel_id = $request['level_select'];
+      $teamLevelId = $request['level_select'];
 
       $level;
-      if($teamLevel_id != ''){
-        $level = TeamLevel::find($teamLevel_id);
+      if($teamLevelId != ''){
+        $level = TeamLevel::find($teamLevelId);
       } else {
         $level= new TeamLevel();
         $level->name = $request['teamLevel_name'];

@@ -15,7 +15,7 @@
 
         <div class="card-body">
           <h3><b>{{$team->name}}</b></h3>
-          <p>Nivel da Turma: {{ $team->teamLevel->name}}</p>
+          <p>Nível da Turma: {{ $team->teamLevel->name}}</p>
           <p>Esta turma {{ $team->teamLevel->requires_auxiliary ? '' : 'não' }} requer auxiliares</p>
           <p>Os atletas dessa turma {{ $team->teamLevel->can_be_auxiliary ? '' : 'não' }} podem ser auxiliares</p>
         </div>
