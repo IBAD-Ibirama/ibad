@@ -19,114 +19,114 @@ class TeamController extends Controller
 
     public function create()
     {
-      $teamLevels = TeamLevel::all();
-      return view('team.create', compact('teamLevels'));
+        $teamLevels = TeamLevel::all();
+        return view('team.create', compact('teamLevels'));
     }
 
     public function store(Request $request)
     {
-      $request->validate([
-        'team_name' => 'required|min:3',
-        'teamLevel_name' => 'required|min:3'
-      ]);
+        $request->validate([
+            'team_name' => 'required|min:3',
+            'teamLevel_name' => 'required|min:3'
+        ]);
 
-      $teamLevelId = $request['level_select'];
-      $level;
-      if($teamLevelId != ''){
-        $level = TeamLevel::find($teamLevelId);
-      } else {
-        $level= new TeamLevel();
-        $level->name = $request['teamLevel_name'];
-        $level->requires_auxiliary = $request['requires_auxiliary'] == 'on' ? true : false;
-        $level->can_be_auxiliary = $request['can_be_auxiliary'] == 'on' ? true : false;
+        $teamLevelId = $request['level_select'];
+        $level;
+        if($teamLevelId != ''){
+            $level = TeamLevel::find($teamLevelId);
+        } else {
+            $level= new TeamLevel();
+            $level->name = $request['teamLevel_name'];
+            $level->requires_auxiliary = $request['requires_auxiliary'] == 'on' ? true : false;
+            $level->can_be_auxiliary = $request['can_be_auxiliary'] == 'on' ? true : false;
 
-        $level->save();
-      }
+            $level->save();
+        }
 
-      $team =  new Team();
-      $team->name = $request['team_name'];
+        $team =  new Team();
+        $team->name = $request['team_name'];
 
-      $team->teamLevel()->associate($level);
-      $team->save();
+        $team->teamLevel()->associate($level);
+        $team->save();
 
-      $path = 'turmas/'. $team->id;
-      return Redirect::to($path)->with([
-        'message_success' => "A Turma <b>" . $team->name . "</b> foi criada com sucesso."
-      ]);
+        $path = 'turmas/'. $team->id;
+        return Redirect::to($path)->with([
+            'message_success' => "A Turma <b>" . $team->name . "</b> foi criada com sucesso."
+        ]);
     }
 
     public function show(int $teamID)
     {
-      $team = Team::find($teamID);
-      $athletes = DB::table('athletes')
-        ->select(
-          [
-            'users.name as name',
-            'users.id as id',
-            'athletes.id as athleste_id'
-          ]
-        )
-        ->join('users', 'athletes.user_id', '=', 'users.id')
-        ->where('athletes.team_id', '=', $team->id)
-        ->orderBy('users.name')
-        ->get();
-      $team->athletes = $athletes;
-      return view('team.show', compact('team'));
+        $team = Team::find($teamID);
+        $athletes = DB::table('athletes')
+            ->select(
+                [
+                    'users.name as name',
+                    'users.id as id',
+                    'athletes.id as athleste_id'
+                ])
+            ->join('users', 'athletes.user_id', '=', 'users.id')
+            ->where('athletes.team_id', '=', $team->id)
+            ->orderBy('users.name')
+            ->get();
+        $team->athletes = $athletes;
+        return view('team.show', compact('team'));
     }
 
     public function edit(int $teamID)
     {
-      $team = Team::find($teamID);
-      $teamLevels = TeamLevel::all()->where('id', '!=', $team->teamLevel->id);
-      $allTeamLevels = TeamLevel::all();
-      return view('team.edit', compact('team','teamLevels', 'allTeamLevels'));
+        $team = Team::find($teamID);
+        $teamLevels = TeamLevel::all()->where('id', '!=', $team->teamLevel->id);
+        $allTeamLevels = TeamLevel::all();
+        return view('team.edit', compact('team','teamLevels', 'allTeamLevels'));
     }
 
     public function update(Request $request, int $teamID)
     {
-      $request->validate([
-        'team_name' => 'required|min:3',
-        'teamLevel_name' => 'required|min:3'
-      ]);
+        $request->validate([
+            'team_name' => 'required|min:3',
+            'teamLevel_name' => 'required|min:3'
+        ]);
 
-      $team = Team::find($teamID);
-      $teamLevelId = $request['level_select'];
+        $team = Team::find($teamID);
+        $teamLevelId = $request['level_select'];
 
-      $level;
-      if($teamLevelId != ''){
-        $level = TeamLevel::find($teamLevelId);
-      } else {
-        $level= new TeamLevel();
-        $level->name = $request['teamLevel_name'];
-        $level->requires_auxiliary = $request['requires_auxiliary'] == 'on' ? true : false;
-        $level->can_be_auxiliary = $request['can_be_auxiliary'] == 'on' ? true : false;
+        $level;
+        if($teamLevelId != ''){
+            $level = TeamLevel::find($teamLevelId);
+        } else {
+            $level= new TeamLevel();
+            $level->name = $request['teamLevel_name'];
+            $level->requires_auxiliary = $request['requires_auxiliary'] == 'on' ? true : false;
+            $level->can_be_auxiliary = $request['can_be_auxiliary'] == 'on' ? true : false;
 
-        $level->save();
-      }
+            $level->save();
+        }
 
-      $team->name = $request['team_name'];
+        $team->name = $request['team_name'];
 
-      $team->teamLevel()->associate($level);
-      $team->save();
+        $team->teamLevel()->associate($level);
+        $team->save();
 
-      $path = 'turmas/'. $team->id;
-      return Redirect::to($path)->with([
-        'message_success' => "Os dados da Turma <b>" . $team->name . "</b> foram atualizados."
-      ]);
+        $path = 'turmas/'. $team->id;
+        return Redirect::to($path)->with([
+            'message_success' => "Os dados da Turma <b>" . $team->name . "</b> foram atualizados."
+        ]);
     }
 
     public function destroy(int $teamID)
     {
-      $team = Team::find($teamID);
+        $team = Team::find($teamID);
+        $athletes = $team->athletes()->get();
 
-      foreach ($team->athletes()->get() as $athlete){
-        $athlete->team()->dissociate();
-        $athlete->save();
-      }
+        foreach ($athletes as $athlete){
+            $athlete->team()->dissociate();
+            $athlete->save();
+        }
 
-      $teamName = $team->name;
-      $team->delete();
-      session()->flash('success', "A turma <b>" . $teamName . "</b> foi removida.");
-      return Redirect::back();
+        $teamName = $team->name;
+        $team->delete();
+        session()->flash('success', "A turma <b>" . $teamName . "</b> foi removida.");
+        return Redirect::back();
     }
 }
