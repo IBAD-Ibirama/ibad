@@ -1,4 +1,11 @@
 <!doctype html>
+@php
+$athlete = null;
+$user = Auth::user();
+if($user){
+    $athlete = \App\Athlete::where('user_id', $user->id)->first();
+}
+@endphp
 <html lang="pt-br">
 <head>
   <meta charset="utf-8">
@@ -50,9 +57,11 @@
             <li class="nav-item">
                 <a class="nav-link" href="/financeiro">Relatório Financeiro<span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/atletas/desempenho/1">Desempenho do atleta<span class="sr-only">(current)</span></a>
-            </li>
+            @if($athlete && $athlete->id)
+                <li class="nav-item">
+                    <a class="nav-link" href="/atletas/desempenho/{{$athlete->id}}">Desempenho do atleta<span class="sr-only">(current)</span></a>
+                </li>
+            @endif
             @endrole
 
             @can('financeiro')
