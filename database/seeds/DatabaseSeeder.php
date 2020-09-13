@@ -14,9 +14,13 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        $this->call(MovesSeeder::class);
+        $this->call(PermissionsSeeder::class);
+        $this->call(SponsorSeeder::class);
+        $this->call(AthleteSeeder::class);
+
         $this->call(ModalitiesSeeder::class);
         $this->call(CompetitionsSeeder::class);
-        $this->call(AthletesSeeder::class);
         $this->call(CategoriesSeeder::class);
         $this->call(PhotosSeeder::class);
         $this->call(CompetitionParticipationSeeder::class);
