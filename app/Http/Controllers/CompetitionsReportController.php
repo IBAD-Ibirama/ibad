@@ -69,6 +69,7 @@ class CompetitionsReportController extends Controller
           ->join('competition_participation', 'athletes.id', '=', 'competition_participation.athletes_id')
           ->join('categories', 'categories.id', '=', 'competition_participation.categories_id')
           ->join('modalities', 'modalities.id', '=', 'competition_participation.modalities_id')
+          ->join('users',      'users.id',      '=', 'athletes.user_id')
           ->where('competitions_id', $id)
           ->get();
     }

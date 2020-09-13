@@ -41,13 +41,13 @@ use Illuminate\Support\Facades\URL;
 
         function criaTabela() {
             let table = new Tabela();
-            table.setColumns(['Data', 'Local', 'Descrição', 'Nível competição', 'Opções']);
+            table.setColumns(['Id', 'Data', 'Local', 'Descrição', 'Nível competição', 'Opções']);
             table.createTable();
             root.append(table.getTable());
 
             let aRegistros = <?= $aRegistros ?>;
 
-            let aIgnora = ['id', 'updated_at', 'created_at'];
+            let aIgnora = ['updated_at', 'created_at'];
             for(let i = 0; i < aRegistros.length; i++) {
                 let data = aRegistros[i];
                 let tr = document.createElement('tr');

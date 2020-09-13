@@ -11,6 +11,6 @@ $factory->define(CompetitionParticipation::class, function (Faker $faker) {
         'modalities_id' => $faker->randomElement([1, 2, 3, 4, 5]),
         'competitions_id' => $faker->randomElement([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
         'categories_id' => $faker->randomElement([1, 2, 3, 4, 5, 6, 7, 8, 9]),
-        'results' => $faker->randomElement(["Ouro","Prata","Bronza","Participante"]),
+        'results' => $faker->randomElement(["Ouro","Prata","Bronze","Participante"]),
     ];
 });
