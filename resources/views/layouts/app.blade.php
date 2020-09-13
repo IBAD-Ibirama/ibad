@@ -24,18 +24,25 @@
             <li><a class="nav-link{{Request::is('dashboard') ? ' active' : ''}}" href="/">Dashboard</a></li>
             @role('admin')
             <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}" href="/usuarios">Usuários</a></li>
-            <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a></li>
-            <li class="nav-item">
-                <a class="nav-link" href="/competicoes/relatorio">Relatório de Competições<span class="sr-only">(current)</span></a>
+            <li class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="dropdownCompeticoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Atletas
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownCompeticoes">
+                    <a class="nav-link dropdown-item{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Consulta de Atletas</a>
+                    <a class="nav-link dropdown-item{{Request::is('frequencia*') ? ' active' : ''}}" href="/frequencia">Consulta de Frequências<span class="sr-only">(current)</span></a>
+                </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/atletas/registerAthleteCompetition">Registrar participação do atleta<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/competicao">Competições<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/frequencia">Frequência<span class="sr-only">(current)</span></a>
+            <li></li>
+            <li class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="dropdownCompeticoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Competições
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownCompeticoes">
+                    <a class="nav-link dropdown-item{{Request::is('competicao*') ? ' active' : ''}}" href="/competicao">Consulta de Competições<span class="sr-only">(current)</span></a>
+                    <a class="nav-link dropdown-item{{Request::is('competicoes/relatorio*') ? ' active' : ''}}" href="/competicoes/relatorio">Relatório de Competição<span class="sr-only">(current)</span></a>
+                    <a class="nav-link dropdown-item{{Request::is('atletas/registerAthleteCompetition*') ? ' active' : ''}}"" href="/atletas/registerAthleteCompetition">Registrar participação do atleta<span class="sr-only">(current)</span></a>
+                </div>
             </li>
             @endrole
             
