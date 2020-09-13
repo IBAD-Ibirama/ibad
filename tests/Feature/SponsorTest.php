@@ -72,7 +72,10 @@ class SponsorTest extends TestCase
     {
         Carbon::setTestNow(now());
 
-        $this->actingAs($this->user()->create());
+        $sponsor = $this->sponsor()->make();
+
+        $this->actingAs($this->user()->create())
+            ->post(route('patrocinadores.store'), $sponsor->toArray());
 
         $response = $this->get('/patrocinadores')
             ->assertOk();

@@ -66,7 +66,6 @@ class UserTest extends TestCase
     /** @test */
     public function it_should_show_a_move_search()
     {
-        // $this->withoutExceptionHandling();
         $user = $this->user()->make();
 
         $this->actingAs($this->user()->create())
@@ -74,27 +73,21 @@ class UserTest extends TestCase
 
         $user = User::first();
 
-        // $this->assertEquals($user->id, User::first()->id);
+        $this->assertEquals($user->id, User::first()->id);
     }
 
     /** @test */
-    public function user_can_be_updated()
+    public function it_should_list_allUsers()
     {
+        Carbon::setTestNow(now());
+
         $user = $this->user()->make();
 
         $this->actingAs($this->user()->create())
             ->post(route('usuarios.store'), $user->toArray());
 
-        $user = User::first();
-
-        $newuser = $this->user()->make();
-
-        $response = $this->put('usuarios/' . $user->id, $newuser->toArray());
-
-        //NÃO FUNCIONA
-        // $this->assertEquals($newuser->name, User::first()->name);
-        // $this->assertEquals($newuser->email, User::first()->email);
-        // $this->assertEquals($newuser->password, User::first()->password);    
+        $response = $this->get('/usuarios')
+            ->assertOk();
     }
 
     /** @test */
@@ -110,16 +103,5 @@ class UserTest extends TestCase
         $response = $this->delete('usuarios/' . $user->id);
 
         $this->assertCount(0, User::all());
-    }
-
-    /** @test */
-    public function it_should_list_allUsers()
-    {
-        Carbon::setTestNow(now());
-
-        $this->actingAs($this->user()->create());
-
-        $response = $this->get('/usuarios')
-            ->assertOk();
     }
 }

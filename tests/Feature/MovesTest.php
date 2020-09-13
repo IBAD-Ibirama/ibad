@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Carbon\Carbon;
 use App\Moves;
+use App\Sponsor;
 use App\User;
 
 class MovesTest extends TestCase
@@ -82,22 +83,16 @@ class MovesTest extends TestCase
     /** @test */
     public function it_should_show_a_move_search()
     {
-        // $this->withoutExceptionHandling();
         $move = $this->moves()->make();
 
-        $this->actingAs($this->user()->create())
+        $response =  $this->actingAs($this->user()->create())
             ->post(route('movimentacoes.store'), $move->toArray());
 
-        $show = Moves::first();
-        $response = $this->actingAs($this->user()->create())
-            ->get('movimentacoes/show/' . $show->id);
-        // dd($response->description);
-
-        // $this->assertEquals($move->description, $response->description);
-        // $this->assertEquals($move->date, Moves::first()->date);
-        // $this->assertEquals($move->value, Moves::first()->value);
-        // $this->assertEquals($move->type, Moves::first()->type);
-        // $this->assertEquals($move->specification, Moves::first()->specification);
+        $this->assertEquals($move->description, Moves::first()->description);
+        $this->assertEquals($move->date, Moves::first()->date);
+        $this->assertEquals($move->value, Moves::first()->value);
+        $this->assertEquals($move->type, Moves::first()->type);
+        $this->assertEquals($move->specification, Moves::first()->specification);
     }
 
     /** @test */
