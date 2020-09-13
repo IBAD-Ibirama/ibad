@@ -1,6 +1,6 @@
-@extends('base')
+@extends('layouts.app')
 @section('content')
-<style>   
+<style>
     .relatorio_competicao {
         font-size: 14pt;
         text-align: justify;

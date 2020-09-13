@@ -25,6 +25,27 @@
             @role('admin')
             <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}" href="/usuarios">Usuários</a></li>
             <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a></li>
+            <li class="nav-item">
+                <a class="nav-link" href="/competicoes/relatorio">Relatório de Competições<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/atletas/registerAthleteCompetition">Registrar participação do atleta<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/competicao">Competições<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/frequencia">Frequência<span class="sr-only">(current)</span></a>
+            </li>
+            @endrole
+            
+            @role('atleta')
+            <li class="nav-item">
+                <a class="nav-link" href="/financeiro">Relatório Financeiro<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/atletas/desempenho/1">Desempenho do atleta<span class="sr-only">(current)</span></a>
+            </li>
             @endrole
 
             @can('financeiro')

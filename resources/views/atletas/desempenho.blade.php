@@ -1,4 +1,4 @@
-@extends('base')
+@extends('layouts.app')
 
 @section('content')
 <style>
@@ -15,7 +15,7 @@
     }
 </style>
 
-<div class="divParticipacoes">
+<div class="container divParticipacoes">
     <h4>Descrição do Desempenho do Atleta</h4>
     <div class="bodyGridParticipacoes">
         <table class="table table-striped">
