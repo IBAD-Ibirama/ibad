@@ -59,7 +59,7 @@ if($user){
             </li>
             @if($athlete && $athlete->id)
                 <li class="nav-item">
-                    <a class="nav-link" href="/atletas/desempenho/{{$athlete->id}}">Desempenho do atleta<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/atleta/desempenho/{{$athlete->id}}">Desempenho do atleta<span class="sr-only">(current)</span></a>
                 </li>
             @endif
             @endrole
