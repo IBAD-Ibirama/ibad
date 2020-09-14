@@ -10,23 +10,25 @@ use App\Model\Competitions;
 use App\Model\Modalities;
 use \Illuminate\Support\Facades\DB;
 
-class RegisterAthleteCompetitionController extends Controller {
+class RegisterAthleteCompetitionController extends Controller
+{
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
 
         $athletesCompetitions = DB::table('athletes')
-                ->join('competition_participation', 'athletes.id', '=', 'competition_participation.athletes_id')
-                ->join('competitions', 'competitions.id', '=', 'competition_participation.competitions_id')
-                ->join('categories', 'categories.id', '=', 'competition_participation.categories_id')
-                ->join('modalities', 'modalities.id', '=', 'competition_participation.modalities_id')
-                ->join('users', 'users.id', '=', 'athletes.user_id')
-                ->orderBy('competition_participation.created_at', 'desc')
-                ->get();
+            ->join('competition_participation', 'athletes.id', '=', 'competition_participation.athletes_id')
+            ->join('competitions', 'competitions.id', '=', 'competition_participation.competitions_id')
+            ->join('categories', 'categories.id', '=', 'competition_participation.categories_id')
+            ->join('modalities', 'modalities.id', '=', 'competition_participation.modalities_id')
+            ->join('users', 'users.id', '=', 'athletes.user_id')
+            ->orderBy('competition_participation.created_at', 'desc')
+            ->get();
 
         foreach ($athletesCompetitions as $registro) {
             $registro->date = date('d/m/Y', strtotime($registro->date));
@@ -34,11 +36,16 @@ class RegisterAthleteCompetitionController extends Controller {
         return view('atletas.registerAthleteCompetitition', compact('athletesCompetitions'));
     }
 
-    public function formCadastrar() {
+    public function formCadastrar()
+    {
         $competitions = Competitions::all();
-        $athletes = Athletes::all();
         $categories = Categories::all();
         $modalities = Modalities::all();
+        $athletes = DB::table('users')
+        ->join('athletes', 'athletes.user_id', '=', 'users.id')
+        ->orderBy('users.name')
+        ->get();
+
         return view('atletas.cadastroRegistroCompeticao', compact('competitions', 'athletes', 'categories', 'modalities'));
     }
 
@@ -48,7 +55,8 @@ class RegisterAthleteCompetitionController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $athletes = $request->athletes;
 
         foreach ($athletes as $athlete) {
@@ -65,4 +73,30 @@ class RegisterAthleteCompetitionController extends Controller {
         return redirect()->action('registerAthleteCompetitionController@index')->with('success', 'Categoria inserida com sucesso!');
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Athlete  $athlete
+     * @return \Illuminate\Http\Response
+     */
+    public function show($idComp, $idAth)
+    {
+
+        $competition = DB::table('athletes')
+            ->join('competition_participation', 'athletes.id', '=', 'competition_participation.athletes_id')
+            ->join('competitions', 'competitions.id', '=', 'competition_participation.competitions_id')
+            ->join('categories', 'categories.id', '=', 'competition_participation.categories_id')
+            ->join('modalities', 'modalities.id', '=', 'competition_participation.modalities_id')
+            ->join('users', 'users.id', '=', 'athletes.user_id')
+            ->where('competition_participation.competitions_id', '=', $idComp)
+            ->where('competition_participation.athletes_id', '=', $idAth)
+            ->get();
+
+            foreach ($competition as $registro) {
+                $registro->date = date('d/m/Y', strtotime($registro->date));
+                echo $registro->name;
+            }
+    
+            return view('atletas.registerAthleteCompetitition', compact('competition'));
+    }
 }

@@ -158,6 +158,8 @@
             let input = document.createElement('input');
             input.type = 'checkbox';
             input.value = obj.id;
+            console.log(obj);
+
             input.name = 'athletes[]';
             let textNode = document.createTextNode(" " + obj.name);
             li.append(input);
