@@ -20,98 +20,92 @@ use Illuminate\Support\Facades\URL;
     }
 
     #root{
-        height: 300px;
-        overflow-y: auto;
+        overflow-x: auto;
     }
 
 </style>
-<h1>Consulta Participação</h1>
-<button id="btn-registra">Registra Participação</button>
-<div id="root"></div>
-<script>
-    let root = document.querySelector('#root');
+<div class="container">
+    <h1>Consulta Participação</h1>
+    <button id="btn-registra">Registra Participação</button>
+    <div id="root"></div>
+    <script>
+        let root = document.querySelector('#root');
+        document.querySelector('#btn-registra').addEventListener('click', function () {
+            window.location.href = '<?= URL::to('atleta/registroPraticipacaoAtleta/registra') ?>';
+        });
 
-    document.querySelector('#btn-registra').addEventListener('click', function() {
-        window.location.href = '<?= URL::to('atletas/registro') ?>';
-    });
+        criaTabela();
 
-    criaTabela();
+        function criaTabela() {
+            let table = new Tabela();
+            table.setColumns(['Atleta', 'Data', 'Local', 'Descrição', 'Categoria', 'Modalidade']);
+            table.createTable();
+            root.append(table.getTable());
 
-    function criaTabela() {
-        let table = new Tabela();
-        table.setColumns(['Atleta', 'Data', 'Local', 'Descrição', 'Categoria','Modalidade']);
-        table.createTable();
-        root.append(table.getTable());
+            let aRegistros = <?= $athletesCompetitions ?>;
+            
+            let campos = [
+                 'name'
+                ,'date'
+                ,'place'
+                ,'descricao'
+                ,'category'
+                ,'player_number'
+            ];
 
-        let aRegistros = <?= $athletesCompetitions ?>;
-
-        let ignora = [
-            'id',
-            'competitions_id',
-            'competition_level',
-            'athletes_id',
-            'categories_id',
-            'coordinator',
-            'created_at',
-            'genre',
-            'modalities_id',
-            'results',
-            'updated_at'
-        ];
-
-        for(let i = 0; i < aRegistros.length; i++) {
-            let data = aRegistros[i];
-            let tr = document.createElement('tr');
-            for(let [key, value] of Object.entries(data)) {
-                if(ignora.includes(key)) {
-                    continue;
+            for (let i = 0; i < aRegistros.length; i++) {
+                let data = aRegistros[i];
+                let tr = document.createElement('tr');
+                for (let [key, value] of Object.entries(data)) {
+                    if (campos.includes(key)) {
+                        let td = document.createElement('td');
+                        td.append(document.createTextNode(value))
+                        tr.append(td);
+                    }
                 }
                 let td = document.createElement('td');
-                td.append(document.createTextNode(value))
-                tr.append(td);
-            }
-            let td = document.createElement('td');
-            table.getTable().append(tr);
-        }
-    }
-
-    function Tabela() {
-        this.columns = null;
-        this.table   = null; 
-
-        this.setColumns = function(columns) {
-            this.columns = columns;
-        }
-
-        this.createTable = function() {
-            let table = this.getTable();
-            let thead = document.createElement('thead');
-            let tr    = document.createElement('tr');
-
-            for(let i = 0; i < this.columns.length; i++) {
-                let td = document.createElement('th');
-                td.append(document.createTextNode(this.columns[i]));
-
-                tr.append(td);
-            }
-            thead.append(tr);
-            table.append(thead);
-        }
-
-        this.clear = function() {
-            let table = this.getTable();
-            while (table.firstChild) {
-                table.removeChild(table.lastChild);
+                table.getTable().append(tr);
             }
         }
 
-        this.getTable = function() {
-            if(this.table == null) {
-                this.table = document.createElement('table');
-            }
-            return this.table;
-        }
-    }
+        function Tabela() {
+            this.columns = null;
+            this.table = null;
 
-</script>
+            this.setColumns = function (columns) {
+                this.columns = columns;
+            }
+
+            this.createTable = function () {
+                let table = this.getTable();
+                let thead = document.createElement('thead');
+                let tr = document.createElement('tr');
+
+                for (let i = 0; i < this.columns.length; i++) {
+                    let td = document.createElement('th');
+                    td.append(document.createTextNode(this.columns[i]));
+
+                    tr.append(td);
+                }
+                thead.append(tr);
+                table.append(thead);
+            }
+
+            this.clear = function () {
+                let table = this.getTable();
+                while (table.firstChild) {
+                    table.removeChild(table.lastChild);
+                }
+            }
+
+            this.getTable = function () {
+                if (this.table == null) {
+                    this.table = document.createElement('table');
+                }
+                return this.table;
+            }
+        }
+
+    </script>
+</div>
 @endsection

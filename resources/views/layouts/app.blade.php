@@ -48,7 +48,7 @@ if($user){
                 <div class="dropdown-menu" aria-labelledby="dropdownCompeticoes">
                     <a class="nav-link dropdown-item{{Request::is('competicao*') ? ' active' : ''}}" href="/competicao">Consulta de Competições<span class="sr-only">(current)</span></a>
                     <a class="nav-link dropdown-item{{Request::is('competicoes/relatorio*') ? ' active' : ''}}" href="/competicoes/relatorio">Relatório de Competição<span class="sr-only">(current)</span></a>
-                    <a class="nav-link dropdown-item{{Request::is('atletas/registerAthleteCompetition*') ? ' active' : ''}}"" href="/atletas/registerAthleteCompetition">Registrar participação do atleta<span class="sr-only">(current)</span></a>
+                    <a class="nav-link dropdown-item{{Request::is('atletas/registerAthleteCompetition*') ? ' active' : ''}}"" href="/atleta/registroPraticipacaoAtleta">Registrar participação do atleta<span class="sr-only">(current)</span></a>
                 </div>
             </li>
             @endrole

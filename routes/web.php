@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('competicoes/relatorio', 'CompetitionsReportController@index');
 Route::post('competicoes/relatorio', 'CompetitionsReportController@emit');
-Route::get('/atletas/desempenho/{id}', 'AthletesCompetitionController@show');
+Route::get('/atleta/desempenho/{id}', 'AthletesCompetitionController@show');
 Route::get('/financeiro', 'FinancesController@index');
 
 //competicoes
@@ -35,9 +35,9 @@ Route::post('competicao/criar'      , 'CompetitionController@create');
 Route::get('competicao/remove/{id}' , 'CompetitionController@destroy');
 
 //Registro da participação em competição
-Route::get('atletas/registerAthleteCompetition'          , 'registerAthleteCompetitionController@index');
-Route::get('atletas/registro'                            , 'registerAthleteCompetitionController@formCadastrar');
-Route::post('atletas/registerAthleteCompetition/register', 'registerAthleteCompetitionController@store');
+Route::get('atleta/registroPraticipacaoAtleta',            'registerAthleteCompetitionController@index');
+Route::get('atleta/registroPraticipacaoAtleta/registra',   'registerAthleteCompetitionController@formCadastrar');
+Route::post('atleta/registroPraticipacaoAtleta/registrar', 'registerAthleteCompetitionController@store');
 
 //Frequencia Atleta
 Route::get('frequencia','FrequencyAthlete@index');
