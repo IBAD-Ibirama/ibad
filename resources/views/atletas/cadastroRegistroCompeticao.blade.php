@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
 @if ($errors->any())
 <div class="alert alert-danger">
@@ -10,10 +11,84 @@
     </ul>
 </div>
 @endif
+
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            @role('admin')
+
+            <div class="card">
+                <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
+                    <span>Registrar participação do atleta </span>
+                    <a class="btn btn-warning btn-sm" href="/atleta/registroPraticipacaoAtleta"><i class="fas fa-arrow-circle-up"></i> Voltar</a>
+                </div>
+                <div class="card-body">
+                    <form autocomplete="off" action="{{ URL::to('atleta/registroPraticipacaoAtleta/registrar') }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="competition">Competicao</label>
+                                    <select class="form-control" id="competition" name="competition"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="coordinator">Coordenador Competição</label>
+                                    <input type="text" class="form-control" id="coordinator" name="coordinator" placeholder="Coordenador da competição" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="competition_level">Nível Competição</label>
+                                    <input type="text" class="form-control" id="competition_level" name="competition_level" placeholder="Nivel competição" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="date">Data Competição</label>
+                                    <input type="text" class="form-control" id="date" name="date" placeholder="data da competição" readonly>
+                                </div>
+                            </div>
+                            <div class="col">
+
+                                <div class="form-group">
+                                    <label for="modality">Atletas</label>
+                                    <div class="form-group">
+                                        <div id="list1" class="dropdown-check-list" tabindex="100">
+
+                                            <span class="anchor">Selecione os atletas: </span>
+                                            <ul id="athlete" class="items">
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="modality">Modalidade</label>
+                                    <select class="form-control" id="modality" name="modality"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="category">Categoria</label>
+                                    <select class="form-control" id="category" name="category"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <input class="btn btn-primary mt-4" type="submit" value="Salvar participação">
+                    </form>
+                </div>
+            </div>
+            @else
+
+            <p>Você não tem permissão para acessar essa funcionalidade.</p>
+
+            @endrole
+        </div>
+    </div>
+</div>
+
+
 <style>
     .dropdown-check-list {
         display: inline-block;
     }
+
     .dropdown-check-list .anchor {
         position: relative;
         cursor: pointer;
@@ -21,6 +96,7 @@
         padding: 5px 50px 5px 10px;
         border: 1px solid #ccc;
     }
+
     .dropdown-check-list .anchor:after {
         position: absolute;
         content: "";
@@ -34,11 +110,13 @@
         -o-transform: rotate(-135deg);
         -webkit-transform: rotate(-135deg);
         transform: rotate(-135deg);
-    }    
+    }
+
     .dropdown-check-list .anchor:active:after {
         right: 8px;
         top: 21%;
     }
+
     .dropdown-check-list ul.items {
         padding: 2px;
         display: none;
@@ -46,68 +124,20 @@
         border: 1px solid #ccc;
         border-top: none;
     }
+
     .dropdown-check-list ul.items li {
         list-style: none;
     }
+
     .dropdown-check-list.visible .anchor {
         color: #0094ff;
     }
+
     .dropdown-check-list.visible .items {
         display: block;
     }
-</style>  
-<div class="container">
-    <div class="information">
-        <div class="filters">
-            <form id="formulario" method="POST" action="{{ URL::to('atleta/registroPraticipacaoAtleta/registrar') }}">
-                @csrf
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="competition">Competicao</label>
-                            <select class="form-control" id="competition" name="competition"></select>
-                        </div>
-                        <div class="form-group">
-                            <label for="coordinator">Coordenador Competição</label>
-                            <input type="text" class="form-control" id="coordinator" name="coordinator" placeholder="Coordenador da competição" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="competition_level">Nível Competição</label>
-                            <input type="text" class="form-control" id="competition_level" name="competition_level" placeholder="Nivel competição" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="date">Data Competição</label>
-                            <input type="text" class="form-control" id="date" name="date" placeholder="data da competição" readonly>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <div id="list1" class="dropdown-check-list" tabindex="100">
-                                <span class="anchor">Selecione os atletas: </span>
-                                <ul id="athlete" class="items">
+</style>
 
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="modality">Modalidade</label>
-                            <select class="form-control" id="modality" name="modality"></select>
-                        </div>
-                        <div class="form-group">
-                            <label for="category">Categoria</label>
-                            <select class="form-control" id="category" name="category"></select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <button type="submit" class="btn btn-primary button-submit">Salvar</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 <script>
     controllerCompetition();
     controllerAthlete();
@@ -115,9 +145,9 @@
     controllerModality();
 
     function controllerModality() {
-        let modalities = <?= $modalities ?>;//pega todas as modalidades
+        let modalities = <?= $modalities ?>; //pega todas as modalidades
 
-        let select = document.querySelector('#modality');//pega o select de modalidade
+        let select = document.querySelector('#modality'); //pega o select de modalidade
 
         //cria um option e anexa ele no append com as informações q queremos
         for (let i = 0; i < modalities.length; i++) {
@@ -131,9 +161,9 @@
     }
 
     function controllerCategory() {
-        let categories = <?= $categories ?>;//pega todas as categorias
+        let categories = <?= $categories ?>; //pega todas as categorias
 
-        let select = document.querySelector('#category');//pega o select de categoria
+        let select = document.querySelector('#category'); //pega o select de categoria
 
         //cria um option e anexa ele no append com as informações q queremos
         for (let i = 0; i < categories.length; i++) {
@@ -147,9 +177,9 @@
     }
 
     function controllerAthlete() {
-        let athletes = <?= $athletes ?>;//pega todos os atletas
+        let athletes = <?= $athletes ?>; //pega todos os atletas
 
-        let select = document.querySelector('#athlete');//pega o select de atletas
+        let select = document.querySelector('#athlete'); //pega o select de atletas
 
         //cria um option e anexa ele no append com as informações q queremos
         for (let i = 0; i < athletes.length; i++) {
@@ -170,13 +200,13 @@
     }
 
     function controllerCompetition() {
-        let competitions = <?= $competitions ?>;//pega todas as competições
+        let competitions = <?= $competitions ?>; //pega todas as competições
 
-        let select = document.querySelector('#competition');//pega o select de competicao
+        let select = document.querySelector('#competition'); //pega o select de competicao
 
         //adiciona um evento quanto o elemento select for alterado
-        select.addEventListener('change', function () {
-            let optionSelected = this.options[this.selectedIndex];//pega o option selecionado
+        select.addEventListener('change', function() {
+            let optionSelected = this.options[this.selectedIndex]; //pega o option selecionado
             //pega a competição q foi seleciona no select
             debugger
             let obj = competitions.find(competition => competition.id == optionSelected.value);
@@ -213,7 +243,7 @@
     }
 
     var checkList = document.getElementById('list1');
-    checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
+    checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
         if (checkList.classList.contains('visible'))
             checkList.classList.remove('visible');
         else

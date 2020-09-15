@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Athletes;
 use App\Model\Categories;
 use App\Model\CompetitionParticipation;
 use App\Model\Competitions;
@@ -70,7 +69,7 @@ class RegisterAthleteCompetitionController extends Controller
         }
 
 
-        return redirect()->action('registerAthleteCompetitionController@index')->with('success', 'Categoria inserida com sucesso!');
+        return redirect()->action('RegisterAthleteCompetitionController@index')->with('success', 'Participação inserida com sucesso!');
     }
 
     /**

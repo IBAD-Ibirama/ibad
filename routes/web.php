@@ -35,9 +35,9 @@ Route::post('competicao/criar'      , 'CompetitionController@create');
 Route::get('competicao/remove/{id}' , 'CompetitionController@destroy');
 
 //Registro da participação em competição
-Route::get('atleta/registroPraticipacaoAtleta',            'registerAthleteCompetitionController@index');
-Route::get('atleta/registroPraticipacaoAtleta/registra',   'registerAthleteCompetitionController@formCadastrar');
-Route::post('atleta/registroPraticipacaoAtleta/registrar', 'registerAthleteCompetitionController@store');
+Route::get('atleta/registroPraticipacaoAtleta',            'RegisterAthleteCompetitionController@index');
+Route::get('atleta/registroPraticipacaoAtleta/registra',   'RegisterAthleteCompetitionController@formCadastrar');
+Route::post('atleta/registroPraticipacaoAtleta/registrar', 'RegisterAthleteCompetitionController@store');
 
 //Frequencia Atleta
 Route::get('frequencia','FrequencyAthlete@index');
