@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            @role('admin')
+            @can('treinador')
 
             <div class="card">
                 <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
@@ -55,7 +55,7 @@
 
             <p>Você não tem permissão para acessar essa funcionalidade.</p>
 
-            @endrole
+            @endcan
         </div>
     </div>
 </div>

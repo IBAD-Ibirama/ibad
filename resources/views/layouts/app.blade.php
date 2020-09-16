@@ -30,8 +30,11 @@
             <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}" href="/usuarios">Usuários</a></li>
             <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a>
             </li>
-            <li><a class="nav-link{{Request::is('turmas*') ? ' active' : ''}}" href="/turmas">Turmas</a></li>
+
             @endrole
+            @can('treinador')
+            <li><a class="nav-link{{Request::is('turmas*') ? ' active' : ''}}" href="/turmas">Turmas</a></li>
+            @endcan
 
             @can('financeiro')
             <li><a class="nav-link{{Request::is('movimentacoes*') ? ' active' : ''}}"
