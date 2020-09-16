@@ -26,9 +26,9 @@
                     <form action="/turmas/{{$team->id}}" method="post">
                         @csrf
                         @method('PUT')
-                      <div class="form-group">
+                        <div class="form-group">
                             <label for="team_name">Nome</label>
-                            <input type="text" class="form-control{{$errors->has('team_name') ? ' border-danger' : '' }}" id="team_name" name="team_name">
+                            <input value="{{ $team->name }}" type="text" class="form-control{{$errors->has('team_name') ? ' border-danger' : '' }}" id="team_name" name="team_name" />
                             <small class="form-text text-danger">{!! $errors->first('team_name') !!}</small>
                         </div>
 
@@ -40,7 +40,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="teamLevel_name">Nome do Nível:</label>
-                                            <input type="text" class="form-control{{ $errors->has('teamLevel_name') ? ' border-danger' : '' }}" id="teamLevel_name" name="teamLevel_name">
+                                            <input value="{{$team->teamLevel->name}}" type="text" class="form-control{{ $errors->has('teamLevel_name') ? ' border-danger' : '' }}" id="teamLevel_name" name="teamLevel_name">
                                             <small class="form-text text-danger">{!! $errors->first('teamLevel_name') !!}</small>
                                         </div>
                                     </div>
@@ -49,8 +49,7 @@
                                         <label for="nivelOption">Niveis já existentes</label>
                                         <div class="form-group">
                                             <select name="level_select" class="form-control" id="nivelOption">
-                                                <option value="">
-
+                                                <option>
                                                 </option>
                                                 <option value="{{$team->teamLevel->id}}">
                                                     {{$team->teamLevel->name}}
@@ -73,18 +72,18 @@
                                     Informe as características dessa turma
                                 </small>
                                 <div class="form-check">
-                                        <input type="checkbox"  class="form-check-input {{$errors->has('requires_auxiliary') ? ' border-danger' : '' }}" id="requires_auxiliary" name="requires_auxiliary">
-                                        <small class="form-text text-danger">{!! $errors->first('requires_auxiliary') !!}</small>
-                                    <label class="form-check-label" for="auxiliar">
+                                    <input type="checkbox" class="form-check-input {{$errors->has('requires_auxiliary') ? ' border-danger' : '' }}" id="requires_auxiliary" name="requires_auxiliary" />
+                                    <small class="form-text text-danger">{!! $errors->first('requires_auxiliary') !!}</small>
+                                    <label class="form-check-label" for="requires_auxiliary">
                                         Turma irá requerer auxiliares durantes os Treinos
                                     </label>
                                 </div>
 
                                 <div class="form-check">
-                                        <input type="checkbox" class="form-check-input {{$errors->has('pode_auxiliar') ? ' border-danger' : '' }}" id="pode_auxiliar" name="pode_auxiliar">
-                                        <small class="form-text text-danger">{!! $errors->first('pode_auxiliar') !!}</small>
+                                    <input type="checkbox" class="form-check-input {{$errors->has('can_auxiliary') ? ' border-danger' : '' }}" id="can_auxiliary" name="can_auxiliary" />
+                                        <small class="form-text text-danger">{!! $errors->first('can_auxiliary') !!}</small>
 
-                                    <label class="form-check-label" for="pode_auxiliar">
+                                    <label class="form-check-label" for="can_auxiliary">
                                         Os atletas dessa podem auxiliar outras turma nos Treinos
                                     </label>
                                 </div>
@@ -93,8 +92,7 @@
 
                         <div class="row">
                             <div class="mt-5 mb-2 col-12 col-md-3">
-                                <input type="submit" class="btn btn-success btn-lg btn-sm-block"
-                                    value="Atualizar Turma">
+                                <input type="submit" class="btn btn-success btn-lg btn-sm-block" value="Atualizar Turma" />
                             </div>
                         </div>
                     </form>
@@ -112,10 +110,10 @@
 
 @section('script')
 <script>
-    const nivelsCadastrados =  {!! json_encode($allTeamLevels) !!};
-  const inputNome = document.querySelector('#inputName');
-  const checkAuxiliar = document.querySelector('#auxiliar');
-  const checkPodeAuxiliar = document.querySelector('#pode_auxiliar');
+  const nivelsCadastrados =  {!! json_encode($allTeamLevels) !!};
+  const inputNome = document.querySelector('#teamLevel_name');
+  const checkAuxiliar = document.querySelector('#requires_auxiliary');
+  const checkPodeAuxiliar = document.querySelector('#can_auxiliary');
   const optionNivel = document.querySelector('#nivelOption');
 
   inputNome.onchange = () => cleanSelectOption();
