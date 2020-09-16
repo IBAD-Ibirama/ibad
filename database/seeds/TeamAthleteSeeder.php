@@ -3,6 +3,7 @@
 use App\User;
 use App\Athlete;
 use App\Team;
+use Spatie\Permission\Models\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -16,16 +17,20 @@ class TeamAthleteSeeder extends Seeder
      */
     public function run()
     {
+        $athleteRole = Role::find(2);
         $team = Team::find(1);
 
         $userMarcos = $this->createUser('Marcos', 'marcos@email.com', 'marcos123');
         $athleteMarcos = $this->createAthlete('2010-08-27', 'M', '5.555.555', '(65)65656-5655', 'M', '7 série', 'Não possui', 'Não precisa', 'GG', 'A+', 'UDESC', $userMarcos->id, $team->id);
+        $userMarcos->assignRole($athleteRole);
 
         $userJorge = $this->createUser('Jorge', 'jorge@email.com', 'jorge123');
         $athleteJorge = $this->createAthlete('2010-08-27', 'M', '5.555.555', '(65)65656-5655', 'M', '7 série', 'Não possui', 'Não precisa', 'GG', 'A+', 'UDESC', $userJorge->id, $team->id);
+        $userJorge->assignRole($athleteRole);
 
         $userAna = $this->createUser('Ana', 'ana@email.com', 'ana123');
         $athleteAna = $this->createAthlete('2010-08-27', 'F', '5.555.555', '(65)65656-5655', 'M', '7 série', 'Não possui', 'Não precisa', 'GG', 'A+', 'UDESC', $userAna->id, $team->id);
+        $userAna->assignRole($athleteRole);
 
     }
 
