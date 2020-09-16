@@ -28,21 +28,12 @@ class TeamController extends Controller
         $request->validate([
             'team_name' => 'required|min:3',
             'teamLevel_name' => 'required|min:3'
-        ]);
+        ], [], [
+            'team_name' => 'Informe o Nome da Turma',
+            'teamLevel_name' => 'Informe o Nivel'
+            ]);
 
-        $teamLevelId = $request['level_select'];
-        $level;
-        if($teamLevelId != ''){
-            $level = TeamLevel::find($teamLevelId);
-        } else {
-            $level= new TeamLevel();
-            $level->name = $request['teamLevel_name'];
-            $level->requires_auxiliary = $request['requires_auxiliary'] == 'on' ? true : false;
-            $level->can_be_auxiliary = $request['can_be_auxiliary'] == 'on' ? true : false;
-
-            $level->save();
-        }
-
+        $level = $this->handleTeamLevel($request);
         $team =  new Team();
         $team->name = $request['team_name'];
 
@@ -53,6 +44,23 @@ class TeamController extends Controller
         return Redirect::to($path)->with([
             'message_success' => "A Turma <b>" . $team->name . "</b> foi criada com sucesso."
         ]);
+    }
+
+    private function handleTeamLevel(Request $request){
+        $teamLevelId = $request['level_select'];
+        $level;
+        if($teamLevelId != ''){
+            $level = TeamLevel::find($teamLevelId);
+        } else {
+            $level= new TeamLevel();
+            $level->name = $request['teamLevel_name'];
+            $level->requires_auxiliary = $request['requires_auxiliary'] == 'on';
+            $level->can_be_auxiliary = $request['can_be_auxiliary'] == 'on';
+
+            $level->save();
+        }
+
+        return $level;
     }
 
     public function show(int $teamID)
@@ -86,22 +94,15 @@ class TeamController extends Controller
         $request->validate([
             'team_name' => 'required|min:3',
             'teamLevel_name' => 'required|min:3'
-        ]);
+        ], [], [
+            'team_name' => 'Informe o Nome da Turma',
+            'teamLevel_name' => 'Informe o Nivel'
+            ]);
 
         $team = Team::find($teamID);
         $teamLevelId = $request['level_select'];
 
-        $level;
-        if($teamLevelId != ''){
-            $level = TeamLevel::find($teamLevelId);
-        } else {
-            $level= new TeamLevel();
-            $level->name = $request['teamLevel_name'];
-            $level->requires_auxiliary = $request['requires_auxiliary'] == 'on' ? true : false;
-            $level->can_be_auxiliary = $request['can_be_auxiliary'] == 'on' ? true : false;
-
-            $level->save();
-        }
+        $level = $this->handleTeamLevel($request);
 
         $team->name = $request['team_name'];
 
