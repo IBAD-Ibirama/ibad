@@ -72,16 +72,16 @@
                                 <div class="form-check">
                                         <input type="checkbox"  class="form-check-input {{$errors->has('requires_auxiliary') ? ' border-danger' : '' }}" id="requires_auxiliary" name="requires_auxiliary">
                                         <small class="form-text text-danger">{!! $errors->first('requires_auxiliary') !!}</small>
-                                    <label class="form-check-label" for="auxiliar">
+                                    <label class="form-check-label" for="requires_auxiliary">
                                         Turma irá requerer auxiliares durantes os Treinos
                                     </label>
                                 </div>
 
                                 <div class="form-check">
-                                        <input type="checkbox" class="form-check-input {{$errors->has('pode_auxiliar') ? ' border-danger' : '' }}" id="pode_auxiliar" name="pode_auxiliar">
-                                        <small class="form-text text-danger">{!! $errors->first('pode_auxiliar') !!}</small>
+                                        <input type="checkbox" class="form-check-input {{$errors->has('can_auxiliary') ? ' border-danger' : '' }}" id="can_auxiliary" name="can_auxiliary">
+                                        <small class="form-text text-danger">{!! $errors->first('can_auxiliary') !!}</small>
 
-                                    <label class="form-check-label" for="pode_auxiliar">
+                                    <label class="form-check-label" for="can_auxiliary">
                                         Os atletas dessa podem auxiliar outras turma nos Treinos
                                     </label>
                                 </div>
@@ -109,10 +109,10 @@
 
 @section('script')
 <script>
-    const nivelsCadastrados =  {!! json_encode($teamLevels) !!};
-  const inputNome = document.querySelector('#inputName');
-  const checkAuxiliar = document.querySelector('#auxiliar');
-  const checkPodeAuxiliar = document.querySelector('#pode_auxiliar');
+  const nivelsCadastrados =  {!! json_encode($teamLevels) !!};
+  const inputNome = document.querySelector('#teamLevel_name');
+  const checkAuxiliar = document.querySelector('#requires_auxiliary');
+  const checkPodeAuxiliar = document.querySelector('#can_auxiliary');
   const optionNivel = document.querySelector('#nivelOption');
 
   inputNome.onchange = () => cleanSelectOption();

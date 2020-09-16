@@ -58,7 +58,7 @@ class TeamController extends Controller
             $level->name = $request['teamLevel_name'];
 
             $level->requires_auxiliary = $request['requires_auxiliary'] == 'on';
-            $level->can_be_auxiliary = $request['can_be_auxiliary'] == 'on';
+            $level->can_be_auxiliary = $request['can_auxiliary'] == 'on';
 
             $level->save();
         }
