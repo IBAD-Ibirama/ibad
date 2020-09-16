@@ -2,123 +2,73 @@
 
 use Illuminate\Support\Facades\URL;
 ?>
+
 @extends('layouts.app')
+
 @section('content')
 @if ($errors->any())
-    <div class="alert alert-danger">
-        <strong>Ooops!</strong> Houve um problema com sua requisição...<br><br>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif  
-<style>
-    table, td, th {
-        border: 1px solid #ddd;
-        padding: 8px;
-    }
+<div class="alert alert-danger">
+    <strong>Ooops!</strong> Houve um problema com sua requisição...<br><br>
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 
-    #root{
-        height: 300px;
-        overflow-y: auto;
-    }
-
-</style>
 <div class="container">
-    <h1>Consulta competição</h1>
-    <button id="btn-novo">Novo</button>
-    <div id="root"></div>
-    <script>
-        let root    = document.querySelector('#root');
-        let btnNovo = document.querySelector('#btn-novo');
-        btnNovo.addEventListener('click', function() {
-            window.location.href = '<?= URL::to('competicao/cadastrar') ?>';
-        });
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            @role('admin')
+            <div class="card">
+                <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
+                    <span>Consulta de competições</span>
+                    <a class='btn btn-success btn-sm' href="/competicao/cadastrar">Registrar competição</a>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Data</th>
+                                <th scope="col">Local</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Nível Competição</th>
+                                <th scope="col">Opções</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($competitions as $competition)
+                            <tr>
+                                <td>{{$competition->id}}</td>
+                                <td>{{$competition->date}}</td>
+                                <td>{{$competition->place}}</td>
+                                <td>{{$competition->descricao}}</td>
+                                <td>{{$competition->competition_level}}</td>
+                                <td>
+                                    <div class="float-right flex">
+                                        <a class="btn btn-sm btn-light mr-2" href="/competicao/alterar/{{$competition->id}}">Editar</a>
 
-        criaTabela();
+                                        <form style="display: inline" action="/competicao/remove/{{$competition->id}}" method="delete">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input class="btn btn-sm btn-outline-danger" type="submit" value="Deletar">
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        @else
 
-        function criaTabela() {
-            let table = new Tabela();
-            table.setColumns(['Id', 'Data', 'Local', 'Descrição', 'Nível competição', 'Opções']);
-            table.createTable();
-            root.append(table.getTable());
+        <p>Você não tem permissão para acessar essa funcionalidade.</p>
 
-            let aRegistros = <?= $aRegistros ?>;
-
-            let aIgnora = ['updated_at', 'created_at'];
-            for(let i = 0; i < aRegistros.length; i++) {
-                let data = aRegistros[i];
-                let tr = document.createElement('tr');
-                for(let [key, value] of Object.entries(data)) {
-                    if(aIgnora.includes(key)) {
-                        continue;
-                    }
-                    let td = document.createElement('td');
-                    td.append(document.createTextNode(value))
-                    tr.append(td);
-                }
-                let td = document.createElement('td');
-
-                td.append(criaBtn('exclui', function() {
-                    window.location.href = '<?= URL::to('competicao/remove') ?>/' + data.id;
-                }));
-                td.append(criaBtn('alterar', function() {
-                    window.location.href = '<?= URL::to('competicao/alterar') ?>/' + data.id;
-                }));
-                tr.append(td)
-                table.getTable().append(tr);
-            }
-        }
-
-        function Tabela() {
-            this.columns = null;
-            this.table   = null; 
-
-            this.setColumns = function(columns) {
-                this.columns = columns;
-            }
-
-            this.createTable = function() {
-                let table = this.getTable();
-                let thead = document.createElement('thead');
-                let tr    = document.createElement('tr');
-
-                for(let i = 0; i < this.columns.length; i++) {
-                    let td = document.createElement('th');
-                    td.append(document.createTextNode(this.columns[i]));
-
-                    tr.append(td);
-                }
-
-
-                thead.append(tr);
-                table.append(thead);
-            }
-
-            this.clear = function() {
-                let table = this.getTable();
-                while (table.firstChild) {
-                    table.removeChild(table.lastChild);
-                }
-            }
-
-            this.getTable = function() {
-                if(this.table == null) {
-                    this.table = document.createElement('table');
-                }
-                return this.table;
-            }
-        }
-
-        function criaBtn(titulo, func) {
-            let btn = document.createElement('button');
-            btn.append(document.createTextNode(titulo));
-            btn.addEventListener('click', func);
-            return btn;
-        }
-
-    </script>
+        @endrole
+    </div>
 </div>
 @endsection

@@ -20,12 +20,12 @@ class CompetitionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $aRegistros = Competitions::all();
-        foreach($aRegistros as $registro){
-            $registro->date=date('d/m/Y', strtotime($registro->date));
+        $competitions = Competitions::all();
+        foreach($competitions as $competition){
+            $competition->date=date('d/m/Y', strtotime($competition->date));
         }
         
-        return view('competicoes.index', compact('aRegistros'));
+        return view('competicoes.index', compact('competitions'));
     }
 
     public function formCadastro() {
@@ -62,7 +62,7 @@ class CompetitionController extends Controller
         if ($competition->save()) {
             return redirect()
                         ->action('CompetitionController@index')
-                        ->with('success', 'Categoria inserida com sucesso!');
+                        ->with('success', 'Competição inserida com sucesso!');
         } 
 
         return redirect()->back()->with('error', 'Falha ao inserir');
@@ -109,7 +109,7 @@ class CompetitionController extends Controller
         if ($competition->delete()) {
             return redirect()
                         ->action('CompetitionController@index')
-                        ->with('success', 'Categoria inserida com sucesso!');
+                        ->with('success', 'Competição inserida com sucesso!');
         } 
 
         return redirect()->back()->with('error', 'Falha ao remover');
