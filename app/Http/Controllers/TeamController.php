@@ -28,10 +28,12 @@ class TeamController extends Controller
         $request->validate([
             'team_name' => 'required|min:3',
             'teamLevel_name' => 'required|min:3'
-        ], [], [
+        ],
+        [],
+        [
             'team_name' => 'Informe o Nome da Turma',
             'teamLevel_name' => 'Informe o Nivel'
-            ]);
+        ]);
 
         $level = $this->handleTeamLevel($request);
         $team =  new Team();
@@ -42,7 +44,7 @@ class TeamController extends Controller
 
         $path = 'turmas/'. $team->id;
         return Redirect::to($path)->with([
-            'message_success' => "A Turma <b>" . $team->name . "</b> foi criada com sucesso."
+            'success' => "A Turma <b>" . $team->name . "</b> foi criada com sucesso."
         ]);
     }
 
@@ -54,6 +56,7 @@ class TeamController extends Controller
         } else {
             $level= new TeamLevel();
             $level->name = $request['teamLevel_name'];
+
             $level->requires_auxiliary = $request['requires_auxiliary'] == 'on';
             $level->can_be_auxiliary = $request['can_be_auxiliary'] == 'on';
 

@@ -3,6 +3,15 @@
 @section('content')
 
 <div class="container">
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <div class="row justify-content-center">
         <div class="col-md-12">
             @role('admin')
@@ -18,7 +27,8 @@
                         @csrf
                         <div class="form-group">
                             <label for="team_name">Nome</label>
-                            <input type="text" class="form-control" id="team_name" name="team_name">
+                            <input type="text" class="form-control{{$errors->has('team_name') ? ' border-danger' : '' }}" id="team_name" name="team_name">
+                            <small class="form-text text-danger">{!! $errors->first('team_name') !!}</small>
                         </div>
 
                         <div class="row">
@@ -29,7 +39,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="teamLevel_name">Nome do Nível:</label>
-                                            <input id='inputName' class="form-control" name="teamLevel_name">
+                                            <input type="text" class="form-control{{$errors->has('teamLevel_name') ? ' border-danger' : '' }}" id="teamLevel_name" name="teamLevel_name">
+                                            <small class="form-text text-danger">{!! $errors->first('teamLevel_name') !!}</small>
                                         </div>
                                     </div>
 
@@ -58,16 +69,17 @@
                                     Informe as características dessa turma
                                 </small>
                                 <div class="form-check">
-                                    <input name="requires_auxiliary" type="checkbox" class="form-check-input"
-                                        id="auxiliar">
+                                        <input type="checkbox"  class="form-check-input {{$errors->has('requires_auxiliary') ? ' border-danger' : '' }}" id="requires_auxiliary" name="requires_auxiliary">
+                                        <small class="form-text text-danger">{!! $errors->first('requires_auxiliary') !!}</small>
                                     <label class="form-check-label" for="auxiliar">
                                         Turma irá requerer auxiliares durantes os Treinos
                                     </label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input name="can_be_auxiliary" type="checkbox" class="form-check-input"
-                                        id="pode_auxiliar">
+                                        <input type="checkbox" class="form-check-input {{$errors->has('pode_auxiliar') ? ' border-danger' : '' }}" id="pode_auxiliar" name="pode_auxiliar">
+                                        <small class="form-text text-danger">{!! $errors->first('pode_auxiliar') !!}</small>
+
                                     <label class="form-check-label" for="pode_auxiliar">
                                         Os atletas dessa podem auxiliar outras turma nos Treinos
                                     </label>

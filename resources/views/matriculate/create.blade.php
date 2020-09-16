@@ -3,6 +3,15 @@
 @section('content')
 
 <div class="container">
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <div class="row justify-content-center">
         <div class="col-md-12">
             @role('admin')
@@ -20,7 +29,7 @@
                         <label for="athlete"> Escolha o Atleta:</label>
 
                         <div class="form-group">
-                            <select id="athlete" class="form-control" name="athlete_id">
+                            <select id="athlete" class="form-control {{$errors->has('athlete_id') ? ' border-danger' : '' }}" name="athlete_id">
                                 <option>
                                 </option>
                                 @foreach($athletes as $athlete)
@@ -29,6 +38,7 @@
                                 </option>;
                                 @endforeach
                             </select>
+                            <small class="form-text text-danger">{!! $errors->first('athlete_id') !!}</small>
                         </div>
 
                         <label>Atleta</label>
