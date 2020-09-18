@@ -42,7 +42,12 @@ class AthleteEvaluationFormTest extends TestCase
      */
     public function testRealizationDateRule()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $athleteEvaluationForm = new AthleteEvaluationForm();
+        $rules = $athleteEvaluationForm->rules();
+        $this->assertTrue(isset($rules['realization_date']));
+        $this->assertStringContainsString('required', $rules['realization_date']);
+        $this->assertStringContainsString('date', $rules['realization_date']);
+        $this->assertStringContainsString('before:tomorrow', $rules['realization_date']);
     }
 
     /**
@@ -52,7 +57,10 @@ class AthleteEvaluationFormTest extends TestCase
      */
     public function testPhysicalTestsRule()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $athleteEvaluationForm = new AthleteEvaluationForm();
+        $rules = $athleteEvaluationForm->rules();
+        $this->assertTrue(isset($rules['physical_testes']));
+        $this->assertStringContainsString('array', $rules['physical_testes']);
     }
 
     /**
@@ -62,7 +70,10 @@ class AthleteEvaluationFormTest extends TestCase
      */
     public function testBodyIndexesRule()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $athleteEvaluationForm = new AthleteEvaluationForm();
+        $rules = $athleteEvaluationForm->rules();
+        $this->assertTrue(isset($rules['body_indexes']));
+        $this->assertStringContainsString('array', $rules['body_indexes']);
     }
 
     /**
