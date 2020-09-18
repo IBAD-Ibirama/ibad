@@ -1,36 +1,51 @@
-@extends('layouts.master')
-
-@section('title', 'Consultar Atletas')
+@extends('layouts.app')
 
 @section('content')
-<div class="text-left">
-    <a class="btn btn-secondary mb-1" href={{ route('index') }} role="button">Início</a>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col" width="10%">#</th>
-            <th scope="col" width="65%">Nome do Atleta</th>
-            <th scope="col" width="25%">Ações</th>
-        </tr>
-        </thead>
-        <tbody>
-            @if (count($athletes) > 0)
-                @foreach ($athletes as $athlete)
-                    <tr>
-                        <th scope="row">{{ $athlete->id }}</th>
-                        <td>{{ $athlete->name }}</td>
-                        <td>
-                            <a class="btn btn-primary" href={{ route('evaluations.index', compact('athlete')) }} role="button">Avaliações</a>
-                            <a class="btn btn-warning" href={{ route('evolution-charts.index', compact('athlete')) }} role="button">Gráficos de Evolução</a>
-                        </td>
-                    </tr>
-                @endforeach
-            @else
-                <tr>
-                    <td colspan="3">Nenhum atleta cadastrado</td>
-                </tr>
-            @endif
-        </tbody>
-    </table>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      @role('admin')
+
+      <div class="card">
+        <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
+          <span>Todos os atletas</span>
+          <a class='btn btn-success btn-sm' href="/atletas/create">Criar novo atleta</a>
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+            @foreach($athletes as $athlete)
+            <li class="list-group-item">
+              @if(file_exists('images/athletes/'. $athlete->id . '_thumb.jpg'))
+              <a title="Show Details" href="/athlete/{{ $athlete->id }}">
+                <img src="/images/athletes/{{$athlete->id}}_thumb.jpg" alt="User Thumb">
+              </a>
+              @endif
+              <a href="/atletas/{{$athlete->id}}" title="Mostrar detalhes">{{$athlete->user->name}}</a>
+
+              <div class="float-right flex">
+
+                <a class="btn btn-sm btn-primary" href={{ route('evaluations.index', compact('athlete')) }} role="button">Avaliações</a>
+                <a class="btn btn-sm btn-warning" href={{ route('evolution-charts.index', compact('athlete')) }} role="button">Gráficos de Evolução</a>
+
+                <a class="btn btn-sm btn-light mr-2" href="/atletas/{{$athlete->id}}/edit">Editar</a>
+
+                <form style="display: inline" action="/atletas/{{$athlete->id}}" method="post">
+                  @csrf
+                  @method('DELETE')
+                  <input class="btn btn-sm btn-outline-danger" type="submit" value="Deletar">
+                </form>
+              </div>
+            </li>
+            @endforeach
+          </ul>
+        </div>
+      </div>
+      @else
+
+      <p>Você não tem permissão para acessar essa funcionalidade.</p>
+
+      @endrole
+    </div>
+  </div>
 </div>
 @endsection

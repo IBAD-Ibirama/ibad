@@ -3,23 +3,29 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Team extends Model
 {
-    /**
-     * Fillable fields.
-     * 
-     * @var array
-     */
-    protected $fillable = [
-        'name'
-    ];
+    use SoftDeletes;
 
-    /**
-     * Return team's trainings.
-     */
+    protected $table = 'teams';
+    protected $dates = ['deleted_at'];
+    protected $fillable = ['name'];
+
+    public function teamLevel()
+    {
+        return $this->belongsTo(TeamLevel::class, 'team_level_id', 'id');
+    }
+
+    public function athletes()
+    {
+        return $this->hasMany(Athlete::class, 'team_id', 'id');
+    }
+
     public function trainings()
     {
-        return $this->hasMany(Training::class);
+        return $this->hasMany(Training::class, 'team_id', 'id');
     }
+
 }

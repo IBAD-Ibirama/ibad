@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateTeamsTable extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -15,8 +16,11 @@ class CreateTeamsTable extends Migration
     {
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 50);
+            $table->string('name');
+            $table->bigInteger('team_level_id');
+            $table->foreign('team_level_id')->references('id')->on('team_levels');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -30,3 +34,4 @@ class CreateTeamsTable extends Migration
         Schema::dropIfExists('teams');
     }
 }
+
