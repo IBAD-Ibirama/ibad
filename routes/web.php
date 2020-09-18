@@ -17,6 +17,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('movimentacoes', 'MovesController');
     Route::resource('patrocinadores', 'SponsorController');
     Route::resource('atletas', 'AthleteController');
+    Route::resource('responsaveis', 'ResponsibleController');
     Route::get('/relatorio-movimentacoes', 'MovesReportController@create');
     Route::get('/delete-images/athlete/{athlete_id}', 'AthleteController@deleteImages');
 });

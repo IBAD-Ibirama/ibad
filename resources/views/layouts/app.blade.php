@@ -5,7 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>IBAD</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" defer></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <script>
+      $( document ).ready(function() {
+        $('#cpf').mask('000.000.000-00');
+        $('#phone').mask('(00)00000-0000');
+      });
+      function adicionarNovoAtleta(id,nome){
+          let atletas = document.getElementById("listaDeAtletas")
+          atletas.innerHTML += "<li class='list-group-item' id='item"+id+"'><form class='form-group' style='display: inline' action='' method='post'><input type='text' class='form-control' id='' name='' value='"+nome+"' readonly><input class='btn btn-sm btn-outline-danger' type='button' value='Deletar' onclick='removerAtleta("+id+")'></form><input type='hidden' name='"+id+"' id='atleta' value='"+id+"'></li>"             
+      }
+      function removerAtleta(id){
+        var listaAtletas = document.getElementById("listaDeAtletas");
+        var atleta= document.getElementById("item"+id);
+        listaAtletas.removeChild(atleta);
+      }
+      function atualizarUsuario(idUsuario){
+          document.getElementById('usuario').value = idUsuario
+      }
+
+  </script>
 </head>
 <body>
   <div id="app">
@@ -25,6 +46,7 @@
             @role('admin')
             <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}" href="/usuarios">Usuários</a></li>
             <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a></li>
+            <li><a class="nav-link{{Request::is('responsaveis*') ? ' active' : ''}}" href="/responsaveis">Responsáveis</a></li>
             @endrole
 
             @can('financeiro')
