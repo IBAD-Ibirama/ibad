@@ -21,7 +21,7 @@ class ModalitiesSeeder extends Seeder
 
     private function criarRegistros($modalidade, $genero)
     {
-        DB::table('modalities')->insert([
+        App\Model\Modality::create([
             'player_number' => $modalidade,
             'genre' => $genero,
         ]);
