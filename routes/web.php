@@ -53,9 +53,17 @@ Route::middleware('auth')->group(function () {
         ->name('frequency.create')
         ->where('training', '[0-9]+');
 
-
     Route::post('/turma/{training}/frequencia', 'FrequencyController@store')
         ->name('frequency.store')
+        ->where('training', '[0-9]+');
+
+
+    Route::get('/turma/{training}/frequencia/edit', 'FrequencyController@edit')
+        ->name('frequency.edit')
+        ->where('training', '[0-9]+');
+
+    Route::put('/turma/{training}/frequencia', 'FrequencyController@update')
+        ->name('frequency.update')
         ->where('training', '[0-9]+');
 
 });

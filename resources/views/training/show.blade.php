@@ -11,8 +11,13 @@
                 <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
                     <span>Detalhes do treino</span>
                     <div>
-                        <a class='btn btn-primary btn-sm'
-                            href="{{ route('frequency.create', $training->id)}}">Chamada</a>
+                        @if(count($training->frequencies()->get()) == 0)
+                        <a class='btn btn-primary btn-sm' href="{{ route('frequency.create', $training->id)}}">Fazer
+                            Chamada</a>
+                        @else
+                        <a class='btn btn-light btn-sm' href="{{ route('frequency.edit', $training->id)}}">Editar
+                            Chamada</a>
+                        @endif
                         <a class='btn btn-success btn-sm' href="{{ route('training.index') }}">Voltar</a>
                     </div>
                 </div>
