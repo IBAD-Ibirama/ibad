@@ -26,16 +26,36 @@ Route::middleware('auth')->group(function () {
     Route::resource('turmas', 'TeamController');
     Route::model('athlete', 'App\Athlete');
 
-    Route::get('/turmas/{team}/matricula', 'MatriculateController@create')
-      ->name('team.matriculate')
-      ->where('id', '[0-9]+');
+    Route::get('/turmas/{team}/matricular', 'MatriculateController@create')
+        ->name('team.matriculate')
+        ->where('id', '[0-9]+');
 
     Route::post('/turmas/{team}/matricular', 'MatriculateController@store')
-      ->where('team', '[0-9]+')
-      ->name('athlete.matriculate');
+        ->where('team', '[0-9]+')
+        ->name('athlete.matriculate');
 
     Route::delete('/turmas/{team}/atleta/{athlete}', 'MatriculateController@destroy')
-      ->name('team.dematriculate')
-      ->where('team', '[0-9]+')
-      ->where('athlete', '[0-9]+');
+        ->name('team.dematriculate')
+        ->where('team', '[0-9]+')
+        ->where('athlete', '[0-9]+');
+
+    Route::model('training', 'App\Training');
+
+    Route::get('/treinos', 'TrainingController@index')
+        ->name('training.index')
+        ->where('team', '[0-9]+');
+
+    Route::get('/treino/{training}', 'TrainingController@show')
+        ->name('training.show')
+        ->where('training', '[0-9]+');
+
+    Route::get('/treino/{training}/frequencia', 'FrequencyController@create')
+        ->name('frequency.create')
+        ->where('training', '[0-9]+');
+
+
+    Route::post('/turma/{training}/frequencia', 'FrequencyController@store')
+        ->name('frequency.store')
+        ->where('training', '[0-9]+');
+
 });

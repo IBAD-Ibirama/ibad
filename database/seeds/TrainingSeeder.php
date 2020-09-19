@@ -21,7 +21,7 @@ class TrainingSeeder extends Seeder
         $this->createTraining(6,1,3);
      }
 
-     public function createTraining($trainerID, $teamID, $localID): void
+     public function createTraining($trainerID, $teamID, $localID)
      {
          factory(Training::class)->create([
              'trainer_id' => $trainerID,
