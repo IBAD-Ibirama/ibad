@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Competitions;
+use App\Model\Competition;
 use DateTime;
 use Illuminate\Http\Request;
 
@@ -20,7 +20,7 @@ class CompetitionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $competitions = Competitions::all();
+        $competitions = Competition::all();
         foreach($competitions as $competition){
             $competition->date=date('d/m/Y', strtotime($competition->date));
         }
@@ -35,7 +35,7 @@ class CompetitionController extends Controller
     public function formAlterar(String $id = null) {
         $competicao = null;
         if($id != null) {
-            $competicao = Competitions::find($id);
+            $competicao = Competition::find($id);
             $competicao->created_at = null;
             $competicao->updated_at = null;
         }
@@ -47,7 +47,7 @@ class CompetitionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, Competitions $competition) {
+    public function create(Request $request, Competition $competition) {
         $request->validate([
             'date' => 'required',
             'descricao' => 'required',
@@ -84,7 +84,7 @@ class CompetitionController extends Controller
             'competition_level' => 'required',
             'place' => 'required'
         ] );
-        $competition=Competitions::find($request->id);
+        $competition=Competition::find($request->id);
         $competition->date              = $request->date;
         $competition->place             = $request->place;
         $competition->descricao       = $request->descricao;
@@ -104,7 +104,7 @@ class CompetitionController extends Controller
      */
     public function destroy(String $id) {
         $id;
-        $competition = Competitions::find($id);
+        $competition = Competition::find($id);
         
         if ($competition->delete()) {
             return redirect()

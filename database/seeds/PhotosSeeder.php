@@ -1,6 +1,6 @@
 <?php
 
-use App\Model\Photos;
+use App\Model\Photo;
 use Illuminate\Database\Seeder;
 
 class PhotosSeeder extends Seeder
@@ -12,7 +12,7 @@ class PhotosSeeder extends Seeder
      */
     public function run()
     {
-        factory(Photos::class, 10)->create()->each(function ($ret) {
+        factory(Photo::class, 10)->create()->each(function ($ret) {
             $ret->save();
         });
     }

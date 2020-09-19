@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Model\Finances;
+use App\Model\Finance;
 use Faker\Generator as Faker;
 
-$factory->define(Finances::class, function (Faker $faker) {
+$factory->define(Finance::class, function (Faker $faker) {
     return [
         'year'        => $faker->randomElement([2017, 2018, 2019, 2020]),
         'janeiro'     => $faker->randomElement([0, 1]),

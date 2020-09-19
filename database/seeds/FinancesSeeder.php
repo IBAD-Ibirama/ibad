@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Model\Finances;
+use App\Model\Finance;
 
 class FinancesSeeder extends Seeder
 {
@@ -12,7 +12,7 @@ class FinancesSeeder extends Seeder
      */
     public function run()
     {
-        factory(Finances::class, 3)->create()->each(function($ret) {
+        factory(Finance::class, 3)->create()->each(function($ret) {
             $ret->save();
         });
     }
