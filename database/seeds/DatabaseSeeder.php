@@ -18,6 +18,11 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionsSeeder::class);
         $this->call(SponsorSeeder::class);
         $this->call(AthleteSeeder::class);
+        
+        $this->call(TeamSeeder::class);
+        $this->call(TeamAthleteSeeder::class);
+        $this->call(FaultLimitSeeder::class);
+        $this->call(TrainingSeeder::class);
 
         $this->call(ModalitiesSeeder::class);
         $this->call(CompetitionsSeeder::class);

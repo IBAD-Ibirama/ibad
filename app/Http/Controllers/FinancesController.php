@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Model\Athletes;
+use App\Athlete;
 
 class FinancesController extends Controller {
 
@@ -12,7 +12,7 @@ class FinancesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $pagamento = Athletes::find(1)->relFinances;
+        $pagamento = Athlete::find(1)->relFinances;
         return view('financeiro.index', compact('pagamento'));
     }
 }
