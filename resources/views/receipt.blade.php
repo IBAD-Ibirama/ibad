@@ -89,8 +89,8 @@
         </div>
 
         <div class="receipt-section">
-            <p>Recebi de {{$move->user->name}} a importância de cinquenta reais</p>
-            <p>{{$move->description}}</p>
+            <p>Recebi de {{$move->user->name}} a importância de {{$extensiveNumber}}.</p>
+            <p>{{$move->description}}.</p>
         </div>
 
         <div class="receipt-section">
@@ -100,9 +100,10 @@
 
         <div class="receipt-signature col-xs-6">
             <p class="receipt-line"></p>
-            <p>UDESC - Alto Vale - CEAVI</p>
-            <p>83.891.283/0001-36</p>
-            <p>R. Dr. Getúlio Vargas, 2822 - Bela Vista</p>
+            <p>Ibirama Badminton - IBAD</p>
+            <p>28.538.367/0001-82</p>
+            <p>ibad.contato@gmail.com</p>
+            <p>R. Laurentino, 85 - Centro</p>
             <p>Ibirama - SC - 89140-000</p>
         </div>
 
