@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('competicoes/relatorio', 'CompetitionsReportController@index');
     Route::post('competicoes/relatorio', 'CompetitionsReportController@emit');
     Route::get('/atleta/desempenho', 'AthletesCompetitionController@showAll');
+    Route::get('/atleta/dados', 'QueryAthelteController@show');
     Route::get('/atleta/desempenho/{id}', 'AthletesCompetitionController@show');
     Route::get('/financeiro', 'FinancesController@index');
 

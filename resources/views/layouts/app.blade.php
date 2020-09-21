@@ -63,6 +63,7 @@ if($user){
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownCompeticoes">
                                     <a class="nav-link dropdown-item{{Request::is('frequencia*') ? ' active' : ''}}" href="/frequencia">Consulta de Frequências<span class="sr-only">(current)</span></a>
+                                    <a class="nav-link dropdown-item{{Request::is('/atleta/dados*') ? ' active' : ''}}" href="/atleta/dados">Consulta de dados<span class="sr-only">(current)</span></a>
                                 </div>
                             </li>
                             <li class="nav-item">
