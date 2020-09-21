@@ -29,6 +29,7 @@
                     @forelse($helpers as $helper)
                         <p>Auxiliar: {{$helper->athlete->user->name}}</p>          
                     @empty
+                    <p>Treinador: {{$trainers->name}}</p>
                     <p>Nenhum auxiliar vinculado a esse treino</p>    
                     @endforelse
                     <p>Dia da semana: {{$training->week_day}}-feira</p>

@@ -36,7 +36,11 @@
                         <select name="trainer_select" class="form-control" id="trainerOption">
                           <option value="">
                           </option>
-                      
+                          @foreach($trainers as $trainer)
+                            <option value='{{$trainer->id}}'>
+                              {{$trainer->id}} - {{$trainer->name}}
+                            </option>;
+                            @endforeach
                         </select>
                       </div>
                   </div>     

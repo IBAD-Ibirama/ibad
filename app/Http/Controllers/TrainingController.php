@@ -10,9 +10,11 @@ use App\Local;
 use When\When;
 use App\Training;
 use App\TrainingHelper;
+use App\User;
 use \Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Spatie\Permission\Models\Role;
 use DateTime;
 
 class TrainingController extends Controller
@@ -24,7 +26,12 @@ class TrainingController extends Controller
 
     public function show(Training $training){
         $helpers = TrainingHelper::all()->where('training_id','=',$training->id);
-        return view('training.show', compact('training','helpers'));
+        $trainers= User::find($training->trainer_id);
+        #dd($trainers->name);
+        return view('training.show')
+        ->with(compact('training'))
+        ->with(compact('helpers'))
+        ->with(compact('trainers'));
     }
 
     public function create()
@@ -36,8 +43,13 @@ class TrainingController extends Controller
       ->select('teams.id')
       ->get();
   
-   
-      #$trainers = Trainer::all();
+      $trainers = array();
+      $users = User::all();
+      foreach ($users as $user) { 
+        if($user->getRoleNames()[0] == "treinador"){
+          array_push($trainers, $user);
+        }
+      }
       $athletes = DB::table('athletes')
       ->join('users', 'athletes.user_id', '=' ,'users.id')
       ->join('teams', 'athletes.team_id', '=', 'teams.id')
@@ -49,7 +61,7 @@ class TrainingController extends Controller
       $place = DB::select('select * from locals');
       return view('training.create')
           ->with(compact('teams'))
-          #->with(compact('trainers'))
+          ->with(compact('trainers'))
           ->with(compact('place'))
           ->with(compact('athletes'))
           ->with(compact('teams_can_have_auxiliary'));
@@ -59,7 +71,7 @@ class TrainingController extends Controller
     public function store(Request $request)
     {
       $team_id = $request['team_select'];
-      #$trainer_id= $request['trainer_select'];
+      $trainer_id= $request['trainer_select'];
       $local_id=$this->handleTrainingLocal($request)->id;
       $week_day = $request['day_select'];
       $init_time = $request['training_init_time'];
@@ -90,7 +102,7 @@ class TrainingController extends Controller
           $training_unit->time_init= $init_time;
           $training_unit->time_end= $end_time;
           $training_unit->week_day=$week_day;
-          $training_unit->trainer_id=1;
+          $training_unit->trainer_id=$trainer_id;
           $training_unit->team_id=$team_id;
           $training_unit->local_id=$local_id;
           $training_unit->save();
