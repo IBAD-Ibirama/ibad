@@ -19,7 +19,8 @@
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "2.4",
-        "spatie/laravel-permission": "3.6"
+        "spatie/laravel-permission": "3.6",
+        "wgenial/numeroporextenso": "^3.0
     },
     "require-dev": {
         "facade/ignition": "^2.0",
