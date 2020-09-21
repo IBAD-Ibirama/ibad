@@ -23,7 +23,8 @@ class TrainingController extends Controller
     }
 
     public function show(Training $training){
-        return view('training.show', compact('training'));
+        $helpers = TrainingHelper::all()->where('training_id','=',$training->id);
+        return view('training.show', compact('training','helpers'));
     }
 
     public function create()
@@ -42,7 +43,7 @@ class TrainingController extends Controller
       ->join('teams', 'athletes.team_id', '=', 'teams.id')
       ->join('team_levels', 'teams.team_level_id' , '=', 'team_levels.id')
       ->where('team_levels.can_be_auxiliary', '=', 'true')
-      ->select('users.id', 'users.name')
+      ->select('athletes.id', 'users.name')
       ->get();
 
       $place = DB::select('select * from locals');
@@ -109,7 +110,7 @@ class TrainingController extends Controller
         $training_helper = new TrainingHelper();
         $training_helper->helper_id=$auxiliary;
         $training_helper->training_id=$training_id;
-        $training__helper->save();
+        $training_helper->save();
       }
 
       private function handleTrainingLocal(Request $request){

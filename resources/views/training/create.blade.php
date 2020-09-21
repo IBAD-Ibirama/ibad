@@ -185,7 +185,9 @@
 
   if(!can_have_aux){
     auxiliary1.disabled =true;
+    auxiliary1.value = null;
     auxiliary2.disabled =true;
+    auxiliary2.value= null;
     auxiliaryTitle.textContent = "Essa turma não pode ter ajudantes!";
   }else{
     auxiliary1.disabled =false;

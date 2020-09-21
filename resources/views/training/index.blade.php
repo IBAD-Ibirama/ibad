@@ -16,7 +16,8 @@
                     <ul class="list-group">
                         @foreach($trainings as $trainings)
                         <li class="list-group-item">
-                            <a href="/treino/{{$trainings->id}}" title="Consultar">{{$trainings->date}}</a>
+                            <a href="/treino/{{$trainings->id}}" title="Consultar">
+                            {{ (new DateTime(substr($trainings->date,0,10)))->format('d/m/Y')}}</a>
 
                             {{-- <div class="float-right flex">
                                 <a class="btn btn-sm btn-light mr-2" href="/turmas/{{$team->id}}/edit">Editar</a>
