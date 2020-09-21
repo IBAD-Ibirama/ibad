@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Categories;
+use App\Model\Category;
 use App\Model\CompetitionParticipation;
-use App\Model\Competitions;
-use App\Model\Modalities;
+use App\Model\Competition;
+use App\Model\Modality;
 use \Illuminate\Support\Facades\DB;
 
 class RegisterAthleteCompetitionController extends Controller
@@ -37,9 +37,9 @@ class RegisterAthleteCompetitionController extends Controller
 
     public function formCadastrar()
     {
-        $competitions = Competitions::all();
-        $categories = Categories::all();
-        $modalities = Modalities::all();
+        $competitions = Competition::all();
+        $categories = Category::all();
+        $modalities = Modality::all();
         $athletes = DB::table('users')
         ->join('athletes', 'athletes.user_id', '=', 'users.id')
         ->orderBy('users.name')

@@ -28,7 +28,7 @@ class CategoriesSeeder extends Seeder
     private function criarRegistros($categoria)
     {
 
-        DB::table('categories')->insert([
+        \App\Model\Category::create([
             'category' => $categoria,
         ]);
     }

@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Model\Competitions;
+use App\Model\Competition;
 use Faker\Generator as Faker;
 
-$factory->define(Competitions::class, function (Faker $faker) {
+$factory->define(Competition::class, function (Faker $faker) {
     return [
          'date' => $faker->dateTime
         ,'place' => $faker->address

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
-use App\Model\Competitions;
+use App\Model\Competition;
 use \Illuminate\Http\Request;
 use \Illuminate\Support\Facades\DB;
 
@@ -28,7 +28,7 @@ class CompetitionsReportController extends Controller
     public function emit(Request $request)
     {
         $values       = $this->getDadosEmissao($request);
-        $competicao   = Competitions::find($values['id']);
+        $competicao   = Competition::find($values['id']);
         $atletas      = $this->getDadosParticipacao($values['id']);
         $titulo       = $values['titulo'];
         $informacoes  = $values['informacoes'];
