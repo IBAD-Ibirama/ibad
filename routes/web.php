@@ -66,4 +66,13 @@ Route::middleware('auth')->group(function () {
         ->name('frequency.update')
         ->where('training', '[0-9]+');
 
+    Route::get('/limiteDeFaltas', 'FaultLimitController@index')
+        ->name('fault.show');
+
+    Route::get('/limiteDeFaltas/edit', 'FaultLimitController@create')
+        ->name('fault.create');
+
+    Route::post('/limiteDeFaltas', 'FaultLimitController@store')
+        ->name('fault.store');
+
 });
