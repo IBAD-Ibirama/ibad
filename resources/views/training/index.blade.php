@@ -21,7 +21,7 @@
                         <a href="{{ route('training.show', $training->id) }}" title="Consultar">{{ $training->time_init}} as {{ $training->time_end}} |</a>
                         <a href="{{ route('training.show', $training->id) }}" title="Consultar">{{ $training->local->description }} </a>
                         <div class="float-right flex">
-                         <a class="btn btn-sm btn-light mr-2" href= "" >Editar</a>
+                         <a class="btn btn-sm btn-light mr-2" href= "{{ route('training.edit', $training->id) }}" >Editar</a>
                             <form style="display: inline"  action="{{ route('training.destroy', $training->id) }}" href="{{ route('training.index') }}" method="post">
                          @csrf
                          @method('DELETE')

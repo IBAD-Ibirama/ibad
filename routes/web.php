@@ -61,7 +61,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/treino/{training}/frequencia', 'FrequencyController@create')
         ->name('frequency.create')
         ->where('training', '[0-9]+');
-        
+
+    Route::get('/treino/{id}/edit', 'TrainingController@edit')
+        ->name('training.edit')
+        ->where('id', '[0-9]+');
+    
+    Route::put('/treino/{id}/edit', 'TrainingController@update')
+        ->name('training.update')
+        ->where('id', '[0-9]+');
+
     Route::delete('/treinos/{id}', 'TrainingController@destroy')
         ->name('training.destroy')
         ->where('id', '[0-9]+');

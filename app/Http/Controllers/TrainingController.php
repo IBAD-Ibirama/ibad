@@ -168,4 +168,88 @@ class TrainingController extends Controller
           session()->flash('success', "Treino <b></b> foi removida.");
           return Redirect::back();
       }
+
+    public function edit(int $id )
+    {
+      $training = Training::find($id);
+      $teams = Team::all();
+      $teams_can_have_auxiliary = DB::table('teams')
+      ->join('team_levels', 'teams.team_level_id' , '=', 'team_levels.id')
+      ->where('team_levels.requires_auxiliary', '=', 'true')
+      ->select('teams.id')
+      ->get();
+  
+   
+      #$trainers = Trainer::all();
+      $athletes = DB::table('athletes')
+      ->join('users', 'athletes.user_id', '=' ,'users.id')
+      ->join('teams', 'athletes.team_id', '=', 'teams.id')
+      ->join('team_levels', 'teams.team_level_id' , '=', 'team_levels.id')
+      ->where('team_levels.can_be_auxiliary', '=', 'true')
+      ->select('athletes.id', 'users.name')
+      ->get();
+
+      $place = DB::select('select * from locals');
+      return view('training.edit')
+          ->with(compact('teams'))
+          #->with(compact('trainers'))
+          ->with(compact('place'))
+          ->with(compact('athletes'))
+          ->with(compact('training'))
+          ->with(compact('teams_can_have_auxiliary'));
+    }
+
+  public function update(Request $request, int $id)
+  {
+    $team_id = $request['team_select'];
+    #$trainer_id= $request['trainer_select'];
+    $local_id=$this->handleTrainingLocal($request)->id;
+    $week_day = $request['day_select'];
+    $init_time = $request['training_init_time'];
+    $end_time = $request['training_end_time'];
+    $init_date = $request['training_init'];
+    $repeat_until = $request['training_repeat'];
+    
+    $auxiliary1 = $request['auxiliary1'];
+    $auxiliary2 = $request['auxiliary2'];
+    
+    
+    $recurent = new When();
+    $recurent->startDate($this->dateFromString($init_date))
+    ->freq("weekly")
+    ->count($this->calculateWeeks($init_date, $repeat_until))
+    ->byday($this->ptWeekDayToEn($week_day))
+    ->generateOccurrences();
+
+    foreach ($recurent->occurrences as $datas){
+      
+      $dates_string = strval(date_format($datas, 'd-m-Y'));
+      $arr2 = str_split($dates_string, 10);
+      foreach($arr2 as $date_value){
+        $training_unit = Training::find($id);
+        
+        
+        $training_unit->date = new DateTime($date_value);
+        $training_unit->time_init= $init_time;
+        $training_unit->time_end= $end_time;
+        $training_unit->week_day=$week_day;
+        $training_unit->trainer_id=1;
+        $training_unit->team_id=$team_id;
+        $training_unit->local_id=$local_id;
+        $training_unit->save();
+
+        if($auxiliary1 != null)
+          $this->handleHelpers($auxiliary1, $training_unit->id);
+      
+        if($auxiliary2 != null)
+          $this->handleHelpers($auxiliary2, $training_unit->id);
+      }
+    }
+
+      
+   
+
+    $path = route('training.show',  $training_unit -> id);
+    return Redirect::to($path);
+  }
 }
