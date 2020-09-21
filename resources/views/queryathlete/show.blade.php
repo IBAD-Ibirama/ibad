@@ -9,7 +9,7 @@
       <div class="card">
         <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
           <span>Consultar dados</span>
-          <a class="btn btn-warning btn-sm" href="/atletas"><i class="fas fa-arrow-circle-up"></i> Voltar</a>
+          <a class="btn btn-warning btn-sm" href="/dashboard"><i class="fas fa-arrow-circle-up"></i> Voltar</a>
         </div>
         <div class="card-body">
             <div class="form-group">
