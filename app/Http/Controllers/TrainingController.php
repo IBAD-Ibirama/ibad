@@ -21,6 +21,7 @@ class TrainingController extends Controller
 {
     public function index(){
         $trainings = Training::orderBy('date', 'asc')->get();
+       # $trainers= User::find($training->trainer_id);
         return view('training.index', compact('trainings'));
     }
 
