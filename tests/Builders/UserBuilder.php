@@ -3,7 +3,6 @@
 namespace Tests\Builders;
 
 use App\User;
-use League\CommonMark\Extension\Attributes\Node\Attributes;
 
 class UserBuilder
 {

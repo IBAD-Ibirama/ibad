@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Moves;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
 
 class MovesController extends Controller
 {

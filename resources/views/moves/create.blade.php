@@ -15,18 +15,18 @@
             @csrf
             <div class="form-group">
               <label for="description">Descrição</label>
-              <input type="text" class="form-control{{$errors->has('description') ? ' border-danger' : '' }}" id="description" name="description" value="{{old('description')}}">
+              <input type="text" class="form-control{{ $errors->has('description') ? ' border-danger' : '' }}" id="description" name="description" value="{{ old('description') }}">
               <small class="form-text text-danger">{!! $errors->first('description') !!}</small>
             </div>
             <div class="form-group">
               <label for="date">Data</label>
-              <input type="date" class="form-control{{$errors->has('date') ? ' border-danger' : '' }}" id="date" name="date" value="{{old('date')}}">
-              <small class="form-text text-danger">{!! $errors->first('date') !!}</small>
+              <input type="date" class="form-control{{ $errors->has('date') ? ' border-danger' : '' }}" id="date" name="date" value="{{ old('date') }}">
+              <small class="form-text text-danger">{ !! $errors->first('date') !! }</small>
             </div>
             <div class="form-group">
               <label for="value">Valor</label>
-              <input type="text" class="form-control{{$errors->has('value') ? ' border-danger' : '' }}" id="value" name="value" value="">
-              <small class="form-text text-danger">{!! $errors->first('value') !!}</small>
+              <input type="text" class="form-control{{ $errors->has('value') ? ' border-danger' : '' }}" id="value" name="value" value="">
+              <small class="form-text text-danger">{ !! $errors->first('value') !! }</small>
             </div>
             <div class="form-group">
               <label for="type">Tipo</label>
@@ -37,7 +37,7 @@
             </div>
             <div class="form-group">
               <label for="specification">Especificação</label>
-              <input type="text" class="form-control{{$errors->has('specification') ? ' border-danger' : '' }}" id="specification" name="specification" value="">
+              <input type="text" class="form-control{{ $errors->has('specification') ? ' border-danger' : '' }}" id="specification" name="specification" value="">
               <small class="form-text text-danger">{!! $errors->first('specification') !!}</small>
             </div>
             <input class="btn btn-primary mt-4" type="submit" value="Salvar movimentação">

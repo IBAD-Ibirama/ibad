@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {

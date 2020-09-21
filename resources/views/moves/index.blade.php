@@ -17,14 +17,14 @@
         </div>
         <div class="card-body">
           <ul class="list-group">
-            @foreach($moves as $move)
+            @foreach ( $moves as $move )
             <li class="list-group-item">
-              <a href="/movimentacoes/{{$move->id}}" title="Mostrar detalhes">{{$move->description}}</a>
+              <a href="/movimentacoes/{{ $move->id }}" title="Mostrar detalhes">{{ $move->description }}</a>
 
               <div class="float-right flex">
-                <a class="btn btn-sm btn-light mr-2" href="/movimentacoes/{{$move->id}}/edit">Editar</a>
+                <a class="btn btn-sm btn-light mr-2" href="/movimentacoes/{{ $move->id }}/edit">Editar</a>
 
-                <form style="display: inline" action="/movimentacoes/{{$move->id}}" method="post">
+                <form style="display: inline" action="/movimentacoes/{{ $move->id }}" method="post">
                   @csrf
                   @method('DELETE')
                   <input class="btn btn-sm btn-outline-danger" type="submit" value="Deletar">
@@ -47,7 +47,6 @@
         var url = 'relatorio-movimentacoes' + "/?data=" + document.getElementById(inputid).value;
         window.location.href = url
       }
-
     </script>
   </div>
   @endsection

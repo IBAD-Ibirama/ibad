@@ -3,7 +3,6 @@
 namespace Tests\Builders;
 
 use App\Moves;
-use League\CommonMark\Extension\Attributes\Node\Attributes;
 
 class MovesBuilder
 {
@@ -48,5 +47,4 @@ class MovesBuilder
         $this->attributes['specification'] = $specification;
         return $this;
     }
-
 }

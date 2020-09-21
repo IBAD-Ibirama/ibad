@@ -5,22 +5,19 @@ namespace Tests\Feature;
 use App\Sponsor;
 use App\User;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
 class SponsorTest extends TestCase
 {
     /** @test */
-    public function it_should_authenticated()
+    function it_should_authenticated()
     {
         $this->post(route('patrocinadores.store'))
             ->assertRedirect('/login');
     }
 
     /** @test */
-    public function it_should_store_in_database()
+    function it_should_store_in_database()
     {
         Carbon::setTestNow(now());
         $this->withoutExceptionHandling();
@@ -43,7 +40,7 @@ class SponsorTest extends TestCase
     }
 
     /** @test */
-    public function cnpj_field_is_unique_and_is_required()
+    function cnpj_field_is_unique_and_is_required()
     {
         $sponsor = $this->sponsor()->setCnpj(null)->make();
         $this->actingAs($this->user()->create())
@@ -54,7 +51,7 @@ class SponsorTest extends TestCase
     }
 
     /** @test */
-    public function it_should_show_a_move_search()
+    function it_should_show_a_move_search()
     {
         $this->withoutExceptionHandling();
         $sponsor = $this->sponsor()->make();
@@ -68,7 +65,7 @@ class SponsorTest extends TestCase
     }
 
     /** @test */
-    public function it_should_list_allSponsors()
+    function it_should_list_allSponsors()
     {
         Carbon::setTestNow(now());
 
@@ -82,7 +79,7 @@ class SponsorTest extends TestCase
     }
 
     /** @test */
-    public function sponsor_can_be_updated()
+    function sponsor_can_be_updated()
     {
         $sponsor = $this->sponsor()->make();
 
@@ -105,7 +102,7 @@ class SponsorTest extends TestCase
     }
 
     /** @test */
-    public function sponsor_can_be_deleted()
+    function sponsor_can_be_deleted()
     {
         $sponsor = $this->sponsor()->make();
 

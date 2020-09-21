@@ -4,9 +4,9 @@ namespace Tests;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Tests\Builders\MovesBuilder;
 use Tests\Builders\SponsorBuilder;
 use Tests\Builders\UserBuilder;
-use Tests\Builders\MovesBuilder;
 
 abstract class TestCase extends BaseTestCase
 {

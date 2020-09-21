@@ -2,23 +2,22 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\User;
 use Carbon\Carbon;
 use Tests\TestCase;
-use App\User;
+
 
 class UserTest extends TestCase
 {
     /** @test */
-    public function it_should_authenticated()
+    function it_should_authenticated()
     {
         $this->post(route('usuarios.store'))
             ->assertRedirect('/login');
     }
 
     /** @test */
-    public function it_should_store_in_database()
+    function it_should_store_in_database()
     {
         Carbon::setTestNow(now());
 
@@ -39,7 +38,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function name_field_email_field_password_field_is_required()
+    function name_field_email_field_password_field_is_required()
     {
         $user = $this->user()->setName(null)->make();
         $this->actingAs($this->user()->create())
@@ -64,7 +63,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function it_should_show_a_move_search()
+    function it_should_show_a_move_search()
     {
         $user = $this->user()->make();
 
@@ -77,7 +76,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function it_should_list_allUsers()
+    function it_should_list_allUsers()
     {
         Carbon::setTestNow(now());
 
@@ -91,7 +90,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function user_can_be_deleted()
+    function user_can_be_deleted()
     {
         $user = $this->user()->make();
 

@@ -2,25 +2,22 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
-use Carbon\Carbon;
 use App\Moves;
-use App\Sponsor;
 use App\User;
+use Carbon\Carbon;
+use Tests\TestCase;
 
 class MovesTest extends TestCase
 {
     /** @test */
-    public function it_should_authenticated()
+    function it_should_authenticated()
     {
         $this->post(route('movimentacoes.store'))
             ->assertRedirect('/login');
     }
 
     /** @test */
-    public function it_should_store_in_database()
+    function it_should_store_in_database()
     {
         Carbon::setTestNow(now());
 
@@ -43,7 +40,7 @@ class MovesTest extends TestCase
     }
 
     /** @test */
-    public function description_date_value_type_specification_field_is_required()
+    function description_date_value_type_specification_field_is_required()
     {
         $moves = $this->moves()->setDescription(null)->make();
         $this->actingAs($this->user()->create())
@@ -81,7 +78,7 @@ class MovesTest extends TestCase
             ]);
     }
     /** @test */
-    public function it_should_show_a_move_search()
+    function it_should_show_a_move_search()
     {
         $move = $this->moves()->make();
 
@@ -96,7 +93,7 @@ class MovesTest extends TestCase
     }
 
     /** @test */
-    public function it_should_list_allMoves()
+    function it_should_list_allMoves()
     {
         Carbon::setTestNow(now());
 
@@ -107,7 +104,7 @@ class MovesTest extends TestCase
     }
 
     /** @test */
-    public function move_can_be_updated()
+    function move_can_be_updated()
     {
         $move = $this->moves()->make();
 
@@ -128,7 +125,7 @@ class MovesTest extends TestCase
     }
 
     /** @test */
-    public function move_can_be_deleted()
+    function move_can_be_deleted()
     {
         $move = $this->moves()->make();
 

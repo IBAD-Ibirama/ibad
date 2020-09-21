@@ -2,11 +2,9 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
-use Carbon\Carbon;
 use App\Athlete;
+use Carbon\Carbon;
+use Tests\TestCase;
 
 class AthleteTest extends TestCase
 {
@@ -17,14 +15,14 @@ class AthleteTest extends TestCase
      */
 
     /** @test */
-    public function it_should_authenticated()
+    function it_should_authenticated()
     {
         $this->post(route('atletas.store'))
             ->assertRedirect('/login');
     }
 
     /** @test */
-    public function it_should_store_in_database()
+    function it_should_store_in_database()
     {
         Carbon::setTestNow(now());
 
@@ -51,7 +49,7 @@ class AthleteTest extends TestCase
     }
 
     /** @test */
-    public function it_should_show_a_athlete_search()
+    function it_should_show_a_athlete_search()
     {
 
         $athlete = factory(Athlete::class)->make();
@@ -63,7 +61,7 @@ class AthleteTest extends TestCase
     }
 
     /** @test */
-    public function it_should_list_allAthletes()
+    function it_should_list_allAthletes()
     {
         Carbon::setTestNow(now());
 
@@ -77,7 +75,7 @@ class AthleteTest extends TestCase
     }
 
     /** @test */
-    public function sponsor_can_be_updated()
+    function sponsor_can_be_updated()
     {
         $athlete = factory(Athlete::class)->make();
 
@@ -110,7 +108,7 @@ class AthleteTest extends TestCase
     }
 
     /** @test */
-    public function sponsor_can_be_deleted()
+    function sponsor_can_be_deleted()
     {
         $athlete = factory(Athlete::class)->make();
 

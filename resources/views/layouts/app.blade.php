@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="pt-br">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,6 +8,7 @@
   <title>IBAD</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 </head>
+
 <body>
   <div id="app">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
@@ -21,15 +23,15 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left Side Of Navbar -->
           <ul class="navbar-nav mr-auto">
-            <li><a class="nav-link{{Request::is('dashboard') ? ' active' : ''}}" href="/">Dashboard</a></li>
+            <li><a class="nav-link{{ Request::is('dashboard') ? ' active' : '' }}" href="/">Dashboard</a></li>
             @role('admin')
-            <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}" href="/usuarios">Usuários</a></li>
-            <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a></li>
+            <li><a class="nav-link{{ Request::is('usuarios*') ? ' active' : '' }}" href="/usuarios">Usuários</a></li>
+            <li><a class="nav-link{{ Request::is('atletas*') ? ' active' : '' }}" href="/atletas">Atletas</a></li>
             @endrole
 
             @can('financeiro')
-            <li><a class="nav-link{{Request::is('movimentacoes*') ? ' active' : ''}}" href="/movimentacoes">Movimentações</a></li>
-            <li><a class="nav-link{{Request::is('patrocinadores*') ? ' active' : ''}}" href="/patrocinadores">Patrocinadores</a></li>
+            <li><a class="nav-link { {Request::is('movimentacoes*') ? ' active' : '' }} " href="/movimentacoes">Movimentações</a></li>
+            <li><a class="nav-link {{ Request::is('patrocinadores*') ? ' active' : '' }} " href="/patrocinadores">Patrocinadores</a></li>
             @endcan
           </ul>
 
@@ -57,7 +59,7 @@
     </nav>
 
     <main class="py-4">
-      @if(isset($message_success) || Session::has('success'))
+      @if ( isset( $message_success) || Session::has( 'success'))
       <div class="container">
         <div class="alert alert-success" role="alert">
           {!! isset($message_success) ? $message_success : Session::get("success") !!}
@@ -82,4 +84,5 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
   @yield('script')
 </body>
+
 </html>
