@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Athlete;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class FinancesController extends Controller {
 
@@ -12,7 +14,10 @@ class FinancesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $pagamento = Athlete::find(1)->relFinances;
-        return view('financeiro.index', compact('pagamento'));
+
+        $finances = DB::table('moves')
+            ->where('user_id', Auth::user()->id)
+            ->get();
+        return view('financeiro.index', compact('finances'));
     }
 }

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Athlete;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use stdClass;
 
 class FrequencyAthlete extends Controller
@@ -12,14 +15,12 @@ class FrequencyAthlete extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $frequency=new stdClass();
-        $frequency->nameAthlete='Rodrigo Santiago';
-        $frequency->numberOfLack=2;
-        $frequency->numberOfTraining=8;
-        $frequency->freqPor=((8-2)/8)*100 . "%";
-        
-        return view('frequencia.index', compact('frequency'));
+        $frequencys = DB::table('frequencies')
+            ->join('trainings', 'frequencies.training_id', '=', 'trainings.id')
+            ->where('athlete_id', Auth::user()->id)
+            ->get();
+            
+        return view('frequencia.index', compact('frequencys'));
     }
-
 
 }

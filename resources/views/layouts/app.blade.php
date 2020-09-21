@@ -38,8 +38,10 @@ if($user){
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownCompeticoes">
                                     <a class="nav-link dropdown-item{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Consulta de Atletas</a>
-                                    <a class="nav-link dropdown-item{{Request::is('frequencia*') ? ' active' : ''}}" href="/frequencia">Consulta de Frequências<span class="sr-only">(current)</span></a>
                                 </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/atleta/desempenho">Desempenho dos atletas<span class="sr-only">(current)</span></a>
                             </li>
                             <li></li>
                             <li class="dropdown">
@@ -55,12 +57,20 @@ if($user){
                             @endrole
 
                             @role('atleta')
+                            <li class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownCompeticoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Atletas
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownCompeticoes">
+                                    <a class="nav-link dropdown-item{{Request::is('frequencia*') ? ' active' : ''}}" href="/frequencia">Consulta de Frequências<span class="sr-only">(current)</span></a>
+                                </div>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/financeiro">Relatório Financeiro<span class="sr-only">(current)</span></a>
                             </li>
-                            @if($athlete && $athlete->id)
+                            @if($user->id && $user->id)
                             <li class="nav-item">
-                                <a class="nav-link" href="/atleta/desempenho/{{$athlete->id}}">Desempenho do atleta<span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="/atleta/desempenho/{{$user->id}}">Desempenho do atleta<span class="sr-only">(current)</span></a>
                             </li>
                             @endif
                             @endrole

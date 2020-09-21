@@ -11,17 +11,15 @@
     <table id="tabela" class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">Nome do Atleta</th>
-                <th scope="col">Número de faltas</th>
-                <th scope="col">Número total de treinos</th>
-                <th scope="col">Frequência em porcentagem</th>
+                <th scope="col">Situação</th>
+                <th scope="col">Data</th>
             </tr>
         </thead>
         <tbody>
-            <td> {{ $frequency->nameAthlete }}</td>
-            <td> {{ $frequency->numberOfLack }}</td>
-            <td> {{ $frequency->numberOfTraining }}</td>
-            <td> {{ $frequency->freqPor }}</td>
+            @foreach($frequencys as $frequency)
+                <td> {{ ($frequency->presence)? 'PRESENTE': 'AUSENTE' }}</td>
+                <td> {{  date('d/m/Y', strtotime($frequency->date)) }}</td>
+            @endforeach
         </tbody>
     </table>
 </div>
