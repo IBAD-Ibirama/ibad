@@ -9,7 +9,8 @@
 
             <div class="card">
                 <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
-                    <span>{{ __('Todas os treinos') }}</span>
+                    <span>{{ __('Todos os treinos') }}</span>
+                    <a class='btn btn-success btn-sm' href="/treinos/create">Criar novo treino</a>
                 </div>
                 <div class="card-body">
                     <ul class="list-group">

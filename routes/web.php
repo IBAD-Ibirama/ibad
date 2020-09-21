@@ -45,6 +45,15 @@ Route::middleware('auth')->group(function () {
         ->name('training.index')
         ->where('team', '[0-9]+');
 
+    Route::get('/treinos/create', 'TrainingController@create')
+        ->name('training.create')
+        ->where('team', '[0-9]+');
+
+    Route::post('/training/cadastrar', 'TrainingController@store')
+        ->name('training.store')
+        ->where('id', '[0-9]+');
+  
+
     Route::get('/treino/{training}', 'TrainingController@show')
         ->name('training.show')
         ->where('training', '[0-9]+');
