@@ -66,4 +66,23 @@ Route::middleware('auth')->group(function () {
         ->name('frequency.update')
         ->where('training', '[0-9]+');
 
+    Route::any('/turma/{id}/faltas', 'FrequencyController@faults')
+        ->name('frequency.faults')
+        ->where('id', '[0-9]+');
+
+    Route::get('/turma/{id}/desistencias', 'WithdrawalController@withdrawal')
+        ->name('team.withdrawal')
+        ->where('id', '[0-9]+');
+
+    Route::get('/turma/{id}/adddesistencia', 'WithdrawalController@linksAthletePagewithdrawal')
+        ->name('team.add_withdrawal')
+        ->where('id', '[0-9]+');
+
+    Route::post('/turma/desistencia', 'WithdrawalController@addWithdrawal')
+        ->name('add_withdrawal');
+
+    Route::delete('/turmas/{team}/withdrawal/{withdrawal}', 'WithdrawalController@destroy')
+        ->name('withdrawal.delete')
+        ->where('team', '[0-9]+')
+        ->where('withdrawal', '[0-9]+');
 });

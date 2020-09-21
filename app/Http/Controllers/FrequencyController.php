@@ -14,8 +14,8 @@ class FrequencyController extends Controller
 
     public function create(Training $training)
     {
-        if(count($training->frequencies()->get()) != 0){
-          return $this->edit($training);
+        if (count($training->frequencies()->get()) != 0) {
+            return $this->edit($training);
         }
         $team = DB::table('trainings')
             ->join('teams', 'teams.id', '=', 'trainings.team_id')
@@ -24,9 +24,9 @@ class FrequencyController extends Controller
 
         $athletes = DB::table('trainings')
             ->select([
-                    'users.name as name',
-                    'users.id as id',
-                    'athletes.id as athlete_id'
+                'users.name as name',
+                'users.id as id',
+                'athletes.id as athlete_id'
             ])
             ->join('teams', 'teams.id', '=', 'trainings.team_id')
             ->join('athletes', 'athletes.team_id', '=', 'teams.id')
@@ -38,9 +38,9 @@ class FrequencyController extends Controller
 
         $helps = DB::table('trainings')
             ->select([
-                    'users.name as name',
-                    'users.id as id',
-                    'athletes.id as athlete_id'
+                'users.name as name',
+                'users.id as id',
+                'athletes.id as athlete_id'
             ])
             ->join('trainings_helpers', 'trainings.id', '=', 'trainings_helpers.training_id')
             ->join('athletes', 'athletes.id', '=', 'trainings_helpers.helper_id')
@@ -57,22 +57,21 @@ class FrequencyController extends Controller
         $helps = $request['helps'];
 
         try {
-            foreach ($athletes as $athlete){
+            foreach ($athletes as $athlete) {
                 $this->createFrequency($athlete['athlete_id'], $training->id, $athlete['presence']);
             }
-            if($helps != null){
-                foreach ($helps as $help){
+            if ($helps != null) {
+                foreach ($helps as $help) {
                     $this->createFrequency($help['athlete_id'], $training->id, $help['presence']);
                 }
             }
-
         } catch (\Throwable $th) {
             session()->flash('error', "Não foi possivel cadastrar a chamada");
-            return ['code' => 500 ];
+            return ['code' => 500];
         }
 
         session()->flash('success', "Chamada cadastrada com sucesso");
-        return ['code' => 200 ];
+        return ['code' => 200];
     }
 
     public function createFrequency($athlete_id, $training_id, $presence)
@@ -86,7 +85,7 @@ class FrequencyController extends Controller
 
     public function edit(Training $training)
     {
-        if(count($training->frequencies()->get()) == 0){
+        if (count($training->frequencies()->get()) == 0) {
             $path = route('training.show', $training->id);
             return Redirect::to($path)->with([
                 'message_success' => "Treino do dia <b>" . $training->date . "</b> não possui chamada feita."
@@ -95,34 +94,40 @@ class FrequencyController extends Controller
 
         $athletes = DB::table('trainings')
             ->select([
-                    'users.name as name',
-                    'users.id as id',
-                    'athletes.id as athlete_id',
-                    'frequencies.presence as presence',
-                    'frequencies.id as frequency_id'
+                'users.name as name',
+                'users.id as id',
+                'athletes.id as athlete_id',
+                'frequencies.presence as presence',
+                'frequencies.id as frequency_id'
             ])
             ->join('frequencies', 'frequencies.training_id',  '=', 'trainings.id')
             ->join('athletes', 'athletes.id', '=', 'frequencies.athlete_id')
             ->join('users', 'users.id', '=', 'athletes.user_id')
             ->orderBy('users.name')
             ->where('trainings.id', '=', $training->id)
+            ->whereNotExists(function($query)
+            {
+                $query->select(DB::raw(1))
+                      ->from('withdrawals')
+                      ->whereRaw('withdrawals.athlete_id = athletes.id');
+            })
             ->get();
 
         $helps = DB::table('trainings')
-        ->select([
+            ->select([
                 'users.name as name',
                 'users.id as id',
                 'athletes.id as athlete_id',
                 'frequencies.presence as presence',
                 'frequencies.id as frequency_id'
-        ])
-        ->join('trainings_helpers', 'trainings_helpers.training_id',  '=', 'trainings.id')
-        ->join('athletes', 'athletes.id', '=', 'trainings_helpers.helper_id')
-        ->join('frequencies', 'frequencies.athlete_id',  '=', 'athletes.id')
-        ->join('users', 'users.id', '=', 'athletes.user_id')
-        ->orderBy('users.name')
-        ->where('trainings.id', '=', $training->id)
-        ->get();
+            ])
+            ->join('trainings_helpers', 'trainings_helpers.training_id',  '=', 'trainings.id')
+            ->join('athletes', 'athletes.id', '=', 'trainings_helpers.helper_id')
+            ->join('frequencies', 'frequencies.athlete_id',  '=', 'athletes.id')
+            ->join('users', 'users.id', '=', 'athletes.user_id')
+            ->orderBy('users.name')
+            ->where('trainings.id', '=', $training->id)
+            ->get();
 
         return view('frequency.edit', compact('training', 'athletes', 'helps'));
     }
@@ -133,22 +138,21 @@ class FrequencyController extends Controller
         $helps = $request['helps'];
 
         try {
-            foreach ($athletes as $athlete){
+            foreach ($athletes as $athlete) {
                 $this->editFrequency($athlete['frequency_id'], $athlete['presence']);
             }
-            if($helps != null){
-                foreach ($helps as $help){
+            if ($helps != null) {
+                foreach ($helps as $help) {
                     $this->editFrequency($help['frequency_id'], $help['presence']);
                 }
             }
-
         } catch (\Throwable $th) {
             session()->flash('error', "Não foi possivel ediatar a chamada");
-            return ['code' => 500 ];
+            return ['code' => 500];
         }
 
         session()->flash('success', "Chamada editada com sucesso");
-        return ['code' => 200 ];
+        return ['code' => 200];
     }
 
     public function editFrequency($frequency_id, $presence)
@@ -158,4 +162,36 @@ class FrequencyController extends Controller
         $frequency->save();
     }
 
+    public function faults(Request $request, int $team_id)
+    {
+        $athlete = $request['athlete'];
+        $dateStart = $request['dateStart'];
+        $dateEnd = $request['dateEnd'];
+
+        $team = Team::find($team_id);
+        $query = DB::table('frequencies')
+            ->join('athletes', 'frequencies.athlete_id', '=', 'athletes.id')
+            ->join('users', 'athletes.user_id', '=', 'users.id')
+            ->join('trainings', 'frequencies.training_id', '=', 'trainings.id')
+            ->where('frequencies.presence', '=', false)
+            ->where('athletes.team_id', '=', $team_id);
+
+        if ($athlete > 0) {
+            $query->where('frequencies.athlete_id', '=', $athlete);
+        }
+
+        if ($dateStart != null) {
+            $query->where('trainings.date', '>=', $dateStart);
+        }
+
+        if ($dateEnd != null) {
+            $query->where('trainings.date', '<=', $dateEnd);
+        }
+
+        $query->orderBy('users.name');
+        $faults = $query->get();
+
+        $team->faults = $faults;
+        return view('frequency.faults', compact('team'));
+    }
 }
