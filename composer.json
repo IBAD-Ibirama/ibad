@@ -18,7 +18,8 @@
         "intervention/image": "^2.5",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
-        "spatie/laravel-permission": "3.6"
+        "spatie/laravel-permission": "3.6",
+        "tplaner/when": "^3.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

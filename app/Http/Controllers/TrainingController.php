@@ -9,6 +9,7 @@ use App\TeamLevel;
 use App\Local;
 use When\When;
 use App\Training;
+use App\TrainingHelper;
 use \Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -27,7 +28,7 @@ class TrainingController extends Controller
 
     public function create()
     {
-      $team = Team::all();
+      $teams = Team::all();
       $teams_can_have_auxiliary = DB::table('teams')
       ->join('team_levels', 'teams.team_level_id' , '=', 'team_levels.id')
       ->where('team_levels.requires_auxiliary', '=', 'true')
@@ -41,13 +42,12 @@ class TrainingController extends Controller
       ->join('teams', 'athletes.team_id', '=', 'teams.id')
       ->join('team_levels', 'teams.team_level_id' , '=', 'team_levels.id')
       ->where('team_levels.can_be_auxiliary', '=', 'true')
-      #->whereRaw('NOT EXISTS (select 1 from trainers where trainers.user_id = users.id)')
       ->select('users.id', 'users.name')
       ->get();
-  
+
       $place = DB::select('select * from locals');
       return view('training.create')
-          ->with(compact('team'))
+          ->with(compact('teams'))
           #->with(compact('trainers'))
           ->with(compact('place'))
           ->with(compact('athletes'))
@@ -58,15 +58,17 @@ class TrainingController extends Controller
     public function store(Request $request)
     {
       $team_id = $request['team_select'];
-      $trainer_id= $request['trainer_select'];
+      #$trainer_id= $request['trainer_select'];
       $local_id=$this->handleTrainingLocal($request)->id;
       $week_day = $request['day_select'];
       $init_time = $request['training_init_time'];
       $end_time = $request['training_end_time'];
       $init_date = $request['training_init'];
       $repeat_until = $request['training_repeat'];
+      
       $auxiliary1 = $request['auxiliary1'];
       $auxiliary2 = $request['auxiliary2'];
+      
       
       $recurent = new When();
       $recurent->startDate($this->dateFromString($init_date))
@@ -81,20 +83,33 @@ class TrainingController extends Controller
         $arr2 = str_split($dates_string, 10);
         foreach($arr2 as $date_value){
           $training_unit = new Training();
+          
+          
           $training_unit->date = new DateTime($date_value);
           $training_unit->time_init= $init_time;
           $training_unit->time_end= $end_time;
           $training_unit->week_day=$week_day;
-          $training_unit->trainer_id=$trainer_id;
+          $training_unit->trainer_id=1;
           $training_unit->team_id=$team_id;
           $training_unit->local_id=$local_id;
-          $training_unit->main_auxiliary_id=$auxiliary1;
-          $training_unit->secondary_auxiliary_id=$auxiliary2;
           $training_unit->save();
+
+          if($auxiliary1 != null)
+            $this->handleHelpers($auxiliary1, $training_unit->id);
+        
+          if($auxiliary2 != null)
+            $this->handleHelpers($auxiliary2, $training_unit->id);
         }
       }
-      $path = route('training.index', $team);
+      $path = route('training.index');
       return Redirect::to($path);
+      }
+
+      private function handleHelpers(int $auxiliary, int $training_id){
+        $training_helper = new TrainingHelper();
+        $training_helper->helper_id=$auxiliary;
+        $training_helper->training_id=$training_id;
+        $training__helper->save();
       }
 
       private function handleTrainingLocal(Request $request){

@@ -13,7 +13,7 @@
                     <a class="btn btn-warning btn-sm" href="/treinos"><i class="fas fa-arrow-circle-up"></i> Voltar</a>
                 </div>
                 <div class="mt-5 mb-3">
-                  <form action="{{ route('training.store', $team->id) }}" method="POST">
+                  <form action="{{ route('training.store') }}" method="POST">
                   @csrf
                   <div class="col-md-6">
                     <label for="trainer_select">Selecione a turma:</label>
@@ -21,7 +21,11 @@
                         <select name="team_select" class="form-control" id="teamOption">
                           <option value="">
                           </option>
-                        
+                          @foreach($teams as $team)
+                            <option value='{{$team->id}}'>
+                              {{$team->id}} - {{$team->name}}
+                            </option>;
+                            @endforeach
                         </select>
                       </div>
                   </div>
@@ -158,9 +162,9 @@
   const auxiliary1 = document.querySelector('#auxiliary1');
   const auxiliary2 =document.querySelector('#auxiliary2');
   const auxiliaryTitle =document.querySelector('#titleAuxiliary');
-  
+  const team = document.querySelector('#teamOption');
   const locals = {!! json_encode($place) !!};
-  const team = {!!json_encode($team)!!};
+  
   const teams_can_have_auxiliary = {!!json_encode($teams_can_have_auxiliary)!!};
 
 
@@ -170,10 +174,11 @@
       optionLocal.selectedIndex = "0";
   }
   
-  let can_have_aux = false;
+  
+  function handleAuxiliaries(id){
+    let can_have_aux = false;
   teams_can_have_auxiliary.forEach(element => {
-    if (team.id == element.id){
-      console.log('s');
+    if (id == element.id){
         can_have_aux = true;
     }
   });
@@ -182,6 +187,15 @@
     auxiliary1.disabled =true;
     auxiliary2.disabled =true;
     auxiliaryTitle.textContent = "Essa turma não pode ter ajudantes!";
+  }else{
+    auxiliary1.disabled =false;
+    auxiliary2.disabled =false;
+    auxiliaryTitle.textContent = "Ajudantes:";
+  }
+  }
+ 
+  team.onchange = () => {
+    handleAuxiliaries(team.value);
   }
 
   optionLocal.onchange = () => {
