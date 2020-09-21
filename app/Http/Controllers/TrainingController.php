@@ -158,4 +158,14 @@ class TrainingController extends Controller
         }
         return $return_word;
       }    
+
+      public function destroy($id)
+      {
+          $training = Training::find($id);
+    
+          $training->delete();
+        
+          session()->flash('success', "Treino <b></b> foi removida.");
+          return Redirect::back();
+      }
 }

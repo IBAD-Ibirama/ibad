@@ -61,6 +61,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/treino/{training}/frequencia', 'FrequencyController@create')
         ->name('frequency.create')
         ->where('training', '[0-9]+');
+        
+    Route::delete('/treinos/{id}', 'TrainingController@destroy')
+        ->name('training.destroy')
+        ->where('id', '[0-9]+');
+  
 
     Route::post('/turma/{training}/frequencia', 'FrequencyController@store')
         ->name('frequency.store')

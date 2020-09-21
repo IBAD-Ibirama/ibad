@@ -14,22 +14,22 @@
                 </div>
                 <div class="card-body">
                     <ul class="list-group">
-                        @foreach($trainings as $trainings)
+                    @foreach($trainings as $training)
                         <li class="list-group-item">
-                            <a href="/treino/{{$trainings->id}}" title="Consultar">
-                            {{ (new DateTime(substr($trainings->date,0,10)))->format('d/m/Y')}}</a>
-
-                            {{-- <div class="float-right flex">
-                                <a class="btn btn-sm btn-light mr-2" href="/turmas/{{$team->id}}/edit">Editar</a>
-
-                            <form style="display: inline" action="turmas/{{$team->id}}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <input class="btn btn-sm btn-outline-danger" type="submit" value="Deletar">
+                        <a  href="{{ route('training.show', $training->id) }}" title="Consultar" >{{ (new DateTime(substr($training->date,0,10)))->format('d/m/Y')}} |</a>
+                        <a  href="{{ route('training.show', $training->id) }}" title="Consultar">{{ $training->week_day }} |</a>
+                        <a href="{{ route('training.show', $training->id) }}" title="Consultar">{{ $training->time_init}} as {{ $training->time_end}} |</a>
+                        <a href="{{ route('training.show', $training->id) }}" title="Consultar">{{ $training->local->description }} </a>
+                        <div class="float-right flex">
+                         <a class="btn btn-sm btn-light mr-2" href= "" >Editar</a>
+                            <form style="display: inline"  action="{{ route('training.destroy', $training->id) }}" href="{{ route('training.index') }}" method="post">
+                         @csrf
+                         @method('DELETE')
+                            <input class="btn btn-sm btn-outline-danger" type="submit" name="_method" value="delete">
                             </form>
-                </div> --}}
-                </li>
-                @endforeach
+                        </div>
+                        </li>
+                        @endforeach
                 </ul>
             </div>
         </div>
