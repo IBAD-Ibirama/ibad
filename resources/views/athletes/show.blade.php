@@ -18,7 +18,8 @@
       <div class="card">
 
         <div class="card-header">{{$athlete->user->name}}
-          <a class='btn btn-success btn-sm float-right' href="/atletas">Voltar</a>
+          <a class="btn btn-warning btn-sm float-right ml-2" href="{{ route('atletas.index') }}"><i class="fas fa-arrow-circle-up"></i> Voltar</a>
+          <a class='btn btn-outline-primary btn-sm float-right' href="{{ route('evolution-charts.index', compact('athlete')) }}">Gráficos de Evolução</a>
         </div>
 
         <div class="col-md-3">

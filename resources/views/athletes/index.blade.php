@@ -24,8 +24,7 @@
 
               <div class="float-right flex">
 
-                <a class="btn btn-sm btn-primary" href={{ route('evaluations.index', compact('athlete')) }} role="button">Avaliações</a>
-                <a class="btn btn-sm btn-warning" href={{ route('evolution-charts.index', compact('athlete')) }} role="button">Gráficos de Evolução</a>
+                <a class="btn btn-sm btn-outline-primary mr-2" href={{ route('evaluations.index', compact('athlete')) }}>Avaliações</a>
 
                 <a class="btn btn-sm btn-light mr-2" href="/atletas/{{$athlete->id}}/edit">Editar</a>
 

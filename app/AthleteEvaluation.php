@@ -69,4 +69,26 @@ class AthleteEvaluation extends Model
         }
         return $evaluationBodyIndex ?: new AthleteEvaluationBodyIndex();
     }
+
+    /**
+     * Get's realization date formatted in d/m/Y.
+     * 
+     * @return string
+     */
+    public function formattedRealizationDate()
+    {
+        return date('d/m/Y', strtotime($this->realization_date));
+    }
+
+    /**
+     * Gets evaluation description, including realization date,
+     * number of physical tests and number of body indexes.
+     * 
+     * @return string
+     */
+    public function description()
+    {
+        $data = [$this->formattedRealizationDate(), $this->physicalTests()->count(), $this->bodyIndexes()->count()];
+        return sprintf('%s - %s testes físicos e %s índices corporais', ...$data);
+    }
 }

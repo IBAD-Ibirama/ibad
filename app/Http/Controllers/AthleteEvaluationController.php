@@ -49,19 +49,22 @@ class AthleteEvaluationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\AthleteEvaluation  $athleteEvaluation
+     * @param  \App\Athlete            $athlete
+     * @param  \App\AthleteEvaluation  $evaluation
      * @return \Illuminate\Http\Response
      */
-    public function show(AthleteEvaluation $athleteEvaluation)
+    public function show(Athlete $athlete, AthleteEvaluation $evaluation)
     {
-        //
+        $physicalTests = PhysicalTest::all()->sortBy('name');
+        $bodyIndexes = BodyIndex::all()->sortBy('name');
+        return view('athlete_evaluation.show', compact('athlete', 'evaluation', 'physicalTests', 'bodyIndexes'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Athlete            $athlete
-     * @param  \App\AthleteEvaluation  $athleteEvaluation
+     * @param  \App\AthleteEvaluation  $evaluation
      * @return \Illuminate\Http\Response
      */
     public function edit(Athlete $athlete, AthleteEvaluation $evaluation)
