@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <title>IBAD</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -31,9 +32,11 @@
                         <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}"
                                 href="/usuarios">Usuários</a></li>
                         <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a>
+                        <li><a class="nav-link{{Request::is('limiteDeFalta*') ? ' active' : ''}}"
+                                href="{{route('fault.show')}}">Limite de Falta</a>
                         </li>
-
                         @endrole
+
                         @can('treinador')
                         <li><a class="nav-link{{Request::is('turmas*') ? ' active' : ''}}" href="/turmas">Turmas</a>
                         </li>
@@ -83,13 +86,21 @@
             </div>
             @endif
 
-            @isset($message_warning)
+            @if(isset($message_warning) || Session::has('warning'))
             <div class="container">
                 <div class="alert alert-warning" role="alert">
-                    {!! $message_warning !!}
+                    {!! isset($message_warning) ? $message_warning : Session::get("warning") !!}
                 </div>
             </div>
-            @endisset
+            @endif
+
+            @if(isset($message_failure) || Session::has('failure'))
+            <div class="container">
+                <div class="alert alert-danger" role="alert">
+                    {!! isset($message_failure) ? $message_failure : Session::get("failure") !!}
+                </div>
+            </div>
+            @endif
 
             @yield('content')
         </main>

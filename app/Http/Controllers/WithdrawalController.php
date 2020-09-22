@@ -11,15 +11,14 @@ use Illuminate\Support\Facades\Redirect;
 
 class WithdrawalController extends Controller
 {
-    public function withdrawal(int $team_id)
+    public function index(Team $team)
     {
-        $team = Team::find($team_id);
         $withdrawal = DB::table('withdrawals')
         ->select(
             [
                 'users.name as name',
                 'withdrawals.id as id',
-                'withdrawals.date as date'
+                'withdrawals.createad_te as date'
             ]
         )
             ->where('withdrawals.team_id', '=', $team->id)
@@ -39,21 +38,16 @@ class WithdrawalController extends Controller
         $team = Team::find($team_id);
 
         $withdrawal = Withdrawal::create([
-            'date' =>  date_create(),
             'athlete_id' => $athlete_id,
             'team_id' => $team_id
-
-
         ]);
 
         $path = route('team.withdrawal', $team_id);
         return Redirect::to($path);
     }
 
-    public function linksAthletePagewithdrawal(int $team_id)
+    public function linksAthletePagewithdrawal(Team $team)
     {
-        $team = Team::find($team_id);
-
         $athletes = DB::table('athletes')
             ->select(
                 [
@@ -78,11 +72,10 @@ class WithdrawalController extends Controller
     }
 
 
-    public function destroy($team_id, $withdrawal_id)
+    public function destroy(Team $team, Withdrawal $withdrawal)
     {
-        $withdrawal = Withdrawal::find($withdrawal_id);
         $withdrawal->delete();
-        $path = route('team.withdrawal', $team_id);
+        $path = route('team.withdrawal', $team->id);
         return Redirect::to($path);
     }
 }

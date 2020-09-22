@@ -16,9 +16,9 @@ class CreateTrainingsHelpersTable extends Migration
       Schema::create('trainings_helpers', function (Blueprint $table) {
         $table->id();
         $table->bigInteger('helper_id');
-        $table->foreign('helper_id')->references('id')->on('athletes');
+        $table->foreign('helper_id')->references('id')->on('athletes')->onDelete('cascade');
         $table->bigInteger('training_id');
-        $table->foreign('training_id')->references('id')->on('trainings');
+        $table->foreign('training_id')->references('id')->on('trainings')->onDelete('cascade');
         $table->timestamps();
       });
     }

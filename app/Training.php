@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Training extends Model
 {
     protected $table = 'trainings';
-    protected $fillable = ['date'];
+    protected $fillable = ['date', 'time_init', 'time_end', 'week_day'];
 
     public function local()
     {

@@ -66,8 +66,8 @@ class FrequencyController extends Controller
                 }
             }
         } catch (\Throwable $th) {
-            session()->flash('error', "Não foi possivel cadastrar a chamada");
-            return ['code' => 500];
+            session()->flash('warning', "Não foi possivel cadastrar a chamada");
+            return ['code' => 500 ];
         }
 
         session()->flash('success', "Chamada cadastrada com sucesso");
@@ -147,8 +147,8 @@ class FrequencyController extends Controller
                 }
             }
         } catch (\Throwable $th) {
-            session()->flash('error', "Não foi possivel ediatar a chamada");
-            return ['code' => 500];
+            session()->flash('warning', "Não foi possivel ediatar a chamada");
+            return ['code' => 500 ];
         }
 
         session()->flash('success', "Chamada editada com sucesso");
@@ -162,13 +162,12 @@ class FrequencyController extends Controller
         $frequency->save();
     }
 
-    public function faults(Request $request, int $team_id)
+    public function faults(Request $request, Team $team)
     {
         $athlete = $request['athlete'];
         $dateStart = $request['dateStart'];
         $dateEnd = $request['dateEnd'];
 
-        $team = Team::find($team_id);
         $query = DB::table('frequencies')
             ->join('athletes', 'frequencies.athlete_id', '=', 'athletes.id')
             ->join('users', 'athletes.user_id', '=', 'users.id')

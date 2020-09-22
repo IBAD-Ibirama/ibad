@@ -16,8 +16,11 @@ class CreateWithdrawalsTable extends Migration
         Schema::create('withdrawals', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('athlete_id');
-            $table->foreign('athlete_id')->references('id')->on('athletes');
-            $table->timestamp('date', 0);
+            $table->foreign('athlete_id')->references('id')->on('athletes')->onDelete('cascade');
+            $table->bigInteger('team_id');
+            $table->foreign('team_id')->references('id')->on('teams')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
