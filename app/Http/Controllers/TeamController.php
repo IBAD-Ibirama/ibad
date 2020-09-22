@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use App\Team;
 use App\TeamLevel;
 use Illuminate\Http\Request;
@@ -118,9 +119,25 @@ class TeamController extends Controller
         ]);
     }
 
-    public function destroy(int $teamID)
+    public function destroy(Request $request, int $teamID)
     {
         $team = Team::find($teamID);
+        $trainings = $team->trainings()->orderBy('date', 'asc')->where('date', '>=', date('Y-m-d'))->get();
+        $trainigsNoRealized = false;
+
+        foreach ($trainings as $training) {
+            if(count($training->frequencies()->get()) == 0){
+                $trainigsNoRealized = true;
+                break;
+            }
+        }
+
+        if($trainigsNoRealized){
+            $teamName = $team->name;
+            session()->flash('warning', "Não é possivel apagar turma <b>" . $teamName . "</b> devido a treino pendente.");
+            return Redirect::back();
+        }
+
         $athletes = $team->athletes()->get();
 
         foreach ($athletes as $athlete){

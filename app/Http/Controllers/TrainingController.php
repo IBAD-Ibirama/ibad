@@ -288,12 +288,12 @@ class TrainingController extends Controller
 
   public function destroy(Training $training)
   {
-      try{
+      try {
           $training->delete();
           session()->flash('success', "Treino foi removido.");
 
       } catch (\Exception $e) {
-        session()->flash('success', "Não foi possivel remover o Treino.");
+        session()->flash('warning', "Não foi possivel remover o Treino.");
         return Redirect::back();
       }
 
