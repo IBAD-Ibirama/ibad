@@ -32,7 +32,7 @@
                     <p>Treinador: {{$training->trainer->name}}</p>
                     <p>Nenhum auxiliar vinculado a esse treino</p>
                     @endforelse
-                    <p>Dia da semana: {{$training->week_day}}-feira</p>
+                    <p>Dia da semana: {{$training->week_day}}</p>
 
                     <p>Horário: Início as {{$training->time_init}} até as {{$training->time_end}}</p>
                 </div>

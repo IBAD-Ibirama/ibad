@@ -133,7 +133,6 @@ class TrainingController extends Controller
             $validator =Validator::make($request->all(), []);
             $validator->errors()->add('auxiliary1', 'Auxiliar 1 é igual ao auxiliar 2');
             $validator->errors()->add('auxiliary2', 'Auxiliar 2 é igual ao auxiliar 1');
-            $validator->getMessageBag()->add('password', 'Password wrong');
             return Redirect::back()->withErrors($validator)->withInput();
         }
       }
@@ -157,11 +156,11 @@ class TrainingController extends Controller
           $training->save();
 
           if($auxiliary1 != null) {
-              $this->handleHelpers($auxiliary1, $training_unit->id);
+              $this->handleHelpers($auxiliary1, $training->id);
           }
 
           if($auxiliary2 != null){
-              $this->handleHelpers($auxiliary2, $training_unit->id);
+              $this->handleHelpers($auxiliary2, $training->id);
           }
       }
 
@@ -171,106 +170,133 @@ class TrainingController extends Controller
       ]);
     }
 
+    private function handleHelpers(int $auxiliary, int $training_id)
+    {
+      $training_helper = new TrainingHelper();
+      $training_helper->helper_id = $auxiliary;
+      $training_helper->training_id = $training_id;
+      $training_helper->save();
+    }
 
-      private function handleHelpers(int $auxiliary, int $training_id){
-        $training_helper = new TrainingHelper();
-        $training_helper->helper_id=$auxiliary;
-        $training_helper->training_id=$training_id;
-        $training_helper->save();
+    private function handleTrainingLocal(Request $request)
+    {
+      $trainingLocalId = $request['local_select'];
+      $local;
+      if($trainingLocalId != ''){
+          $local = Local::find($trainingLocalId);
+      } else {
+          $local= new Local();
+          $local->description = $request['training_local'];
+          $local->save();
       }
+      return $local;
+    }
 
-      private function handleTrainingLocal(Request $request){
-        $trainingLocalId = $request['local_select'];
-        $local;
-        if($trainingLocalId != ''){
-            $local = Local::find($trainingLocalId);
-        } else {
-            $local= new Local();
-            $local->description = $request['training_local'];
-            $local->save();
-        }
-        return $local;
-      }
+    private function calculateWeeks($inicio, $fim)
+    {
+      $initDate = new DateTime($inicio);
+      $endDate = new DateTime($fim);
+      $difference_in_weeks = $initDate->diff($endDate)->days / 7 + 1;
 
-      private function calculateWeeks($inicio, $fim){
-        $initDate = new DateTime($inicio);
-        $endDate = new DateTime($fim);
-        $difference_in_weeks = $initDate->diff($endDate)->days / 7 + 1;
-
-        return (int)$difference_in_weeks;
-      }
-
-      public function destroy(Training $training)
-      {
-          $training->delete();
-
-          session()->flash('success', "Treino <b></b> foi removida.");
-          return Redirect::back();
-      }
+      return (int)$difference_in_weeks;
+    }
 
     public function edit(Training $training)
     {
       $teams = Team::all();
       $teams_can_have_auxiliary = $this->getAllTeamNeedAuxiliarys();
-
+      $helpers = TrainingHelper::all()->where('training_id','=',$training->id);
       $trainers = $this->getAllTrainers();
       $athletes = $this->getAllHelpers();
 
       $place = Local::all();
-      return view('training.edit', compact('teams','trainers','place','athletes','training','teams_can_have_auxiliary'));
+      return view('training.edit', compact('teams','trainers','place','athletes','training','teams_can_have_auxiliary', 'helpers'));
     }
 
-  public function update(Request $request, int $id)
-  {
-    $team_id = $request['team_select'];
-    #$trainer_id= $request['trainer_select'];
-    $local_id=$this->handleTrainingLocal($request)->id;
-    $week_day = $request['day_select'];
-    $init_time = $request['training_init_time'];
-    $end_time = $request['training_end_time'];
-    $init_date = $request['training_init'];
-    $repeat_until = $request['training_repeat'];
+    public function update(Request $request, Training $training)
+    {
+      $request->validate([
+          'team_select' => 'required',
+          'trainer_select' => 'required',
+          'training_init_time' => 'required',
+          'training_end_time' => 'required',
+          'training_init' => 'required',
+          'training_local' => 'required',
+      ],[
+          'required' => 'Informe :attribute',
+      ],
+      [
+        'team_select' => 'a turma',
+        'trainer_select' => 'o treinador',
+        'training_init_time' => 'a hora de inicio do treino',
+        'training_end_time' => 'a hora de termino do treino',
+        'training_init' => 'o dia inicial',
+        'training_local' => 'o local onde ocorrerá o treino',
+      ]);
 
-    $auxiliary1 = $request['auxiliary1'];
-    $auxiliary2 = $request['auxiliary2'];
+      $auxiliary1 = $request['auxiliary1'];
+      $auxiliary2 = $request['auxiliary2'];
 
+      //validar Auxiliares
+      $team = Team::find($request['team_select']);
+      if($team->teamLevel->requires_auxiliary){
+        $request->validate([
+          'auxiliary1' => 'required',
+          'auxiliary2' => 'required',
+        ],[
+            'required' => 'Informe :attribute',
+        ],
+        [
+          'auxiliary1' => 'o auxiliar 1',
+          'auxiliary2' => 'o auxiliar 2',
+        ]);
 
-    $recurent = new When();
-    $recurent->startDate($this->dateFromString($init_date))
-    ->freq("weekly")
-    ->count($this->calculateWeeks($init_date, $repeat_until))
-    ->byday($week_day)
-    ->generateOccurrences();
-
-    foreach ($recurent->occurrences as $datas){
-
-      $dates_string = strval(date_format($datas, 'd-m-Y'));
-      $arr2 = str_split($dates_string, 10);
-      foreach($arr2 as $date_value){
-        $training_unit = Training::find($id);
-
-
-        $training_unit->date = new DateTime($date_value);
-        $training_unit->time_init= $init_time;
-        $training_unit->time_end= $end_time;
-        $training_unit->week_day=$week_day;
-        $training_unit->trainer_id=1;
-        $training_unit->team_id=$team_id;
-        $training_unit->local_id=$local_id;
-        $training_unit->save();
-
-        if($auxiliary1 != null)
-          $this->handleHelpers($auxiliary1, $training_unit->id);
-
-        if($auxiliary2 != null)
-          $this->handleHelpers($auxiliary2, $training_unit->id);
+        if($auxiliary1 == $auxiliary2){
+            $validator =Validator::make($request->all(), []);
+            $validator->errors()->add('auxiliary1', 'Auxiliar 1 é igual ao auxiliar 2');
+            $validator->errors()->add('auxiliary2', 'Auxiliar 2 é igual ao auxiliar 1');
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
       }
-    }
 
+      $training->date        = new DateTime($request['training_init']);
+      $training->time_init   = $request['training_init_time'];
+      $training->time_end    = $request['training_end_time'];
+      $training->week_day    = $request['day_select_pt'];
+      $training->trainer_id  = $request['trainer_select'];
+      $training->team_id     = $request['team_select'];
+      $training->local_id    = $this->handleTrainingLocal($request)->id;
+      $training->save();
 
+      $helpers = TrainingHelper::all()->where('training_id','=',$training->id);
 
+      foreach ($helpers as $helpers){
+          $helpers->delete();
+      }
 
-    $path = route('training.show',  $training_unit -> id);
-    return Redirect::to($path);
+      if($auxiliary1 != null) {
+        $this->handleHelpers($auxiliary1, $training->id);
+      }
+
+      if($auxiliary2 != null){
+        $this->handleHelpers($auxiliary2, $training->id);
+      }
+
+      $path = route('training.show',  $training->id);
+      return Redirect::to($path);
+  }
+
+  public function destroy(Training $training)
+  {
+      try{
+          $training->delete();
+          session()->flash('success', "Treino foi removido.");
+
+      } catch (\Exception $e) {
+        session()->flash('success', "Não foi possivel remover o Treino.");
+        return Redirect::back();
+      }
+
+      return Redirect::back();
   }
 }
