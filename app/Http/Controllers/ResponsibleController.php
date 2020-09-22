@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Responsible;
 use App\User;
 use App\Athlete;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 
 class ResponsibleController extends Controller
@@ -97,7 +98,7 @@ class ResponsibleController extends Controller
     public function edit($id)
     {
         $responsible = Responsible::find($id);
-        
+
         $users = User::all();
         $athletes = Athlete::all();
 
@@ -134,7 +135,7 @@ class ResponsibleController extends Controller
         foreach($athletes as $athlete){
             $responsible->athletes()->detach($athlete->id);
         }
-        
+
         foreach($athletes as $athlete){
             $idAthlete = $athlete->id;
             if($request->$idAthlete){
@@ -155,12 +156,11 @@ class ResponsibleController extends Controller
      */
     public function destroy($id)
     {
-        $responsible = Athlete::find($id);
+        $responsible = Responsible::find($id);
 
         $responsible->delete();
 
-        return $this->index()->with([
-            'message_success' => "O responsável foi excluido"
-        ]);
+        session()->flash('success', "Responsável apagado com sucesso");
+        return Redirect::back();
     }
 }
