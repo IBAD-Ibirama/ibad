@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use App\Athlete;
 use App\Team;
 use App\TeamLevel;
-#use App\Trainer;
 use App\Local;
 use When\When;
 use App\Training;
@@ -19,29 +19,24 @@ use DateTime;
 
 class TrainingController extends Controller
 {
-    public function index(){
-        $trainings = Training::orderBy('date', 'asc')->get();
-       # $trainers= User::find($training->trainer_id);
-        return view('training.index', compact('trainings'));
+    public function index()
+    {
+      $trainings = Training::orderBy('date', 'asc')->get();
+
+      return view('training.index', compact('trainings'));
     }
 
-    public function show(Training $training){
-        $helpers = TrainingHelper::all()->where('training_id','=',$training->id);
-        $trainers= User::find($training->trainer_id);
-        return view('training.show')
-        ->with(compact('training'))
-        ->with(compact('helpers'))
-        ->with(compact('trainers'));
+    public function show(Training $training)
+    {
+      $helpers = TrainingHelper::all()->where('training_id','=',$training->id);
+
+      return view('training.show', compact('training', 'helpers'));
     }
 
     public function create()
     {
       $teams = Team::all();
-      $teams_can_have_auxiliary = DB::table('teams')
-      ->join('team_levels', 'teams.team_level_id' , '=', 'team_levels.id')
-      ->where('team_levels.requires_auxiliary', '=', 'true')
-      ->select('teams.id')
-      ->get();
+      $teams_can_have_auxiliary = $this->getAllTeamNeedAuxiliarys();
 
       $trainers = $this->getAllTrainers();
       $athletes = $this->getAllHelpers();
@@ -51,19 +46,16 @@ class TrainingController extends Controller
       return view('training.create', compact('teams','trainers','place','athletes', 'teams_can_have_auxiliary'));
     }
 
-    public function getAllTrainers()
+    private function getAllTrainers()
     {
-        $trainers = array();
-        $users = User::all();
-        foreach ($users as $user) {
-          if($user->getRoleNames()[0] == "treinador"){
-            array_push($trainers, $user);
-          }
-        }
-        return $trainers;
+      $trainers = DB::table('users')
+          ->join('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
+          ->where('model_has_roles.role_id', '=', '4')
+          ->get();
+      return $trainers;
     }
 
-    public function getAllHelpers()
+    private function getAllHelpers()
     {
       $athletes = DB::table('athletes')
         ->join('users', 'athletes.user_id', '=' ,'users.id')
@@ -75,8 +67,19 @@ class TrainingController extends Controller
       return $athletes;
     }
 
+    private function getAllTeamNeedAuxiliarys()
+    {
+      $teams_can_have_auxiliary = DB::table('teams')
+        ->join('team_levels', 'teams.team_level_id' , '=', 'team_levels.id')
+        ->where('team_levels.requires_auxiliary', '=', 'true')
+        ->select('teams.id')
+        ->get();
+      return $teams_can_have_auxiliary;
+    }
+
     public function store(Request $request)
     {
+
       $request->validate([
           'team_select' => 'required',
           'trainer_select' => 'required',
@@ -112,28 +115,46 @@ class TrainingController extends Controller
       $auxiliary2 = $request['auxiliary2'];
 
 
+      //validar Auxiliares
+      $team = Team::find($team_id);
+      if($team->teamLevel->requires_auxiliary){
+        $request->validate([
+          'auxiliary1' => 'required',
+          'auxiliary2' => 'required',
+        ],[
+            'required' => 'Informe :attribute',
+        ],
+        [
+          'auxiliary1' => 'o auxiliar 1',
+          'auxiliary2' => 'o auxiliar 2',
+        ]);
+
+        if($auxiliary1 == $auxiliary2){
+            $validator =Validator::make($request->all(), []);
+            $validator->errors()->add('auxiliary1', 'Auxiliar 1 é igual ao auxiliar 2');
+            $validator->errors()->add('auxiliary2', 'Auxiliar 2 é igual ao auxiliar 1');
+            $validator->getMessageBag()->add('password', 'Password wrong');
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
+      }
+
       $recurent = new When();
-      $recurent->startDate($this->dateFromString($init_date))
+      $recurent->startDate(new DateTime($init_date))
       ->freq("weekly")
       ->count($this->calculateWeeks($init_date, $repeat_until))
       ->byday($week_day)
       ->generateOccurrences();
 
-      foreach ($recurent->occurrences as $datas){
-
-        $dates_string = strval(date_format($datas, 'd-m-Y'));
-        $arr2 = str_split($dates_string, 10);
-        foreach($arr2 as $date_value){
-          $training_unit = new Training();
-
-          $training_unit->date = new DateTime($date_value);
-          $training_unit->time_init= $init_time;
-          $training_unit->time_end= $end_time;
-          $training_unit->week_day=$week_day_pt;
-          $training_unit->trainer_id=$trainer_id;
-          $training_unit->team_id=$team_id;
-          $training_unit->local_id=$local_id;
-          $training_unit->save();
+      foreach ($recurent->occurrences as $date){
+          $training = new Training();
+          $training->date = $date;
+          $training->time_init = $init_time;
+          $training->time_end = $end_time;
+          $training->week_day = $week_day_pt;
+          $training->trainer_id = $trainer_id;
+          $training->team_id = $team_id;
+          $training->local_id = $local_id;
+          $training->save();
 
           if($auxiliary1 != null) {
               $this->handleHelpers($auxiliary1, $training_unit->id);
@@ -142,13 +163,14 @@ class TrainingController extends Controller
           if($auxiliary2 != null){
               $this->handleHelpers($auxiliary2, $training_unit->id);
           }
-        }
       }
+
       $path = route('training.index');
-        return Redirect::to($path)->with([
-            'success' => "Treino(s) foram cadastrado(s) com sucesso."
-        ]);
-      }
+      return Redirect::to($path)->with([
+          'success' => "Treino(s) foram cadastrado(s) com sucesso."
+      ]);
+    }
+
 
       private function handleHelpers(int $auxiliary, int $training_id){
         $training_helper = new TrainingHelper();
@@ -171,55 +193,31 @@ class TrainingController extends Controller
       }
 
       private function calculateWeeks($inicio, $fim){
-        $date1 =  $this->dateFromString($inicio);
-        $date2 =  $this->dateFromString($fim);
-        $difference_in_weeks = $date1->diff($date2)->days / 7;
+        $initDate = new DateTime($inicio);
+        $endDate = new DateTime($fim);
+        $difference_in_weeks = $initDate->diff($endDate)->days / 7 + 1;
+
         return (int)$difference_in_weeks;
       }
 
-      private function dateFromString($date){
-        return new DateTime($date);
-      }
-
-
-      public function destroy($id)
+      public function destroy(Training $training)
       {
-          $training = Training::find($id);
-
           $training->delete();
 
           session()->flash('success', "Treino <b></b> foi removida.");
           return Redirect::back();
       }
 
-    public function edit(int $id )
+    public function edit(Training $training)
     {
-      $training = Training::find($id);
       $teams = Team::all();
-      $teams_can_have_auxiliary = DB::table('teams')
-      ->join('team_levels', 'teams.team_level_id' , '=', 'team_levels.id')
-      ->where('team_levels.requires_auxiliary', '=', 'true')
-      ->select('teams.id')
-      ->get();
+      $teams_can_have_auxiliary = $this->getAllTeamNeedAuxiliarys();
 
+      $trainers = $this->getAllTrainers();
+      $athletes = $this->getAllHelpers();
 
-      #$trainers = Trainer::all();
-      $athletes = DB::table('athletes')
-      ->join('users', 'athletes.user_id', '=' ,'users.id')
-      ->join('teams', 'athletes.team_id', '=', 'teams.id')
-      ->join('team_levels', 'teams.team_level_id' , '=', 'team_levels.id')
-      ->where('team_levels.can_be_auxiliary', '=', 'true')
-      ->select('athletes.id', 'users.name')
-      ->get();
-
-      $place = DB::select('select * from locals');
-      return view('training.edit')
-          ->with(compact('teams'))
-          #->with(compact('trainers'))
-          ->with(compact('place'))
-          ->with(compact('athletes'))
-          ->with(compact('training'))
-          ->with(compact('teams_can_have_auxiliary'));
+      $place = Local::all();
+      return view('training.edit', compact('teams','trainers','place','athletes','training','teams_can_have_auxiliary'));
     }
 
   public function update(Request $request, int $id)

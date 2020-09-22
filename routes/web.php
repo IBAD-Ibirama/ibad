@@ -49,42 +49,40 @@ Route::middleware('auth')->group(function () {
         ->name('training.create')
         ->where('team', '[0-9]+');
 
-    Route::post('/training/cadastrar', 'TrainingController@store')
+    Route::post('/treino', 'TrainingController@store')
         ->name('training.store')
         ->where('id', '[0-9]+');
-  
+
 
     Route::get('/treino/{training}', 'TrainingController@show')
         ->name('training.show')
         ->where('training', '[0-9]+');
 
+    Route::get('/treino/{training}/edit', 'TrainingController@edit')
+        ->name('training.edit')
+        ->where('training', '[0-9]+');
+
+    Route::put('/treino/{training}/update', 'TrainingController@update')
+        ->name('training.update')
+        ->where('training', '[0-9]+');
+
+    Route::delete('/treinos/{training}', 'TrainingController@destroy')
+        ->name('training.destroy')
+        ->where('id', '[0-9]+');
+
     Route::get('/treino/{training}/frequencia', 'FrequencyController@create')
         ->name('frequency.create')
         ->where('training', '[0-9]+');
 
-    Route::get('/treino/{id}/edit', 'TrainingController@edit')
-        ->name('training.edit')
-        ->where('id', '[0-9]+');
-    
-    Route::put('/treino/{id}/edit', 'TrainingController@update')
-        ->name('training.update')
-        ->where('id', '[0-9]+');
-
-    Route::delete('/treinos/{id}', 'TrainingController@destroy')
-        ->name('training.destroy')
-        ->where('id', '[0-9]+');
-  
-
-    Route::post('/turma/{training}/frequencia', 'FrequencyController@store')
+    Route::post('/treino/{training}/frequencia', 'FrequencyController@store')
         ->name('frequency.store')
         ->where('training', '[0-9]+');
 
-
-    Route::get('/turma/{training}/frequencia/edit', 'FrequencyController@edit')
+    Route::get('/treino/{training}/frequencia/edit', 'FrequencyController@edit')
         ->name('frequency.edit')
         ->where('training', '[0-9]+');
 
-    Route::put('/turma/{training}/frequencia', 'FrequencyController@update')
+    Route::put('/treino/{training}/frequencia', 'FrequencyController@update')
         ->name('frequency.update')
         ->where('training', '[0-9]+');
 

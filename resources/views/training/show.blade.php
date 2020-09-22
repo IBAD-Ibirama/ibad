@@ -23,17 +23,17 @@
                 </div>
 
                 <div class="card-body">
-                      <h3><b>Turma - {{$training->team->name}}</b></h3>
+                    <h3><b>Turma - {{$training->team->name}}</b></h3>
                     <p>Data: {{ (new DateTime(substr($training->date,0,10)))->format('d/m/Y')}}</p>
                     <p>Local: {{ $training->local->description}}</p>
                     @forelse($helpers as $helper)
-                        <p>Auxiliar: {{$helper->athlete->user->name}}</p>          
+                    <p>Auxiliar: {{$helper->athlete->user->name}}</p>
                     @empty
-                    <p>Treinador: {{$trainers->name}}</p>
-                    <p>Nenhum auxiliar vinculado a esse treino</p>    
+                    <p>Treinador: {{$training->trainer->name}}</p>
+                    <p>Nenhum auxiliar vinculado a esse treino</p>
                     @endforelse
                     <p>Dia da semana: {{$training->week_day}}-feira</p>
-    
+
                     <p>Horário: Início as {{$training->time_init}} até as {{$training->time_end}}</p>
                 </div>
             </div>
