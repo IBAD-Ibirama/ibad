@@ -121,11 +121,13 @@ class TeamController extends Controller
     public function destroy(int $teamID)
     {
         $team = Team::find($teamID);
-        $athletes = $team->athletes()->get();
 
-        foreach ($athletes as $athlete){
-            $athlete->team()->dissociate();
-            $athlete->save();
+        $athletes = $team->athletes;
+        if($athletes != null){
+            foreach ($athletes as $athlete){
+                $athlete->team()->dissociate();
+                $athlete->save();
+            }
         }
 
         $teamName = $team->name;
