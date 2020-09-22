@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Training;
 use App\Team;
+use App\FaultLimit;
 use App\Frequency;
 use \Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -11,6 +12,40 @@ use Illuminate\Support\Facades\Redirect;
 
 class FrequencyController extends Controller
 {
+    public function index(Request $request)
+    {
+        $faultLimit = FaultLimit::orderBy('id', 'desc')->first();
+        $dateStart = $request['dateStart'];
+        $dateEnd = $request['dateEnd'];
+
+        $query = DB::table('frequencies')
+        ->select([
+            'users.name as name',
+            'users.id as id',
+            'athletes.id as athlete_id',
+            DB::raw('COUNT(frequencies.presence) as faltas')
+            ])
+            ->join('athletes', 'frequencies.athlete_id', '=', 'athletes.id')
+        ->join('users', 'athletes.user_id', '=', 'users.id')
+        ->join('trainings', 'frequencies.training_id', '=', 'trainings.id')
+        ->where('frequencies.presence', '=', false)
+        ->orderBy(DB::raw('COUNT(frequencies.presence)'), 'desc')
+        ->groupBy('athletes.id')
+        ->groupBy('users.name')
+        ->groupBy('users.id');
+
+        if ($dateStart != null) {
+            $query->where('trainings.date', '>=', $dateStart);
+        }
+
+        if ($dateEnd != null) {
+            $query->where('trainings.date', '<=', $dateEnd);
+        }
+
+        $faults = $query->get();
+
+        return view('frequency.index', compact('faults', 'faultLimit'));
+    }
 
     public function create(Training $training)
     {
@@ -74,7 +109,7 @@ class FrequencyController extends Controller
         return ['code' => 200];
     }
 
-    public function createFrequency($athlete_id, $training_id, $presence)
+    private function createFrequency($athlete_id, $training_id, $presence)
     {
         $frequency = new Frequency();
         $frequency->athlete_id = $athlete_id;
@@ -155,42 +190,11 @@ class FrequencyController extends Controller
         return ['code' => 200];
     }
 
-    public function editFrequency($frequency_id, $presence)
+    private function editFrequency($frequency_id, $presence)
     {
         $frequency = Frequency::find($frequency_id);
         $frequency->presence = $presence;
         $frequency->save();
     }
 
-    public function faults(Request $request, Team $team)
-    {
-        $athlete = $request['athlete'];
-        $dateStart = $request['dateStart'];
-        $dateEnd = $request['dateEnd'];
-
-        $query = DB::table('frequencies')
-            ->join('athletes', 'frequencies.athlete_id', '=', 'athletes.id')
-            ->join('users', 'athletes.user_id', '=', 'users.id')
-            ->join('trainings', 'frequencies.training_id', '=', 'trainings.id')
-            ->where('frequencies.presence', '=', false)
-            ->where('athletes.team_id', '=', $team_id);
-
-        if ($athlete > 0) {
-            $query->where('frequencies.athlete_id', '=', $athlete);
-        }
-
-        if ($dateStart != null) {
-            $query->where('trainings.date', '>=', $dateStart);
-        }
-
-        if ($dateEnd != null) {
-            $query->where('trainings.date', '<=', $dateEnd);
-        }
-
-        $query->orderBy('users.name');
-        $faults = $query->get();
-
-        $team->faults = $faults;
-        return view('frequency.faults', compact('team'));
-    }
 }

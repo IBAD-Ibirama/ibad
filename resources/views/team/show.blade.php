@@ -11,9 +11,8 @@
                 <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
                     <span>Detalhes da turma</span>
                     <div>
-                    <a class='btn btn-primary btn-sm' href="{{ route('frequency.faults', $team->id) }}">Faltas</a>
-                    <a class='btn btn-primary btn-sm' href="/turma/{{$team->id}}/desistencias">Desistências</a>
-                    <a class='btn btn-success btn-sm' href="/turmas">Voltar</a>
+                        <a class='btn btn-primary btn-sm' href="/turma/{{$team->id}}/desistencias">Desistências</a>
+                        <a class='btn btn-success btn-sm' href="/turmas">Voltar</a>
                     </div>
                 </div>
 

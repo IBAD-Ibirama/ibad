@@ -40,7 +40,10 @@
                         @can('treinador')
                         <li><a class="nav-link{{Request::is('turmas*') ? ' active' : ''}}" href="/turmas">Turmas</a>
                         </li>
-                        <li><a class="nav-link{{Request::is('treino*') ? ' active' : ''}}" href="/treinos">Treinos</a>
+                        <li><a class="nav-link{{Request::is('treinos*') ? ' active' : ''}}" href="/treinos">Treinos</a>
+                        </li>
+                        <li><a class="nav-link{{Request::is('frequencias*') ? ' active' : ''}}"
+                                href="{{ route('frequency.index') }}">Frequencias</a>
                         </li>
                         @endcan
 

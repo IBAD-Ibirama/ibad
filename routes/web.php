@@ -72,6 +72,9 @@ Route::middleware('auth')->group(function () {
         ->where('training', '[0-9]+');
 
     /* Rotas de Frequencia */
+    Route::get('/frequencias', 'FrequencyController@index')
+    ->name('frequency.index');
+
     Route::get('/treino/{training}/frequencia', 'FrequencyController@create')
     ->name('frequency.create')
     ->where('training', '[0-9]+');
@@ -87,10 +90,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/treino/{training}/frequencia', 'FrequencyController@update')
     ->name('frequency.update')
     ->where('training', '[0-9]+');
-
-    Route::get('/turma/{team}/faltas', 'FrequencyController@faults')
-        ->name('frequency.faults')
-        ->where('team', '[0-9]+');
 
     /* Rotas de Desistencia */
     Route::get('/turma/{team}/desistencias', 'WithdrawalController@withdrawal')
