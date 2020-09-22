@@ -74,7 +74,7 @@ class TeamController extends Controller
                 [
                     'users.name as name',
                     'users.id as id',
-                    'athletes.id as athleste_id'
+                    'athletes.id as athlete_id'
                 ])
             ->join('users', 'athletes.user_id', '=', 'users.id')
             ->where('athletes.team_id', '=', $team->id)

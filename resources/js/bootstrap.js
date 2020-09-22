@@ -40,4 +40,4 @@ window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 //     forceTLS: true
 // });
 
-try {   window.Popper = require('popper.js').default;   window.$ = window.jQuery = require('jquery');   require('bootstrap');​require('lightbox2');} catch (e) {}
+try { window.Popper = require('popper.js').default; window.$ = window.jQuery = require('jquery'); require('bootstrap'); require('lightbox2'); } catch (e) { }

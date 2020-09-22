@@ -16,7 +16,11 @@ class CreateTrainingsTable extends Migration
       Schema::create('trainings', function (Blueprint $table) {
         $table->id();
         $table->timestamp('date');
+        $table->string('time_init');
+        $table->string('time_end');
+        $table->string('week_day');
 
+        
         $table->bigInteger('trainer_id');
         $table->foreign('trainer_id')->references('id')->on('users');
 
