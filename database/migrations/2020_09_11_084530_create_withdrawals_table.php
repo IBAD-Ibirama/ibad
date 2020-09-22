@@ -20,7 +20,6 @@ class CreateWithdrawalsTable extends Migration
             $table->bigInteger('team_id');
             $table->foreign('team_id')->references('id')->on('teams')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

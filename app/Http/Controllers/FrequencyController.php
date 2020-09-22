@@ -30,6 +30,12 @@ class FrequencyController extends Controller
         ->join('trainings', 'frequencies.training_id', '=', 'trainings.id')
         ->where('frequencies.presence', '=', false)
         ->orderBy(DB::raw('COUNT(frequencies.presence)'), 'desc')
+        ->whereNotExists(function($query)
+        {
+            $query->select(DB::raw(1))
+                  ->from('withdrawals')
+                  ->whereRaw('withdrawals.athlete_id = athletes.id');
+        })
         ->groupBy('athletes.id')
         ->groupBy('users.name')
         ->groupBy('users.id');
@@ -68,6 +74,12 @@ class FrequencyController extends Controller
             ->join('users', 'users.id', '=', 'athletes.user_id')
             ->orderBy('users.name')
             ->where('trainings.id', '=', $training->id)
+            ->whereNotExists(function($query)
+            {
+                $query->select(DB::raw(1))
+                      ->from('withdrawals')
+                      ->whereRaw('withdrawals.athlete_id = athletes.id');
+            })
             ->get();
 
 
@@ -81,6 +93,12 @@ class FrequencyController extends Controller
             ->join('athletes', 'athletes.id', '=', 'trainings_helpers.helper_id')
             ->join('users', 'users.id', '=', 'athletes.user_id')
             ->orderBy('users.name')
+            ->whereNotExists(function($query)
+            {
+                $query->select(DB::raw(1))
+                      ->from('withdrawals')
+                      ->whereRaw('withdrawals.athlete_id = athletes.id');
+            })
             ->where('trainings_helpers.training_id', '=', $training->id)
             ->get();
         return view('frequency.create', compact('training', 'athletes', 'helps', 'team'));
@@ -161,6 +179,12 @@ class FrequencyController extends Controller
             ->join('frequencies', 'frequencies.athlete_id',  '=', 'athletes.id')
             ->join('users', 'users.id', '=', 'athletes.user_id')
             ->orderBy('users.name')
+            ->whereNotExists(function($query)
+            {
+                $query->select(DB::raw(1))
+                      ->from('withdrawals')
+                      ->whereRaw('withdrawals.athlete_id = athletes.id');
+            })
             ->where('trainings.id', '=', $training->id)
             ->get();
 

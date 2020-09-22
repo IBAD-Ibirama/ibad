@@ -18,7 +18,7 @@ class WithdrawalController extends Controller
             [
                 'users.name as name',
                 'withdrawals.id as id',
-                'withdrawals.createad_te as date'
+                'withdrawals.created_at as date'
             ]
         )
             ->where('withdrawals.team_id', '=', $team->id)
@@ -29,24 +29,7 @@ class WithdrawalController extends Controller
         return view('withdrawal.show', compact('team'));
     }
 
-    public function addWithdrawal(Request $request)
-    {
-        $athlete_id = $request['athlete'];
-        $team_id = $request['team'];
-
-        $athlete = Athlete::find($athlete_id);
-        $team = Team::find($team_id);
-
-        $withdrawal = Withdrawal::create([
-            'athlete_id' => $athlete_id,
-            'team_id' => $team_id
-        ]);
-
-        $path = route('team.withdrawal', $team_id);
-        return Redirect::to($path);
-    }
-
-    public function linksAthletePagewithdrawal(Team $team)
+    public function create(Team $team)
     {
         $athletes = DB::table('athletes')
             ->select(
@@ -57,7 +40,7 @@ class WithdrawalController extends Controller
                 ]
             )
             ->join('users', 'athletes.user_id', '=', 'users.id')
-            ->where('athletes.team_id', '=', $team_id)
+            ->where('athletes.team_id', '=', $team->id)
             ->whereNotExists(function($query)
             {
                 $query->select(DB::raw(1))
@@ -68,14 +51,29 @@ class WithdrawalController extends Controller
             ->get();
         $team->athletes = $athletes;
 
-        return view('withdrawal.add-withdrawal', compact('team', 'athletes'));
+        return view('withdrawal.create', compact('team', 'athletes'));
     }
 
+    public function store(Request $request)
+    {
+        $athlete_id = $request['athlete'];
+        $team_id = $request['team'];
+
+        $athlete = Athlete::find($athlete_id);
+
+        $withdrawal = new Withdrawal();
+        $withdrawal->athlete_id = $athlete->id;
+        $withdrawal->team_id = $athlete->team->id;
+        $withdrawal->save();
+
+        $path = route('withdrawal.index', $athlete->team->id);
+        return Redirect::to($path);
+    }
 
     public function destroy(Team $team, Withdrawal $withdrawal)
     {
         $withdrawal->delete();
-        $path = route('team.withdrawal', $team->id);
+        $path = route('withdrawal.index', $team->id);
         return Redirect::to($path);
     }
 }

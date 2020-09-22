@@ -92,16 +92,16 @@ Route::middleware('auth')->group(function () {
     ->where('training', '[0-9]+');
 
     /* Rotas de Desistencia */
-    Route::get('/turma/{team}/desistencias', 'WithdrawalController@withdrawal')
-        ->name('team.withdrawal')
+    Route::get('/turma/{team}/desistencias', 'WithdrawalController@index')
+        ->name('withdrawal.index')
         ->where('team', '[0-9]+');
 
-    Route::get('/turma/{team}/adddesistencia', 'WithdrawalController@linksAthletePagewithdrawal')
-        ->name('team.add_withdrawal')
+    Route::get('/turma/{team}/desistencia/create', 'WithdrawalController@create')
+        ->name('withdrawal.create')
         ->where('team', '[0-9]+');
 
-    Route::post('/turma/desistencia', 'WithdrawalController@addWithdrawal')
-        ->name('add_withdrawal');
+    Route::post('/turma/desistencia', 'WithdrawalController@store')
+        ->name('withdrawal.store');
 
     Route::delete('/turmas/{team}/withdrawal/{withdrawal}', 'WithdrawalController@destroy')
         ->name('withdrawal.delete')
