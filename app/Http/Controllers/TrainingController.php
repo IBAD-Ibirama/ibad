@@ -288,13 +288,21 @@ class TrainingController extends Controller
 
   public function destroy(Training $training)
   {
+      if(count($training->frequencies()->get())){
+        session()->flash('failure', "Não é possivel remover o treino com frequencia.");
+        return Redirect::back();
+      }
+
       try {
-          $training->delete();
-          session()->flash('success', "Treino foi removido.");
+        $helpers = TrainingHelper::all()->where('training_id','=',$training->id);
+        foreach ($helpers as $helpers){
+            $helpers->delete();
+        }
+        $training->delete();
+        session()->flash('success', "Treino foi removido.");
 
       } catch (\Exception $e) {
         session()->flash('warning', "Não foi possivel remover o Treino.");
-        return Redirect::back();
       }
 
       return Redirect::back();

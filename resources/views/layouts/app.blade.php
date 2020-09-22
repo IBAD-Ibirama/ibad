@@ -94,10 +94,10 @@
             </div>
             @endif
 
-            @if(isset($message_fault) || Session::has('fault'))
+            @if(isset($message_failure) || Session::has('failure'))
             <div class="container">
                 <div class="alert alert-danger" role="alert">
-                    {!! isset($message_fault) ? $message_fault : Session::get("fault") !!}
+                    {!! isset($message_failure) ? $message_failure : Session::get("failure") !!}
                 </div>
             </div>
             @endif
