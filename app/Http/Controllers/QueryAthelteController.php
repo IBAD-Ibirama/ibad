@@ -13,8 +13,7 @@ class QueryAthelteController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show() {
-
-        $athlete = Athlete::find(Auth::user()->id);
+        $athlete = Athlete::where('user_id', Auth::user()->id)->first();
         
         return view('queryathlete.show', compact('athlete'));
     }

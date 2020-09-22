@@ -14,7 +14,7 @@
         <div class="card-body">
             <div class="form-group">
               <label for="birthdate">Data de Nascimento</label>
-              <input type="date" class="form-control{{$errors->has('birthdate') ? ' border-danger' : '' }}" id="birthdate" name="birthdate" value="{{$athlete->birthdate ?? old('birthdate')}}" readonly>
+              <input type="date" class="form-control" id="birthdate" name="birthdate" value="{{$athlete->birthdate}}" readonly>
             </div>
             <div class="form-group">
               <label for="gender">Sexo</label>
@@ -22,11 +22,11 @@
             </div>
             <div class="form-group">
               <label for="rg">RG</label>
-              <input type="text" class="form-control{{$errors->has('rg') ? ' border-danger' : '' }}" id="rg" name="rg" value="{{$athlete->rg ?? old('rg')}}" readonly>
+              <input type="text" class="form-control" id="rg" name="rg" value="{{$athlete->rg}}" readonly>
             </div>
             <div class="form-group">
               <label for="telephone">Telefone</label>
-              <input type="text" class="form-control" id="telephone" name="telephone" value="{{$athlete->telephone ?? old('telephone')}}" readonly>
+              <input type="text" class="form-control" id="telephone" name="telephone" value="{{$athlete->telephone}}" readonly>
             </div>
             <div class="form-group">
               <label for="shift">Período</label>
@@ -34,17 +34,17 @@
             </div>
             <div class="form-group">
               <label for="grade">Série</label>
-              <input type="text" class="form-control" id="grade" name="grade" value="{{$athlete->grade ?? old('grade')}}" readonly>
+              <input type="text" class="form-control" id="grade" name="grade" value="{{$athlete->grade}}" readonly>
               <small class="form-text text-danger">{!! $errors->first('grade') !!}</small>
             </div>
             <div class="form-group">
               <label for="health_problem">Problema de Saúde</label>
-              <input type="text" class="form-control" id="health_problem" name="health_problem" value="{{$athlete->health_problem ?? old('health_problem')}}" readonly>
+              <input type="text" class="form-control" id="health_problem" name="health_problem" value="{{$athlete->health_problem}}" readonly>
               <small class="form-text text-danger">{!! $errors->first('health_problem') !!}</small>
             </div>
             <div class="form-group">
               <label for="medication">Medicação</label>
-              <input type="text" class="form-control" id="medication" name="medication" value="{{$athlete->medication ?? old('medication')}}" readonly>
+              <input type="text" class="form-control" id="medication" name="medication" value="{{$athlete->medication}}" readonly>
               <small class="form-text text-danger">{!! $errors->first('medication') !!}</small>
             </div>
             <div class="form-group">
@@ -62,7 +62,7 @@
             @endif
             <div class="form-group">
               <label for="school">Escola</label>
-              <input type="text" class="form-control" id="school" name="school" value="{{$athlete->school ?? old('school')}}" readonly>
+              <input type="text" class="form-control" id="school" name="school" value="{{$athlete->school}}" readonly>
               <small class="form-text text-danger">{!! $errors->first('school') !!}</small>
             </div>
         </div>
