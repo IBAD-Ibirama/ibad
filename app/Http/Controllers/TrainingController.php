@@ -203,6 +203,10 @@ class TrainingController extends Controller
 
     public function edit(Training $training)
     {
+      if(count($training->frequencies()->get())){
+        session()->flash('failure', "Não é possivel alterar dado do treino com frequencia.");
+        return Redirect::back();
+      }
       $teams = Team::all();
       $teams_can_have_auxiliary = $this->getAllTeamNeedAuxiliarys();
       $helpers = TrainingHelper::all()->where('training_id','=',$training->id);
