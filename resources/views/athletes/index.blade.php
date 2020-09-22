@@ -4,7 +4,7 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-12">
-      @role('admin')
+      @can('treinador')
 
       <div class="card">
         <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
@@ -26,6 +26,7 @@
 
                 <a class="btn btn-sm btn-outline-primary mr-2" href={{ route('evaluations.index', compact('athlete')) }}>Avaliações</a>
 
+                @role('admin')
                 <a class="btn btn-sm btn-light mr-2" href="/atletas/{{$athlete->id}}/edit">Editar</a>
 
                 <form style="display: inline" action="/atletas/{{$athlete->id}}" method="post">
@@ -33,6 +34,7 @@
                   @method('DELETE')
                   <input class="btn btn-sm btn-outline-danger" type="submit" value="Deletar">
                 </form>
+                @endrole
               </div>
             </li>
             @endforeach
@@ -43,7 +45,7 @@
 
       <p>Você não tem permissão para acessar essa funcionalidade.</p>
 
-      @endrole
+      @endcan
     </div>
   </div>
 </div>

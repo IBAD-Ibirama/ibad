@@ -13,7 +13,7 @@
     @endif
   <div class="row justify-content-center">
     <div class="col-md-11">
-      @role('admin')
+      @can('treinador')
 
       <div class="card">
 
@@ -51,7 +51,7 @@
 
       <p>Você não tem permissão para acessar essa funcionalidade.</p>
 
-      @endrole
+      @endcan
     </div>
   </div>
 </div>
