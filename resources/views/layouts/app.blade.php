@@ -32,9 +32,11 @@
                         <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}"
                                 href="/usuarios">Usuários</a></li>
                         <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a>
+                        <li><a class="nav-link{{Request::is('limiteDeFalta*') ? ' active' : ''}}"
+                                href="{{route('fault.show')}}">Limite de Falta</a>
                         </li>
-
                         @endrole
+
                         @can('treinador')
                         <li><a class="nav-link{{Request::is('turmas*') ? ' active' : ''}}" href="/turmas">Turmas</a>
                         </li>

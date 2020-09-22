@@ -21,26 +21,28 @@ Route::middleware('auth')->group(function () {
     Route::get('/delete-images/athlete/{athlete_id}', 'AthleteController@deleteImages');
 
 
-    Route::model('team', 'App\Team');
 
     Route::resource('turmas', 'TeamController');
+
     Route::model('athlete', 'App\Athlete');
-
-    Route::get('/turmas/{team}/matricular', 'MatriculateController@create')
-        ->name('team.matriculate')
-        ->where('id', '[0-9]+');
-
-    Route::post('/turmas/{team}/matricular', 'MatriculateController@store')
-        ->where('team', '[0-9]+')
-        ->name('athlete.matriculate');
-
-    Route::delete('/turmas/{team}/atleta/{athlete}', 'MatriculateController@destroy')
-        ->name('team.dematriculate')
-        ->where('team', '[0-9]+')
-        ->where('athlete', '[0-9]+');
-
+    Route::model('team', 'App\Team');
     Route::model('training', 'App\Training');
 
+    /* Rotas de Matricula */
+    Route::get('/turmas/{team}/matricular', 'MatriculateController@create')
+    ->name('team.matriculate')
+    ->where('team', '[0-9]+');
+
+    Route::post('/turmas/{team}/matricular', 'MatriculateController@store')
+    ->where('team', '[0-9]+')
+    ->name('athlete.matriculate');
+
+    Route::delete('/turmas/{team}/atleta/{athlete}', 'MatriculateController@destroy')
+    ->name('team.dematriculate')
+    ->where('team', '[0-9]+')
+    ->where('athlete', '[0-9]+');
+
+    /* Rotas de treino */
     Route::get('/treinos', 'TrainingController@index')
         ->name('training.index')
         ->where('team', '[0-9]+');
@@ -53,7 +55,6 @@ Route::middleware('auth')->group(function () {
         ->name('training.store')
         ->where('id', '[0-9]+');
 
-
     Route::get('/treino/{training}', 'TrainingController@show')
         ->name('training.show')
         ->where('training', '[0-9]+');
@@ -62,14 +63,15 @@ Route::middleware('auth')->group(function () {
         ->name('training.edit')
         ->where('training', '[0-9]+');
 
-    Route::put('/treino/{training}/update', 'TrainingController@update')
+    Route::put('/treino/{training}', 'TrainingController@update')
         ->name('training.update')
         ->where('training', '[0-9]+');
 
     Route::delete('/treinos/{training}', 'TrainingController@destroy')
         ->name('training.destroy')
-        ->where('id', '[0-9]+');
+        ->where('training', '[0-9]+');
 
+    /* Rotas de Frequencia */
     Route::get('/treino/{training}/frequencia', 'FrequencyController@create')
         ->name('frequency.create')
         ->where('training', '[0-9]+');
@@ -86,6 +88,7 @@ Route::middleware('auth')->group(function () {
         ->name('frequency.update')
         ->where('training', '[0-9]+');
 
+    /*Rotas deLimite de Faltas */
     Route::get('/limiteDeFaltas', 'FaultLimitController@index')
         ->name('fault.show');
 
