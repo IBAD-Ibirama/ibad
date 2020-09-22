@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f1e1c0716097feaf202d265389529112",
+    "content-hash": "1e9f2776b8437e2a4b75a39586c5dfa1",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4535,6 +4535,50 @@
                 }
             ],
             "time": "2020-07-22T23:32:04+00:00"
+        },
+        {
+            "name": "wgenial/numeroporextenso",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wgenial/numeroporextenso-php.git",
+                "reference": "e13e78accbed4a9a07ba0cce91280b9eed65c0db"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wgenial/numeroporextenso-php/zipball/e13e78accbed4a9a07ba0cce91280b9eed65c0db",
+                "reference": "e13e78accbed4a9a07ba0cce91280b9eed65c0db",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "8.5.x-dev"
+            },
+            "type": "package",
+            "autoload": {
+                "psr-4": {
+                    "WGenial\\NumeroPorExtenso\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Giovani Generali",
+                    "email": "giovani@wgenial.com.br",
+                    "homepage": "http://www.wgenial.com.br"
+                }
+            ],
+            "description": "Converte numeral em valor por extenso.",
+            "keywords": [
+                "brasil",
+                "extenso",
+                "moeda",
+                "numero",
+                "real"
+            ],
+            "time": "2020-01-08T19:46:54+00:00"
         }
     ],
     "packages-dev": [

@@ -17,6 +17,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('patrocinadores', 'SponsorController');
     Route::resource('atletas', 'AthleteController');
     Route::get('/relatorio-movimentacoes', 'MovesReportController@create');
+    Route::get('/recibo-movimentacoes/{id}', 'MovesReceiptController@create');
     Route::get('/delete-images/athlete/{athlete_id}', 'AthleteController@deleteImages');
 
 
