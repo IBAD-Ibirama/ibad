@@ -5,7 +5,7 @@
   <div class="row justify-content-center">
     <div class="col-md-12">
       
-      @role('admin')
+      @can('treinador')
       
       <div class="card">
         <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
@@ -60,7 +60,7 @@
       
       <p>Você não tem permissão para acessar essa funcionalidade.</p>
 
-      @endrole
+      @endcan
     </div>
   </div>
 </div>
@@ -71,6 +71,8 @@
 <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
 <!-- Chartisan -->
 <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
+<!-- Bootstrap -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 <script>
 (function(document) {
@@ -80,6 +82,7 @@
     const collapseCharts = document.querySelectorAll('.collapse-chart');
 
     const onShowCollapseChart = collapseChart => {
+      console.log('deveria')
       const chartBody = collapseChart.querySelector('.card-body');
       if(!chartBody.childElementCount) {
         const chartType = collapseChart.getAttribute('data-type');
@@ -95,6 +98,7 @@
     const setCollapseEvent = () => {
       if(typeof $ !== 'undefined') {
         collapseCharts.forEach(collapseChart => {
+          console.log('entra')
           $(collapseChart).on('show.bs.collapse', () => onShowCollapseChart(collapseChart));
         });
       } else {
