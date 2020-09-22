@@ -11,15 +11,22 @@ class User extends Authenticatable
     use Notifiable;
     use \Spatie\Permission\Traits\HasRoles;
 
-    public function hobbies(){
+    public function hobbies()
+    {
         return $this->hasOne('App\Athlete');
     }
+
+    public function moves()
+    {
+        return $this->hasMany('App\Moves');
+    }
+
     protected $fillable = [
         'name', 'email', 'password'
     ];
 
     protected $hidden = [
-      'password', 'remember_token',
+        'password', 'remember_token',
     ];
 
     protected $casts = [
