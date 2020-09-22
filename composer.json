@@ -20,7 +20,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "2.4",
         "spatie/laravel-permission": "3.6",
-        "wgenial/numeroporextenso": "^3.0
+        "wgenial/numeroporextenso": "^3.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
