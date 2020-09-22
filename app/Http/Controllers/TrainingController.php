@@ -28,7 +28,6 @@ class TrainingController extends Controller
     public function show(Training $training){
         $helpers = TrainingHelper::all()->where('training_id','=',$training->id);
         $trainers= User::find($training->trainer_id);
-        #dd($trainers->name);
         return view('training.show')
         ->with(compact('training'))
         ->with(compact('helpers'))
@@ -44,37 +43,66 @@ class TrainingController extends Controller
       ->select('teams.id')
       ->get();
 
-      $trainers = array();
-      $users = User::all();
-      foreach ($users as $user) {
-        if($user->getRoleNames()[0] == "treinador"){
-          array_push($trainers, $user);
-        }
-      }
-      $athletes = DB::table('athletes')
-      ->join('users', 'athletes.user_id', '=' ,'users.id')
-      ->join('teams', 'athletes.team_id', '=', 'teams.id')
-      ->join('team_levels', 'teams.team_level_id' , '=', 'team_levels.id')
-      ->where('team_levels.can_be_auxiliary', '=', 'true')
-      ->select('athletes.id', 'users.name')
-      ->get();
+      $trainers = $this->getAllTrainers();
+      $athletes = $this->getAllHelpers();
 
-      $place = DB::select('select * from locals');
-      return view('training.create')
-          ->with(compact('teams'))
-          ->with(compact('trainers'))
-          ->with(compact('place'))
-          ->with(compact('athletes'))
-          ->with(compact('teams_can_have_auxiliary'));
+      $place = Local::all();
+
+      return view('training.create', compact('teams','trainers','place','athletes', 'teams_can_have_auxiliary'));
     }
 
+    public function getAllTrainers()
+    {
+        $trainers = array();
+        $users = User::all();
+        foreach ($users as $user) {
+          if($user->getRoleNames()[0] == "treinador"){
+            array_push($trainers, $user);
+          }
+        }
+        return $trainers;
+    }
+
+    public function getAllHelpers()
+    {
+      $athletes = DB::table('athletes')
+        ->join('users', 'athletes.user_id', '=' ,'users.id')
+        ->join('teams', 'athletes.team_id', '=', 'teams.id')
+        ->join('team_levels', 'teams.team_level_id' , '=', 'team_levels.id')
+        ->where('team_levels.can_be_auxiliary', '=', 'true')
+        ->select('athletes.id', 'users.name')
+        ->get();
+      return $athletes;
+    }
 
     public function store(Request $request)
     {
+      $request->validate([
+          'team_select' => 'required',
+          'trainer_select' => 'required',
+          'training_init_time' => 'required',
+          'training_end_time' => 'required',
+          'training_init' => 'required',
+          'training_repeat' => 'required',
+          'training_local' => 'required',
+      ],[
+          'required' => 'Informe :attribute',
+      ],
+      [
+        'team_select' => 'a turma',
+        'trainer_select' => 'o treinador',
+        'training_init_time' => 'a hora de inicio do treino',
+        'training_end_time' => 'a hora de termino do treino',
+        'training_init' => 'o dia inicial',
+        'training_repeat' => 'o dia de fim do periodo',
+        'training_local' => 'o local onde ocorrerá o treino',
+      ]);
+
       $team_id = $request['team_select'];
       $trainer_id= $request['trainer_select'];
-      $local_id=$this->handleTrainingLocal($request)->id;
+      $local_id = $this->handleTrainingLocal($request)->id;
       $week_day = $request['day_select'];
+      $week_day_pt = $request['day_select_pt'];
       $init_time = $request['training_init_time'];
       $end_time = $request['training_end_time'];
       $init_date = $request['training_init'];
@@ -88,7 +116,7 @@ class TrainingController extends Controller
       $recurent->startDate($this->dateFromString($init_date))
       ->freq("weekly")
       ->count($this->calculateWeeks($init_date, $repeat_until))
-      ->byday($this->ptWeekDayToEn($week_day))
+      ->byday($week_day)
       ->generateOccurrences();
 
       foreach ($recurent->occurrences as $datas){
@@ -98,25 +126,28 @@ class TrainingController extends Controller
         foreach($arr2 as $date_value){
           $training_unit = new Training();
 
-
           $training_unit->date = new DateTime($date_value);
           $training_unit->time_init= $init_time;
           $training_unit->time_end= $end_time;
-          $training_unit->week_day=$week_day;
+          $training_unit->week_day=$week_day_pt;
           $training_unit->trainer_id=$trainer_id;
           $training_unit->team_id=$team_id;
           $training_unit->local_id=$local_id;
           $training_unit->save();
 
-          if($auxiliary1 != null)
-            $this->handleHelpers($auxiliary1, $training_unit->id);
+          if($auxiliary1 != null) {
+              $this->handleHelpers($auxiliary1, $training_unit->id);
+          }
 
-          if($auxiliary2 != null)
-            $this->handleHelpers($auxiliary2, $training_unit->id);
+          if($auxiliary2 != null){
+              $this->handleHelpers($auxiliary2, $training_unit->id);
+          }
         }
       }
       $path = route('training.index');
-      return Redirect::to($path);
+        return Redirect::to($path)->with([
+            'success' => "Treino(s) foram cadastrado(s) com sucesso."
+        ]);
       }
 
       private function handleHelpers(int $auxiliary, int $training_id){
@@ -147,30 +178,9 @@ class TrainingController extends Controller
       }
 
       private function dateFromString($date){
-        return new DateTime(DateTime::createFromFormat('d-m-Y', str_replace("/", "-", $date))->format('d-m-Y'));
+        return new DateTime($date);
       }
 
-      private function ptWeekDayToEn($weekDay){
-        $return_word= "";
-        switch ($weekDay) {
-          case "Segunda-Feira":
-            $return_word= "mo";
-              break;
-          case "Terça-Feira":
-            $return_word= "tu";
-            break;
-          case "Quarta-Feira":
-            $return_word= "we";
-            break;
-          case "Quinta-Feira":
-            $return_word= "th";
-            break;
-          case "Sexta-Feira":
-            $return_word= "fr";
-            break;
-        }
-        return $return_word;
-      }
 
       public function destroy($id)
       {
@@ -231,7 +241,7 @@ class TrainingController extends Controller
     $recurent->startDate($this->dateFromString($init_date))
     ->freq("weekly")
     ->count($this->calculateWeeks($init_date, $repeat_until))
-    ->byday($this->ptWeekDayToEn($week_day))
+    ->byday($week_day)
     ->generateOccurrences();
 
     foreach ($recurent->occurrences as $datas){

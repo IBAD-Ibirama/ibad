@@ -29,8 +29,7 @@
                                     method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <input class="btn btn-sm btn-outline-danger" type="submit" name="_method"
-                                        value="delete">
+                                    <input class="btn btn-sm btn-outline-danger" type="submit" value="Deletar">
                                 </form>
                             </div>
                         </li>
