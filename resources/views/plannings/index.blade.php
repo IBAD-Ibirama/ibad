@@ -1,45 +1,44 @@
-@extends('layouts.master')
-
-@section('title', 'Consultar Atividades')
-@section('subtitle', $team->name . ' - Treino em ' . date('d/m/Y', strtotime($training->date)))
+@extends('layouts.app')
 
 @section('content')
-<div class="text-left">
-    <a class="btn btn-secondary mb-1" href={{ route('index') }} role="button">Início</a>
-    <a class="btn btn-primary mb-1" href={{ route('trainings.index', compact('team')) }} role="button">Voltar para Treinos</a>
-    <a class="btn btn-success mb-1" href={{ route('plannings.create', compact('team', 'training')) }} role="button">Cadastrar</a>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col" width="10%">#</th>
-            <th scope="col" width="25%">Nome da Atividade</th>
-            <th scope="col" width="45%">Descrição da Atividade</th>
-            <th scope="col" width="20%">Ações</th>
-        </tr>
-        </thead>
-        <tbody>
-            @if (count($plannings) > 0)
-                @foreach ($plannings as $planning)
-                    <tr>
-                        <th scope="row">{{ $planning->id }}</th>
-                        <td>{{ $planning->name }}</td>
-                        <td>{{ $planning->description }}</td>
-                        <td>
-                            <a class="btn btn-warning" href={{ route('plannings.edit', compact('team', 'training', 'planning')) }} role="button">Alterar</a>
-                            <button class="btn btn-danger" onclick="document.getElementById('delete_{{ $planning->id }}').submit()">Excluir</button>
-                            <form id="delete_{{ $planning->id }}" action={{ route('plannings.destroy', compact('planning')) }} method="POST">
-                                @csrf
-                                @method('DELETE')
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            @else
-                <tr>
-                    <td colspan="4">Nenhuma atividade cadastrada</td>
-                </tr>
-            @endif
-        </tbody>
-    </table>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      @role('admin')
+      <div class="card">
+        <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
+          <span>{{ $training->description() }} - Todas as atividades planejadas</span>
+          <div>
+            <a class="btn btn-success btn-sm" href="{{ route('plannings.create', compact('team', 'training')) }}">Criar nova atividade</a>
+            <a class="btn btn-warning btn-sm" href="{{ route('training.index', ['team' => $team->id]) }}"><i class="fas fa-arrow-circle-up"></i> Voltar</a>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+            @foreach ($plannings as $planning)
+            <li class="list-group-item">
+                <a href="{{ route('plannings.show', compact('team', 'training', 'planning')) }}" title="Mostrar detalhes">{{ $planning->name }}</a>
+  
+                <div class="float-right flex">
+                  <a class="btn btn-sm btn-light mr-2" href="{{ route('plannings.edit', compact('team', 'training', 'planning')) }}">Editar</a>
+  
+                  <form style="display: inline" action="{{ route('plannings.destroy', compact('planning')) }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <input class="btn btn-sm btn-outline-danger" type="submit" value="Deletar">
+                  </form>
+                </div>
+              </li>  
+            @endforeach
+          </ul>
+        </div>
+      </div>
+      @else
+
+      <p>Você não tem permissão para acessar essa funcionalidade.</p>
+
+      @endrole
+    </div>
+  </div>
 </div>
 @endsection

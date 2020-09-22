@@ -47,16 +47,30 @@ class PlanningController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for showing the specified resource.
      *
      * @param  \App\Team      $team
      * @param  \App\Training  $training
      * @param  \App\Planning  $planning
      * @return \Illuminate\Http\Response
      */
-    public function edit(Team $team, Training $training, Planning $planning)
+    public function show(Team $team, Training $training, Planning $planning)
     {
-        return view('plannings.edit', compact('team', 'training', 'planning'));
+        return $this->edit($team, $training, $planning, false);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Team      $team
+     * @param  \App\Training  $training
+     * @param  \App\Planning  $planning
+     * @param  bool           $readonly
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Team $team, Training $training, Planning $planning, $readonly = false)
+    {
+        return view('plannings.edit', compact('team', 'training', 'planning', 'readonly'));
     }
 
     /**

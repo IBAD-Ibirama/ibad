@@ -112,6 +112,7 @@ Route::middleware('auth')->group(function () {
     //Turmas x Treinos x Atividades
     Route::get('/turmas/{team}/treinos/{training}/atividades', 'PlanningController@index')->name('plannings.index');
     Route::get('/turmas/{team}/treinos/{training}/atividades/create', 'PlanningController@create')->name('plannings.create');
+    Route::get('/turmas/{team}/treinos/{training}/atividades/{planning}/show', 'PlanningController@show')->name('plannings.show');
     Route::get('/turmas/{team}/treinos/{training}/atividades/{planning}/edit', 'PlanningController@edit')->name('plannings.edit');
     Route::post('/turmas/treinos/atividades', 'PlanningController@store')->name('plannings.store');
     Route::put('/turmas/treinos/atividades/{planning}', 'PlanningController@update')->name('plannings.update');

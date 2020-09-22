@@ -34,5 +34,10 @@ class Training extends Model
         return $this->hasMany(Planning::class);
     }
 
+    public function description()
+    {
+        $data = [$this->team->name, date('d/m/Y', strtotime($this->date)), $this->week_day, $this->time_init, $this->time_end];
+        return sprintf('%s - %s - %s - %s às %s', ...$data);
+    }
 }
 
