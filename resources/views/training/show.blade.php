@@ -23,11 +23,18 @@
                 </div>
 
                 <div class="card-body">
-                    {{--  <h3><b>{{$team->name}}</b></h3>
-                    <p>Nível da Turma: {{ $team->teamLevel->name}}</p>
-                    <p>Esta turma {{ $team->teamLevel->requires_auxiliary ? '' : 'não' }} requer auxiliares</p>
-                    <p>Os atletas dessa turma {{ $team->teamLevel->can_be_auxiliary ? '' : 'não' }} podem ser auxiliares
-                    </p> --}}
+                    <h3><b>Turma - {{$training->team->name}}</b></h3>
+                    <p>Data: {{ (new DateTime(substr($training->date,0,10)))->format('d/m/Y')}}</p>
+                    <p>Local: {{ $training->local->description}}</p>
+                    @forelse($helpers as $helper)
+                    <p>Auxiliar: {{$helper->athlete->user->name}}</p>
+                    @empty
+                    <p>Treinador: {{$training->trainer->name}}</p>
+                    <p>Nenhum auxiliar vinculado a esse treino</p>
+                    @endforelse
+                    <p>Dia da semana: {{$training->week_day}}</p>
+
+                    <p>Horário: Início as {{$training->time_init}} até as {{$training->time_end}}</p>
                 </div>
             </div>
             @else
