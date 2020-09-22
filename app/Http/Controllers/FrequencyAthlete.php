@@ -15,9 +15,10 @@ class FrequencyAthlete extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
+        $athlete=Athlete::where('user_id',Auth::user()->id)->first();
         $frequencys = DB::table('frequencies')
             ->join('trainings', 'frequencies.training_id', '=', 'trainings.id')
-            ->where('athlete_id', Auth::user()->id)
+            ->where('athlete_id', $athlete->id)
             ->get();
             
         return view('frequencia.index', compact('frequencys'));

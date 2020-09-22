@@ -27,26 +27,13 @@
                     <form autocomplete="off" action="{{ URL::to('atleta/registroPraticipacaoAtleta/registrar') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
+                            
+                            
                             <div class="col">
                                 <div class="form-group">
                                     <label for="competition">Competicao</label>
                                     <select class="form-control" id="competition" name="competition"></select>
                                 </div>
-                                <div class="form-group">
-                                    <label for="coordinator">Coordenador Competição</label>
-                                    <input type="text" class="form-control" id="coordinator" name="coordinator" placeholder="Coordenador da competição" readonly>
-                                </div>
-                                <div class="form-group">
-                                    <label for="competition_level">Nível Competição</label>
-                                    <input type="text" class="form-control" id="competition_level" name="competition_level" placeholder="Nivel competição" readonly>
-                                </div>
-                                <div class="form-group">
-                                    <label for="date">Data Competição</label>
-                                    <input type="text" class="form-control" id="date" name="date" placeholder="data da competição" readonly>
-                                </div>
-                            </div>
-                            <div class="col">
-
                                 <div class="form-group">
                                     <label for="modality">Atletas</label>
                                     <div class="form-group">
