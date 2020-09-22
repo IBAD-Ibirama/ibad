@@ -22,13 +22,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/recibo-movimentacoes/{id}', 'MovesReceiptController@create');
     Route::get('/delete-images/athlete/{athlete_id}', 'AthleteController@deleteImages');
 
-
-
     Route::resource('turmas', 'TeamController');
 
     Route::model('athlete', 'App\Athlete');
     Route::model('team', 'App\Team');
     Route::model('training', 'App\Training');
+    Route::model('withdrawal', 'App\Withdrawal');
 
     /* Rotas de Matricula */
     Route::get('/turmas/{team}/matricular', 'MatriculateController@create')
@@ -74,23 +73,43 @@ Route::middleware('auth')->group(function () {
         ->where('training', '[0-9]+');
 
     /* Rotas de Frequencia */
+    Route::get('/frequencias', 'FrequencyController@index')
+    ->name('frequency.index');
+
     Route::get('/treino/{training}/frequencia', 'FrequencyController@create')
-        ->name('frequency.create')
-        ->where('training', '[0-9]+');
+    ->name('frequency.create')
+    ->where('training', '[0-9]+');
 
     Route::post('/treino/{training}/frequencia', 'FrequencyController@store')
-        ->name('frequency.store')
-        ->where('training', '[0-9]+');
+    ->name('frequency.store')
+    ->where('training', '[0-9]+');
 
     Route::get('/treino/{training}/frequencia/edit', 'FrequencyController@edit')
-        ->name('frequency.edit')
-        ->where('training', '[0-9]+');
+    ->name('frequency.edit')
+    ->where('training', '[0-9]+');
 
     Route::put('/treino/{training}/frequencia', 'FrequencyController@update')
-        ->name('frequency.update')
-        ->where('training', '[0-9]+');
+    ->name('frequency.update')
+    ->where('training', '[0-9]+');
 
-    /*Rotas deLimite de Faltas */
+    /* Rotas de Desistencia */
+    Route::get('/turma/{team}/desistencias', 'WithdrawalController@index')
+        ->name('withdrawal.index')
+        ->where('team', '[0-9]+');
+
+    Route::get('/turma/{team}/desistencia/create', 'WithdrawalController@create')
+        ->name('withdrawal.create')
+        ->where('team', '[0-9]+');
+
+    Route::post('/turma/desistencia', 'WithdrawalController@store')
+        ->name('withdrawal.store');
+
+    Route::delete('/turmas/{team}/withdrawal/{withdrawal}', 'WithdrawalController@destroy')
+        ->name('withdrawal.delete')
+        ->where('team', '[0-9]+')
+        ->where('withdrawal', '[0-9]+');
+
+    /* Rotas de Limite de Faltas */
     Route::get('/limiteDeFaltas', 'FaultLimitController@index')
         ->name('fault.show');
 

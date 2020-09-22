@@ -79,6 +79,12 @@ class TeamController extends Controller
                 ])
             ->join('users', 'athletes.user_id', '=', 'users.id')
             ->where('athletes.team_id', '=', $team->id)
+            ->whereNotExists(function($query)
+            {
+                $query->select(DB::raw(1))
+                      ->from('withdrawals')
+                      ->whereRaw('withdrawals.athlete_id = athletes.id');
+            })
             ->orderBy('users.name')
             ->get();
         $team->athletes = $athletes;

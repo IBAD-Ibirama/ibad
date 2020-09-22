@@ -61,7 +61,7 @@
                             </small>
                         </div>
 
-                        <div class=" form-group">
+                        <div class="form-group">
                             <label id="titleAuxiliary" class="mt-4 mb-2">Ajudantes</label>
                             <div class="row" id='form-auxiliarys'>
                                 <div class="col-md-6">

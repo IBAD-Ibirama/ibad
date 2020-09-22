@@ -44,8 +44,6 @@ class MovesController extends Controller
             'user_id' => $request->usuario
         ]);
 
-
-
         $moves->save();
 
         return $this->index()->with([
