@@ -4,10 +4,10 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-12">
-      @role('admin')
+      @can('treinador')
       <div class="card">
         <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
-          <span>{{ $training->description() }} - Todas as atividades planejadas</span>
+          <span>{{ $training->description() }} - Atividades planejadas</span>
           <div>
             <a class="btn btn-success btn-sm" href="{{ route('plannings.create', compact('team', 'training')) }}">Criar nova atividade</a>
             <a class="btn btn-warning btn-sm" href="{{ route('training.index', ['team' => $team->id]) }}"><i class="fas fa-arrow-circle-up"></i> Voltar</a>
@@ -37,7 +37,7 @@
 
       <p>Você não tem permissão para acessar essa funcionalidade.</p>
 
-      @endrole
+      @endcan
     </div>
   </div>
 </div>

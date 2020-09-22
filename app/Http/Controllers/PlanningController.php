@@ -56,7 +56,7 @@ class PlanningController extends Controller
      */
     public function show(Team $team, Training $training, Planning $planning)
     {
-        return $this->edit($team, $training, $planning, false);
+        return view('plannings.show', compact('team', 'training', 'planning'));
     }
 
     /**
@@ -65,12 +65,11 @@ class PlanningController extends Controller
      * @param  \App\Team      $team
      * @param  \App\Training  $training
      * @param  \App\Planning  $planning
-     * @param  bool           $readonly
      * @return \Illuminate\Http\Response
      */
-    public function edit(Team $team, Training $training, Planning $planning, $readonly = false)
+    public function edit(Team $team, Training $training, Planning $planning)
     {
-        return view('plannings.edit', compact('team', 'training', 'planning', 'readonly'));
+        return view('plannings.edit', compact('team', 'training', 'planning'));
     }
 
     /**

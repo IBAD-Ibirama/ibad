@@ -28,13 +28,13 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li><a class="nav-link{{Request::is('dashboard') ? ' active' : ''}}" href="/">Dashboard</a></li>
-                        @role('admin')
+                        @can('treinador')
                         <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}"
                                 href="/usuarios">Usuários</a></li>
                         <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a>
                         </li>
 
-                        @endrole
+                        @endcan
                         @can('treinador')
                         <li><a class="nav-link{{Request::is('turmas*') ? ' active' : ''}}" href="/turmas">Turmas</a>
                         </li>
