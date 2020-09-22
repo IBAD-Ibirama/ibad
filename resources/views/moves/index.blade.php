@@ -22,8 +22,8 @@
               <a href="/movimentacoes/{{$move->id}}" title="Mostrar detalhes">{{$move->description}}</a>
 
               <div class="float-right flex">
+                <a class="btn btn-sm btn-outline-primary mr-2" href="/recibo-movimentacoes/{{$move->id}}">Gerar recibo</a>
                 <a class="btn btn-sm btn-light mr-2" href="/movimentacoes/{{$move->id}}/edit">Editar</a>
-
                 <form style="display: inline" action="/movimentacoes/{{$move->id}}" method="post">
                   @csrf
                   @method('DELETE')
