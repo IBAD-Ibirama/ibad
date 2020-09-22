@@ -86,13 +86,21 @@
             </div>
             @endif
 
-            @isset($message_warning)
+            @if(isset($message_warning) || Session::has('warning'))
             <div class="container">
                 <div class="alert alert-warning" role="alert">
-                    {!! $message_warning !!}
+                    {!! isset($message_warning) ? $message_warning : Session::get("warning") !!}
                 </div>
             </div>
-            @endisset
+            @endif
+
+            @if(isset($message_failure) || Session::has('failure'))
+            <div class="container">
+                <div class="alert alert-danger" role="alert">
+                    {!! isset($message_failure) ? $message_failure : Session::get("failure") !!}
+                </div>
+            </div>
+            @endif
 
             @yield('content')
         </main>

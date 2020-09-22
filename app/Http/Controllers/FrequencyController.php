@@ -67,7 +67,7 @@ class FrequencyController extends Controller
             }
 
         } catch (\Throwable $th) {
-            session()->flash('error', "Não foi possivel cadastrar a chamada");
+            session()->flash('warning', "Não foi possivel cadastrar a chamada");
             return ['code' => 500 ];
         }
 
@@ -143,7 +143,7 @@ class FrequencyController extends Controller
             }
 
         } catch (\Throwable $th) {
-            session()->flash('error', "Não foi possivel ediatar a chamada");
+            session()->flash('warning', "Não foi possivel ediatar a chamada");
             return ['code' => 500 ];
         }
 

@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="card-body">
-                    <h3><b>Turma - {{$training->team->name}}</b></h3>
+                    <h3><b>Turma - {{ $training->team ? $training->team->name : 'Turma Não Encotrada' }}</b></h3>
                     <p>Data: {{ (new DateTime(substr($training->date,0,10)))->format('d/m/Y')}}</p>
                     <p>Local: {{ $training->local->description}}</p>
                     @forelse($helpers as $helper)
