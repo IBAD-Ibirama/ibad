@@ -14,33 +14,37 @@
                 </div>
                 <div class="card-body">
                     <ul class="list-group">
-                    @foreach($trainings as $training)
+                        @foreach($trainings as $training)
                         <li class="list-group-item">
-                        <a  href="{{ route('training.show', $training->id) }}" title="Consultar" >{{ (new DateTime(substr($training->date,0,10)))->format('d/m/Y')}} |</a>
-                        <a  href="{{ route('training.show', $training->id) }}" title="Consultar">{{ $training->week_day }} |</a>
-                        <a href="{{ route('training.show', $training->id) }}" title="Consultar">{{ $training->time_init}} as {{ $training->time_end}} |</a>
-                        <a href="{{ route('training.show', $training->id) }}" title="Consultar">{{ $training->local->description }} </a>
-                        <a href="{{ route('training.show', $training->id) }}" title="Consultar">{{ $training->trainer->name }} </a>
-                        <div class="float-right flex">
-                         <a class="btn btn-sm btn-light mr-2" href= "{{ route('training.edit', $training->id) }}" >Editar</a>
-                            <form style="display: inline"  action="{{ route('training.destroy', $training->id) }}" href="{{ route('training.index') }}" method="post">
-                         @csrf
-                         @method('DELETE')
-                            <input class="btn btn-sm btn-outline-danger" type="submit" name="_method" value="delete">
-                            </form>
-                        </div>
+                            <a href="{{ route('training.show', $training->id) }}" title="Consultar">
+                                {{$training->team->name}} -
+                                {{ (new DateTime(substr($training->date,0,10)))->format('d/m/Y')}} -
+                                {{ $training->week_day }} -
+                                {{ $training->time_init}} as {{ $training->time_end}}
+                            </a>
+                            <div class="float-right flex">
+                                <a class="btn btn-sm btn-light mr-2"
+                                    href="{{ route('training.edit', $training->id) }}">Editar</a>
+                                <form style="display: inline" action="{{ route('training.destroy', $training->id) }}"
+                                    method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input class="btn btn-sm btn-outline-danger" type="submit" name="_method"
+                                        value="delete">
+                                </form>
+                            </div>
                         </li>
                         @endforeach
-                </ul>
+                    </ul>
+                </div>
             </div>
+
+            @else
+
+            <p>Você não tem permissão para acessar essa funcionalidade.</p>
+
+            @endcan
         </div>
-
-        @else
-
-        <p>Você não tem permissão para acessar essa funcionalidade.</p>
-
-        @endcan
     </div>
-</div>
 </div>
 @endsection

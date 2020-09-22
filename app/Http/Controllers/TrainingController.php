@@ -43,10 +43,10 @@ class TrainingController extends Controller
       ->where('team_levels.requires_auxiliary', '=', 'true')
       ->select('teams.id')
       ->get();
-  
+
       $trainers = array();
       $users = User::all();
-      foreach ($users as $user) { 
+      foreach ($users as $user) {
         if($user->getRoleNames()[0] == "treinador"){
           array_push($trainers, $user);
         }
@@ -67,8 +67,8 @@ class TrainingController extends Controller
           ->with(compact('athletes'))
           ->with(compact('teams_can_have_auxiliary'));
     }
-    
-  
+
+
     public function store(Request $request)
     {
       $team_id = $request['team_select'];
@@ -79,26 +79,26 @@ class TrainingController extends Controller
       $end_time = $request['training_end_time'];
       $init_date = $request['training_init'];
       $repeat_until = $request['training_repeat'];
-      
+
       $auxiliary1 = $request['auxiliary1'];
       $auxiliary2 = $request['auxiliary2'];
-      
-      
+
+
       $recurent = new When();
       $recurent->startDate($this->dateFromString($init_date))
       ->freq("weekly")
       ->count($this->calculateWeeks($init_date, $repeat_until))
       ->byday($this->ptWeekDayToEn($week_day))
       ->generateOccurrences();
-  
+
       foreach ($recurent->occurrences as $datas){
-        
+
         $dates_string = strval(date_format($datas, 'd-m-Y'));
         $arr2 = str_split($dates_string, 10);
         foreach($arr2 as $date_value){
           $training_unit = new Training();
-          
-          
+
+
           $training_unit->date = new DateTime($date_value);
           $training_unit->time_init= $init_time;
           $training_unit->time_end= $end_time;
@@ -110,7 +110,7 @@ class TrainingController extends Controller
 
           if($auxiliary1 != null)
             $this->handleHelpers($auxiliary1, $training_unit->id);
-        
+
           if($auxiliary2 != null)
             $this->handleHelpers($auxiliary2, $training_unit->id);
         }
@@ -138,46 +138,46 @@ class TrainingController extends Controller
         }
         return $local;
       }
-    
+
       private function calculateWeeks($inicio, $fim){
         $date1 =  $this->dateFromString($inicio);
         $date2 =  $this->dateFromString($fim);
         $difference_in_weeks = $date1->diff($date2)->days / 7;
         return (int)$difference_in_weeks;
       }
-    
+
       private function dateFromString($date){
         return new DateTime(DateTime::createFromFormat('d-m-Y', str_replace("/", "-", $date))->format('d-m-Y'));
       }
-    
+
       private function ptWeekDayToEn($weekDay){
         $return_word= "";
         switch ($weekDay) {
-          case "segunda":
+          case "Segunda-Feira":
             $return_word= "mo";
               break;
-          case "terca":
+          case "Terça-Feira":
             $return_word= "tu";
             break;
-          case "quarta":
+          case "Quarta-Feira":
             $return_word= "we";
             break;
-          case "quinta":
+          case "Quinta-Feira":
             $return_word= "th";
             break;
-          case "sexta":
+          case "Sexta-Feira":
             $return_word= "fr";
             break;
         }
         return $return_word;
-      }    
+      }
 
       public function destroy($id)
       {
           $training = Training::find($id);
-    
+
           $training->delete();
-        
+
           session()->flash('success', "Treino <b></b> foi removida.");
           return Redirect::back();
       }
@@ -191,8 +191,8 @@ class TrainingController extends Controller
       ->where('team_levels.requires_auxiliary', '=', 'true')
       ->select('teams.id')
       ->get();
-  
-   
+
+
       #$trainers = Trainer::all();
       $athletes = DB::table('athletes')
       ->join('users', 'athletes.user_id', '=' ,'users.id')
@@ -222,11 +222,11 @@ class TrainingController extends Controller
     $end_time = $request['training_end_time'];
     $init_date = $request['training_init'];
     $repeat_until = $request['training_repeat'];
-    
+
     $auxiliary1 = $request['auxiliary1'];
     $auxiliary2 = $request['auxiliary2'];
-    
-    
+
+
     $recurent = new When();
     $recurent->startDate($this->dateFromString($init_date))
     ->freq("weekly")
@@ -235,13 +235,13 @@ class TrainingController extends Controller
     ->generateOccurrences();
 
     foreach ($recurent->occurrences as $datas){
-      
+
       $dates_string = strval(date_format($datas, 'd-m-Y'));
       $arr2 = str_split($dates_string, 10);
       foreach($arr2 as $date_value){
         $training_unit = Training::find($id);
-        
-        
+
+
         $training_unit->date = new DateTime($date_value);
         $training_unit->time_init= $init_time;
         $training_unit->time_end= $end_time;
@@ -253,14 +253,14 @@ class TrainingController extends Controller
 
         if($auxiliary1 != null)
           $this->handleHelpers($auxiliary1, $training_unit->id);
-      
+
         if($auxiliary2 != null)
           $this->handleHelpers($auxiliary2, $training_unit->id);
       }
     }
 
-      
-   
+
+
 
     $path = route('training.show',  $training_unit -> id);
     return Redirect::to($path);
