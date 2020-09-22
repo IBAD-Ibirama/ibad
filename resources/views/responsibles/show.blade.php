@@ -15,14 +15,14 @@
 
         <div class="card-body">
           <p><b>Nome: </b>{{$responsible->user->name}}</p>
-          <p><b>Cpf: </b> {{$responsible->cpf}}</p>
+          <p><b>CPF: </b> {{$responsible->cpf}}</p>
           <p><b>Fone: </b> {{$responsible->phone}}</p>
-          <p><b>Atletas: </b></p><br> 
+          <p><b>Atletas: </b></p>
           <ul>
           @foreach($responsible->athletes as $athlete)
           <li>
             <b>Nome: {{$athlete->user->name}}</b>
-            <p>Rg: {{$athlete->rg}}</p>
+            <p>RG: {{$athlete->rg}}</p>
           </li>
           @endforeach
           </ul>

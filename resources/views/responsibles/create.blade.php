@@ -18,13 +18,13 @@
               <label for="user_id">Usuário</label>
               <select name="user_id" id="user_id" class="form-control">
                 @foreach($users as $user)
-                <option value="{{$user->id}}" onclick="atualizarUsuario(this.value)">{{$user->name}}</option>
+                <option value="{{$user->id}}">{{$user->name}}</option>
                 @endforeach
               </select>
             </div>
             <input type="hidden" name="usuario" id="usuario" value="">
             <div class="form-group">
-              <label for="cpf">Cpf</label>
+              <label for="cpf">CPF</label>
               <input type="text" class="form-control{{$errors->has('cpf') ? ' border-danger' : '' }}" id="cpf" name="cpf" value="{{old('cpf')}}">
               <small class="form-text text-danger">{!! $errors->first('cpf') !!}</small>
             </div>
@@ -37,13 +37,11 @@
               <label for="athletes">Atletas</label>
               <select name="athlete" id="athlete" class="form-control">
                 @foreach($athletes as $athlete)
-                <option value="{{$athlete->id}}" id="{{$athlete->user->name}}" onclick="adicionarNovoAtleta(this.value,this.id)">{{$athlete->user->name}}</option>
+                <option value="{{$athlete->id}}" id="athlete-{{$athlete->id}}" data-name="{{$athlete->user->name}}">{{$athlete->user->name}}</option>
                 @endforeach
               </select>
             </div>
-            <div class="form-group" id="listaDeAtletas">
-              
-            </div>
+            <ul class="form-group" id="listaDeAtletas" style="list-style: none; padding: 0"></ul>
             <input class="btn btn-primary mt-4" type="submit" value="Salvar responsável">
           </form>
         </div>
@@ -60,11 +58,5 @@
 
 @section('script')
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" defer></script>
-<script>
-  $(document).ready(function() {
-    $('#telephone').mask('(00)00000-0000');
-    $('#rg').mask('0.000.000');
-  });
-
-</script>
+<script src="{{ asset('js/pages/responsibles.js') }}"></script>
 @endsection

@@ -19,13 +19,13 @@
               <label for="user_id">Usuário</label>
               <select name="user_id" id="user_id" class="form-control">
                 @foreach($users as $user)
-                <option value="{{$user->id}}" onclick="atualizarUsuario(this.value)">{{$user->name}}</option>
+                <option value="{{$user->id}}" {{ $responsible->user->id == $user->id ? 'selected' : '' }}>{{$user->name}}</option>
                 @endforeach
               </select>
             </div>
             <input type="hidden" name="usuario" id="usuario" value="{{$responsible->user->id}}">
             <div class="form-group">
-              <label for="cpf">Cpf</label>
+              <label for="cpf">CPF</label>
               <input type="text" class="form-control{{$errors->has('cpf') ? ' border-danger' : '' }}" id="cpf" name="cpf" value="{{$responsible->cpf ?? old('cpf')}}">
               <small class="form-text text-danger">{!! $errors->first('cpf') !!}</small>
             </div>
@@ -38,19 +38,23 @@
               <label for="athletes">Atletas</label>
               <select name="athlete" id="athlete" class="form-control">
                 @foreach($athletes as $athlete)
-                <option value="{{$athlete->id}}" id="{{$athlete->user->name}}" onclick="adicionarNovoAtleta(this.value,this.id)">{{$athlete->user->name}}</option>
+                <option value="{{$athlete->id}}" id="athlete-{{$athlete->id}}" data-name="{{$athlete->user->name}}">{{$athlete->user->name}}</option>
                 @endforeach
               </select>
             </div>
-            <div class="form-group" id="listaDeAtletas">
+            <ul class="form-group" id="listaDeAtletas" style="list-style: none; padding: 0">
               @foreach($responsible->athletes as $athlete)
-              <li class='list-group-item' id='item{{$athlete->id}}'>
-                  <input type='text' class='form-control' id='' name='' value='{{$athlete->user->name}}' readonly>
-                  <input class='btn btn-sm btn-outline-danger' type='button' value='Deletar' onclick='removerAtleta({{$athlete->id}})'>
+              <li class='mb-3' id='item{{$athlete->id}}'>
+                <div class="input-group">
+                    <input type='text' class='form-control' value='{{$athlete->user->name}}' readonly>
+                    <div class="input-group-prepend">
+                        <button class='btn btn-outline-danger' type='button' onclick='removerAtleta({{$athlete->id}})'>Remover</button>
+                    </div>
+                </div>
                 <input type='hidden' name='{{$athlete->id}}' id='atleta' value='{{$athlete->id}}'>
               </li>
               @endforeach
-            </div>
+            </ul>
             <input class="btn btn-primary mt-4" type="submit" value="Atualizar responsável">
           </form>
         </div>
@@ -67,11 +71,5 @@
 
 @section('script')
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" defer></script>
-<script>
-  $(document).ready(function() {
-    $('#telephone').mask('(00)00000-0000');
-    $('#rg').mask('0.000.000');
-  });
-
-</script>
+<script src="{{ asset('js/pages/responsibles.js') }}"></script>
 @endsection
