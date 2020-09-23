@@ -37,6 +37,7 @@
             @can('treinador')
             <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a>
             <li><a class="nav-link{{Request::is('turmas*') ? ' active' : ''}}" href="/turmas">Turmas</a></li>
+            <li><a class="nav-link{{Request::is('treinos*') ? ' active' : ''}}" href="/treinos">Treinos</a></li>
             @endcan
 
                         @can('financeiro')
