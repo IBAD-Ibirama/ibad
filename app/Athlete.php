@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Athlete extends Model
 {
     protected $fillable = [
-      'birthdate', 'gender', 'rg', 'telephone', 'shift', 'grade', 'health_problem', 'medication', 'cloth_size', 'blood_type', 'imagem', 'school', 'user_id'
+        'birthdate', 'gender', 'rg', 'telephone', 'shift', 'grade', 'health_problem', 'medication', 'cloth_size', 'blood_type', 'imagem', 'school', 'user_id'
     ];
 
     public function user()
@@ -24,9 +24,14 @@ class Athlete extends Model
     {
         return $this->hasMany(Frequency::class, 'athlete_id', 'id');
     }
-    
+  
     public function evaluations()
     {
         return $this->hasMany(AthleteEvaluation::class);
+    }
+  
+    public function responsibles()
+    {
+        return $this->belongsToMany('App\Responsible');
     }
 }
