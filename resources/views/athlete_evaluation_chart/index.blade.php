@@ -80,33 +80,21 @@
   document.addEventListener('DOMContentLoaded', () => {
 
     const collapseCharts = document.querySelectorAll('.collapse-chart');
-
+    
     const onShowCollapseChart = collapseChart => {
-      console.log('deveria')
       const chartBody = collapseChart.querySelector('.card-body');
       if(!chartBody.childElementCount) {
-        const chartType = collapseChart.getAttribute('data-type');
-        const chartId = collapseChart.getAttribute('data-id');
-        const chartUrl = (chartType == 'body-index') ? '@chart("evolucao-atleta-ajax-indices-corporais")' : '@chart("evolucao-atleta-ajax-testes-fisicos")';
-        const chart = new Chartisan({
+        const chartUrl = (collapseChart.getAttribute('data-type') == 'body-index') ? '@chart("evolucao-atleta-ajax-indices-corporais")' : '@chart("evolucao-atleta-ajax-testes-fisicos")';
+        new Chartisan({
           el: chartBody,
-          url: `${chartUrl}?athlete={{ $athlete->id }}&id=${chartId}`
+          url: `${chartUrl}?athlete={{ $athlete->id }}&id=${collapseChart.getAttribute('data-id')}`
         });
       }
     };
 
-    const setCollapseEvent = () => {
-      if(typeof $ !== 'undefined') {
-        collapseCharts.forEach(collapseChart => {
-          console.log('entra')
-          $(collapseChart).on('show.bs.collapse', () => onShowCollapseChart(collapseChart));
-        });
-      } else {
-        setTimeout(setCollapseEvent, 500);
-      }
-    };
-
-    setCollapseEvent();
+    collapseCharts.forEach(collapseChart => {
+      $(collapseChart).on('show.bs.collapse', () => onShowCollapseChart(collapseChart));
+    });
 
   });
 
