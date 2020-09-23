@@ -24,23 +24,20 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-                        <li><a class="nav-link{{Request::is('dashboard') ? ' active' : ''}}" href="/">Dashboard</a></li>
-                        @can('treinador')
-                        <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}"
-                                href="/usuarios">Usuários</a></li>
-                        <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a>
-                        </li>
-
-                        @endcan
-                        @can('treinador')
-                        <li><a class="nav-link{{Request::is('turmas*') ? ' active' : ''}}" href="/turmas">Turmas</a>
-                        </li>
-                        <li><a class="nav-link{{Request::is('treino*') ? ' active' : ''}}" href="/treinos">Treinos</a>
-                        </li>
-                        @endcan
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Left Side Of Navbar -->
+          <ul class="navbar-nav mr-auto">
+            <li><a class="nav-link{{Request::is('dashboard') ? ' active' : ''}}" href="/">Dashboard</a></li>
+            @role('admin')
+            <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}" href="/usuarios">Usuários</a></li>
+            <li><a class="nav-link{{Request::is('responsaveis*') ? ' active' : ''}}" href="/responsaveis">Responsáveis</a></li>
+            </li>
+            @endrole
+            
+            @can('treinador')
+            <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a>
+            <li><a class="nav-link{{Request::is('turmas*') ? ' active' : ''}}" href="/turmas">Turmas</a></li>
+            @endcan
 
                         @can('financeiro')
                         <li><a class="nav-link{{Request::is('movimentacoes*') ? ' active' : ''}}"
