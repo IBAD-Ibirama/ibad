@@ -43,7 +43,7 @@
                         <li><a class="nav-link{{Request::is('treinos*') ? ' active' : ''}}" href="/treinos">Treinos</a>
                         </li>
                         <li><a class="nav-link{{Request::is('frequencias*') ? ' active' : ''}}"
-                                href="{{ route('frequency.index') }}">Frequencias</a>
+                                href="{{ route('frequency.index') }}">Frequências</a>
                         </li>
                         @endcan
 
