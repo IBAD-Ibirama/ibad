@@ -147,11 +147,11 @@
                         </div>
 
                         <div>
-                            <label id="titleAuxiliary" class="mt-4 mb-2">Periodo de Repetição</label>
+                            <label id="titleAuxiliary" class="mt-4 mb-2">Período de Repetição</label>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="training_init">Data do inicio do periodo:</label>
+                                        <label for="training_init">Data de início do período:</label>
                                         <input type="date" id='training_init'
                                             class="form-control {{ $errors->has('training_init') ? ' border-danger' : '' }}"
                                             name="training_init" min="{{date('Y-m-d')}}" />
@@ -162,7 +162,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="training_repeat">Data do final do periodo:</label>
+                                        <label for="training_repeat">Data final do período:</label>
                                         <input type="date" id='training_repeat'
                                             class="form-control {{$errors->has('training_repeat') ? ' border-danger' : '' }}"
                                             name="training_repeat" disabled />
@@ -184,7 +184,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="day_select">Numero de Treinos Que Serão Cadastrados:</label>
+                                        <label for="day_select">Número de Treinos Que Serão Cadastrados:</label>
                                         <input id='num_treino' class="form-control" readonly
                                             value="{{ old('num_treino') }}" />
                                     </div>
@@ -281,8 +281,6 @@
     const [endYear, endMonth, endDay] = endPeriodo.value.split('-');
     const endDate = new Date(endYear, endMonth-1, endDay);
 
-    console.log(endDate.getTime() - initDate.getTime());
-
     const timeDiff = Math.abs(endDate.getTime() - initDate.getTime());
     const diffDays = Math.trunc(Math.ceil(timeDiff / (1000 * 3600 * 24)) / 7 + 1);
     numTreino.value = `${diffDays}`;
@@ -317,7 +315,7 @@
     if(!teamNeedAuxiliary){
         auxiliary1.value= null;
         auxiliary2.value= null;
-        auxiliaryTitle.textContent = "Essa turma não necessita de ter ajudantes!";
+        auxiliaryTitle.textContent = "Essa turma não necessita ajudantes!";
         auxiliaryForm.classList.add('hide');
     } else {
         auxiliaryForm.classList.remove('hide');

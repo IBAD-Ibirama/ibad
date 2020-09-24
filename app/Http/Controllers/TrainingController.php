@@ -94,10 +94,10 @@ class TrainingController extends Controller
       [
         'team_select' => 'a turma',
         'trainer_select' => 'o treinador',
-        'training_init_time' => 'a hora de inicio do treino',
-        'training_end_time' => 'a hora de termino do treino',
+        'training_init_time' => 'a hora de início do treino',
+        'training_end_time' => 'a hora de término do treino',
         'training_init' => 'o dia inicial',
-        'training_repeat' => 'o dia de fim do periodo',
+        'training_repeat' => 'o dia de fim do período',
         'training_local' => 'o local onde ocorrerá o treino',
       ]);
 
@@ -204,7 +204,7 @@ class TrainingController extends Controller
     public function edit(Training $training)
     {
       if(count($training->frequencies()->get())){
-        session()->flash('failure', "Não é possivel alterar dado do treino com frequencia.");
+        session()->flash('failure', "Não é possível alterar dados de um treino com frequência.");
         return Redirect::back();
       }
       $teams = Team::all();
@@ -232,8 +232,8 @@ class TrainingController extends Controller
       [
         'team_select' => 'a turma',
         'trainer_select' => 'o treinador',
-        'training_init_time' => 'a hora de inicio do treino',
-        'training_end_time' => 'a hora de termino do treino',
+        'training_init_time' => 'a hora de início do treino',
+        'training_end_time' => 'a hora de término do treino',
         'training_init' => 'o dia inicial',
         'training_local' => 'o local onde ocorrerá o treino',
       ]);
@@ -293,7 +293,7 @@ class TrainingController extends Controller
   public function destroy(Training $training)
   {
       if(count($training->frequencies()->get())){
-        session()->flash('failure', "Não é possivel remover o treino com frequencia.");
+        session()->flash('failure', "Não é possivel remover o treino com frequência.");
         return Redirect::back();
       }
 
@@ -306,7 +306,7 @@ class TrainingController extends Controller
         session()->flash('success', "Treino foi removido.");
 
       } catch (\Exception $e) {
-        session()->flash('warning', "Não foi possivel remover o Treino.");
+        session()->flash('warning', "Não foi possível remover o Treino.");
       }
 
       return Redirect::back();

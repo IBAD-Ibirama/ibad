@@ -277,7 +277,7 @@ setDay();
         case 5:
             return ['Sexta-Feira', 'fr']
         case 6:
-            return ['Sabado', 'sa']
+            return ['Sábado', 'sa']
         case 0:
             return ['Domingo', 'su']
       }
@@ -293,7 +293,7 @@ setDay();
     if(!teamNeedAuxiliary){
         auxiliary1.value= null;
         auxiliary2.value= null;
-        auxiliaryTitle.textContent = "Essa turma não necessita de ter ajudantes!";
+        auxiliaryTitle.textContent = "Essa turma não necessita ajudantes!";
         auxiliaryForm.classList.add('hide');
     } else {
         auxiliaryForm.classList.remove('hide');
