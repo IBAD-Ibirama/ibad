@@ -107,7 +107,6 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
                 success: function (respose) {
-                    console.log(respose);
                     if(respose.code === 200){
                        window.location.href = trainingID;
                     } else if(respose.code === 500){
@@ -134,9 +133,8 @@
       help.presence = checkbox.checked;
     }
     function markAbsenceAthlete(checkbox, id){
-      const [athlete] = athletes.filter(athlete => athlete.id == id);
+      const athlete = athletes.find(athlete => athlete.id == id);
       athlete.presence = checkbox.checked;
-      console.log(athlete)
     }
     allPresent();
 </script>

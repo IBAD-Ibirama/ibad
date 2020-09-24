@@ -128,9 +128,8 @@
     }
 
     function markAbsenceAthlete(checkbox, id){
-      const [athlete] = athletes.filter(athlete => athlete.id == id);
+      const athlete = athletes.find(athlete => athlete.id == id);
       athlete.presence = checkbox.checked;
-      console.log(athlete)
     }
 </script>
 @endsection
