@@ -47,7 +47,7 @@
                                     {{$fault->name}}
                                 </div>
                                 <div>
-                                    Numero de Faltas: {{$fault->faltas }}
+                                    Número de Faltas: {{$fault->faltas }}
                                 </div>
                             </a>
                             <samp class="ml-1 text-danger">
