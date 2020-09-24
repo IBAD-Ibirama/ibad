@@ -289,7 +289,7 @@ setDay();
         auxiliaryTitle.textContent = "Ajudantes:";
         return;
     }
-    const [teamNeedAuxiliary] =   teams_can_have_auxiliary.filter(team => team.id == id);
+    const teamNeedAuxiliary = teams_can_have_auxiliary.find(team => team.id == id);
     if(!teamNeedAuxiliary){
         auxiliary1.value= null;
         auxiliary2.value= null;
@@ -310,7 +310,7 @@ setDay();
       if(!optionLocal.value) {
           return;
       }
-      const [local] = locals.filter((local) => local.id == optionLocal.value);
+      const local = locals.find(local => local.id == optionLocal.value);
       inputLocal.value = local.description;
   }
 
