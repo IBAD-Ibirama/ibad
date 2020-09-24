@@ -19,7 +19,7 @@
             <div class="card">
                 <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
                     <span>Detalhes do Treino</span>
-                    <a class='btn btn-success btn-sm' href="/turmas">Voltar</a>
+                    <a class='btn btn-success btn-sm' href="{{route('training.show', $training->id)}}">Voltar</a>
                 </div>
 
                 <div class="card-body">

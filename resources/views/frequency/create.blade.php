@@ -19,7 +19,7 @@
             <div class="card">
                 <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
                     <span>Detalhes do Treino</span>
-                    <a class='btn btn-success btn-sm' href="/turmas">Voltar</a>
+                    <a class='btn btn-success btn-sm' href="{{route('training.show', $training->id)}}">Voltar</a>
                 </div>
 
                 <div class="card-body">
@@ -97,7 +97,6 @@
     const url = '{{ route('frequency.store', $training->id)}}';
     const trainingID =  '{{ route('training.show', $training->id) }}';
     const data = { athletes, helps };
-
     $('form').on('submit', function (e) {
               e.preventDefault();
               $.ajax({
@@ -117,11 +116,9 @@
           }
               });
           });
-
       form.onsubmit = function(event){
       event.preventDefault();
     }
-
     function allPresent(){
       athletes.forEach((athlete) =>{
         athlete.presence = true;
@@ -132,17 +129,14 @@
         return help;
       })
     }
-
     function scoreAbsenceHelp(checkbox, id){
       const [help] = helps.filter(help => help.id == id);
       help.presence = checkbox.checked;
     }
-
     function markAbsenceAthlete(checkbox, id){
       const [athlete] = athletes.filter(athlete => athlete.id == id);
       athlete.presence = checkbox.checked;
       console.log(athlete)
-
     }
     allPresent();
 </script>
