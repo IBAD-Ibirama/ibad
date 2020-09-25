@@ -14,6 +14,12 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Athlete');
     }
+
+    public function moves()
+    {
+        return $this->hasMany('App\Moves');
+    }
+
     protected $fillable = [
         'name', 'email', 'password'
     ];

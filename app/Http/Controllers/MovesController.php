@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Moves;
-use Illuminate\Support\Facades\Redirect;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class MovesController extends Controller
 {
     public function index()
     {
-        // $moves = Moves::whereDate('data', '2020-09-06');
         $moves = Moves::all();
         return view('moves.index')->with([
             'moves' => $moves
@@ -19,7 +19,10 @@ class MovesController extends Controller
 
     public function create()
     {
-        return view('moves.create');
+        $users = User::all();
+        return view('moves.create')->with([
+            'users' => $users
+        ]);;
     }
 
     public function store(Request $request)
@@ -37,8 +40,12 @@ class MovesController extends Controller
             'date' => $request->date,
             'value' => $request->value,
             'type' => $request->type,
-            'specification' => $request->specification
+            'specification' => $request->specification,
+            'user_id' => $request->usuario
         ]);
+
+
+
         $moves->save();
 
         return $this->index()->with([
@@ -58,9 +65,11 @@ class MovesController extends Controller
     public function edit($id)
     {
         $moves = Moves::find($id);
+        $users = User::all();
 
         return view('moves.edit')->with([
-            'moves' => $moves
+            'moves' => $moves,
+            'users' => $users
         ]);
     }
 
@@ -81,7 +90,8 @@ class MovesController extends Controller
             'date' => $request->date,
             'value' => $request->value,
             'type' => $request->type,
-            'specification' => $request->specification
+            'specification' => $request->specification,
+            'user_id' => $request->usuario
         ]);
 
         return $this->index()->with([

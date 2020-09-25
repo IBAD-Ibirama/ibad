@@ -6,11 +6,10 @@ use App\User;
 use Carbon\Carbon;
 use Tests\TestCase;
 
-
 class UserTest extends TestCase
 {
     /** @test */
-    function it_should_authenticated()
+    function it_should_be_authenticated()
     {
         $this->post(route('usuarios.store'))
             ->assertRedirect('/login');

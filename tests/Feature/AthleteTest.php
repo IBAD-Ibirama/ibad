@@ -15,7 +15,7 @@ class AthleteTest extends TestCase
      */
 
     /** @test */
-    function it_should_authenticated()
+    function it_should_be_authenticated()
     {
         $this->post(route('atletas.store'))
             ->assertRedirect('/login');
@@ -75,7 +75,7 @@ class AthleteTest extends TestCase
     }
 
     /** @test */
-    function sponsor_can_be_updated()
+    function athlete_can_be_updated()
     {
         $athlete = factory(Athlete::class)->make();
 
@@ -108,7 +108,7 @@ class AthleteTest extends TestCase
     }
 
     /** @test */
-    function sponsor_can_be_deleted()
+    function athlete_can_be_deleted()
     {
         $athlete = factory(Athlete::class)->make();
 

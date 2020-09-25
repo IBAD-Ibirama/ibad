@@ -10,7 +10,7 @@ use Tests\TestCase;
 class SponsorTest extends TestCase
 {
     /** @test */
-    function it_should_authenticated()
+    function it_should_be_authenticated()
     {
         $this->post(route('patrocinadores.store'))
             ->assertRedirect('/login');
