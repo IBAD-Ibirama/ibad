@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -131,11 +131,11 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
-        $oldName = $user->name;
 
         $user->delete();
 
-        session()->flash('success', "O usuário <b>" . $oldName . "</b> foi apagado.");
+        session()->flash('success', "O usuário foi apagado.");
+
         return Redirect::back();
     }
 }

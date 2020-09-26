@@ -17,9 +17,9 @@
         </div>
         <div class="card-body">
           <ul class="list-group">
-            @foreach($moves as $move)
+            @foreach ( $moves as $move )
             <li class="list-group-item">
-              <a href="/movimentacoes/{{$move->id}}" title="Mostrar detalhes">{{$move->description}}</a>
+              <a href="/movimentacoes/{{ $move->id }}" title="Mostrar detalhes">{{ $move->description }}</a>
 
               <div class="float-right flex">
                 <a class="btn btn-sm btn-outline-primary mr-2" href="/recibo-movimentacoes/{{$move->id}}">Gerar recibo</a>
@@ -47,7 +47,6 @@
         var url = 'relatorio-movimentacoes' + "/?data=" + document.getElementById(inputid).value;
         window.location.href = url
       }
-
     </script>
   </div>
-  @endsection
+@endsection

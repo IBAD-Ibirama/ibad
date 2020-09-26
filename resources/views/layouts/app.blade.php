@@ -25,13 +25,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left Side Of Navbar -->
           <ul class="navbar-nav mr-auto">
-            <li><a class="nav-link{{Request::is('dashboard') ? ' active' : ''}}" href="/">Dashboard</a></li>
+            <li><a class="nav-link{{ Request::is('dashboard') ? ' active' : '' }}" href="/">Dashboard</a></li>
             @role('admin')
             <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}" href="/usuarios">Usuários</a></li>
             <li><a class="nav-link{{Request::is('responsaveis*') ? ' active' : ''}}" href="/responsaveis">Responsáveis</a></li>
             </li>
             @endrole
-            
+
             @can('treinador')
             <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a>
             <li><a class="nav-link{{Request::is('turmas*') ? ' active' : ''}}" href="/turmas">Turmas</a></li>
@@ -70,7 +70,7 @@
     </nav>
 
     <main class="py-4">
-      @if(isset($message_success) || Session::has('success'))
+      @if ( isset( $message_success) || Session::has( 'success'))
       <div class="container">
         <div class="alert alert-success" role="alert">
           {!! isset($message_success) ? $message_success : Session::get("success") !!}

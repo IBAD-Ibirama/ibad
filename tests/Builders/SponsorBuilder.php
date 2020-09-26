@@ -3,7 +3,6 @@
 namespace Tests\Builders;
 
 use App\Sponsor;
-use League\CommonMark\Extension\Attributes\Node\Attributes;
 
 class SponsorBuilder
 {
