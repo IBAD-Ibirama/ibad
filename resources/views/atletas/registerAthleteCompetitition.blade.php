@@ -21,6 +21,7 @@
                                 <th scope="col">Descrição</th>
                                 <th scope="col">Categoria</th>
                                 <th scope="col">Modalidade</th>
+                                <th scope="col">Opções</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,6 +33,12 @@
                                 <td>{{$competition->descricao}}</td>
                                 <td>{{$competition->category}}</td>
                                 <td>{{$competition->player_number}}</td>
+                                <td>
+                                    <div class="float-right flex">
+                                        <a class="btn btn-sm btn-light mr-2" href="/atleta/registroPraticipacaoAtleta/alterar/{{$competition->id}}">Editar</a>
+                                        <a class="btn btn-sm btn-outline-danger" href="/atleta/registroPraticipacaoAtleta/remove/{{$competition->id}}">Deletar</a>
+                                    </div>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>

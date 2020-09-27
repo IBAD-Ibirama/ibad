@@ -31,7 +31,7 @@
             <tbody>
                 @foreach($participacoesAtleta as $participacao)
                 <tr>
-                    <td>{{$participacao->date}}</td>
+                    <td>{{date('d/m/Y', strtotime($participacao->date))}}</td>
                     <td>{{$participacao->place}}</td>
                     <td>{{$participacao->results}}</td>
                     <td>{{$participacao->player_number}}</td>

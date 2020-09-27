@@ -57,6 +57,9 @@ Route::middleware('auth')->group(function () {
     Route::get('atleta/registroPraticipacaoAtleta', 'RegisterAthleteCompetitionController@index');
     Route::get('atleta/registroPraticipacaoAtleta/registra', 'RegisterAthleteCompetitionController@formCadastrar');
     Route::post('atleta/registroPraticipacaoAtleta/registrar', 'RegisterAthleteCompetitionController@store');
+    Route::get('atleta/registroPraticipacaoAtleta/alterar/{id}', 'RegisterAthleteCompetitionController@formAlterar');
+    Route::post('atleta/registroPraticipacaoAtleta/atualizar', 'RegisterAthleteCompetitionController@update');
+    Route::get('atleta/registroPraticipacaoAtleta/remove/{id}', 'RegisterAthleteCompetitionController@destroy');
 
     //Frequencia Atleta
     Route::get('frequencia', 'FrequencyAthlete@index');
