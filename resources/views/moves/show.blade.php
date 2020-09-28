@@ -13,11 +13,11 @@
         </div>
 
         <div class="card-body">
-          <p>Descrição: {{$moves->description}}</p>
-          <p>Data: {{$moves->date}}</p>
-          <p>Tipo: {{$moves->type}}</p>
-          <p>Valor: {{$moves->value}}</p>
-          <p>Especificação: {{$moves->specification}}</p>
+          <p>Descrição: {{ $moves->description }}</p>
+          <p>Data: {{ $moves->date }}</p>
+          <p>Tipo: {{ $moves->type }}</p>
+          <p>Valor: {{ $moves->value }}</p>
+          <p>Especificação: {{ $moves->specification }}</p>
         </div>
       </div>
       @else

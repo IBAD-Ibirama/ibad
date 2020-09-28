@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Moves;
+use Illuminate\Http\Request;
 use PDF;
 
 class MovesReportController extends Controller

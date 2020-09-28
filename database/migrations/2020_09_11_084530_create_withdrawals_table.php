@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFrequenciesTable extends Migration
+class CreateWithdrawalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateFrequenciesTable extends Migration
      */
     public function up()
     {
-        Schema::create('frequencies', function (Blueprint $table) {
+        Schema::create('withdrawals', function (Blueprint $table) {
             $table->id();
-            $table->boolean('presence')->default(true);
             $table->bigInteger('athlete_id');
             $table->foreign('athlete_id')->references('id')->on('athletes')->onDelete('cascade');
-            $table->bigInteger('training_id');
-            $table->foreign('training_id')->references('id')->on('trainings')->onDelete('cascade');;
+            $table->bigInteger('team_id');
+            $table->foreign('team_id')->references('id')->on('teams')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateFrequenciesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('frequencies');
+        Schema::dropIfExists('withdrawals');
     }
 }

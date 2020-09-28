@@ -20,12 +20,12 @@ class CreateTrainingsTable extends Migration
         $table->string('time_end');
         $table->string('week_day');
 
-        
+
         $table->bigInteger('trainer_id');
         $table->foreign('trainer_id')->references('id')->on('users');
 
         $table->bigInteger('team_id');
-        $table->foreign('team_id')->references('id')->on('teams');
+        $table->foreign('team_id')->references('id')->on('teams')->nullable();
 
         $table->bigInteger('local_id');
         $table->foreign('local_id')->references('id')->on('locals');

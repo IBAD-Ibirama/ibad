@@ -94,10 +94,10 @@ class TrainingController extends Controller
       [
         'team_select' => 'a turma',
         'trainer_select' => 'o treinador',
-        'training_init_time' => 'a hora de inicio do treino',
-        'training_end_time' => 'a hora de termino do treino',
+        'training_init_time' => 'a hora de início do treino',
+        'training_end_time' => 'a hora de término do treino',
         'training_init' => 'o dia inicial',
-        'training_repeat' => 'o dia de fim do periodo',
+        'training_repeat' => 'o dia de fim do período',
         'training_local' => 'o local onde ocorrerá o treino',
       ]);
 
@@ -203,6 +203,10 @@ class TrainingController extends Controller
 
     public function edit(Training $training)
     {
+      if(count($training->frequencies()->get())){
+        session()->flash('failure', "Não é possível alterar dados de um treino com frequência.");
+        return Redirect::back();
+      }
       $teams = Team::all();
       $teams_can_have_auxiliary = $this->getAllTeamNeedAuxiliarys();
       $helpers = TrainingHelper::all()->where('training_id','=',$training->id);
@@ -228,8 +232,8 @@ class TrainingController extends Controller
       [
         'team_select' => 'a turma',
         'trainer_select' => 'o treinador',
-        'training_init_time' => 'a hora de inicio do treino',
-        'training_end_time' => 'a hora de termino do treino',
+        'training_init_time' => 'a hora de início do treino',
+        'training_end_time' => 'a hora de término do treino',
         'training_init' => 'o dia inicial',
         'training_local' => 'o local onde ocorrerá o treino',
       ]);
@@ -288,13 +292,21 @@ class TrainingController extends Controller
 
   public function destroy(Training $training)
   {
-      try{
-          $training->delete();
-          session()->flash('success', "Treino foi removido.");
+      if(count($training->frequencies()->get())){
+        session()->flash('failure', "Não é possivel remover o treino com frequência.");
+        return Redirect::back();
+      }
+
+      try {
+        $helpers = TrainingHelper::all()->where('training_id','=',$training->id);
+        foreach ($helpers as $helpers){
+            $helpers->delete();
+        }
+        $training->delete();
+        session()->flash('success', "Treino foi removido.");
 
       } catch (\Exception $e) {
-        session()->flash('success', "Não foi possivel remover o Treino.");
-        return Redirect::back();
+        session()->flash('warning', "Não foi possível remover o Treino.");
       }
 
       return Redirect::back();

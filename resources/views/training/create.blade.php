@@ -61,7 +61,7 @@
                             </small>
                         </div>
 
-                        <div class=" form-group">
+                        <div class="form-group">
                             <label id="titleAuxiliary" class="mt-4 mb-2">Ajudantes</label>
                             <div class="row" id='form-auxiliarys'>
                                 <div class="col-md-6">
@@ -147,11 +147,11 @@
                         </div>
 
                         <div>
-                            <label id="titleAuxiliary" class="mt-4 mb-2">Periodo de Repetição</label>
+                            <label id="titleAuxiliary" class="mt-4 mb-2">Período de Repetição</label>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="training_init">Data do inicio do periodo:</label>
+                                        <label for="training_init">Data de início do período:</label>
                                         <input type="date" id='training_init'
                                             class="form-control {{ $errors->has('training_init') ? ' border-danger' : '' }}"
                                             name="training_init" min="{{date('Y-m-d')}}" />
@@ -162,7 +162,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="training_repeat">Data do final do periodo:</label>
+                                        <label for="training_repeat">Data final do período:</label>
                                         <input type="date" id='training_repeat'
                                             class="form-control {{$errors->has('training_repeat') ? ' border-danger' : '' }}"
                                             name="training_repeat" disabled />
@@ -184,7 +184,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="day_select">Numero de Treinos Que Serão Cadastrados:</label>
+                                        <label for="day_select">Número de Treinos Que Serão Cadastrados:</label>
                                         <input id='num_treino' class="form-control" readonly
                                             value="{{ old('num_treino') }}" />
                                     </div>
@@ -238,104 +238,8 @@
 
 @section('script')
 <script>
-    const inputLocal = document.querySelector('#training_local');
-  const optionLocal = document.querySelector('#localOption');
-  const locals = {!! json_encode($place) !!};
-
-  const auxiliaryForm = document.querySelector('#form-auxiliarys');
-  const auxiliaryTitle = document.querySelector('#titleAuxiliary');
-  const team = document.querySelector('#teamOption');
-  const teams_can_have_auxiliary = {!!json_encode($teams_can_have_auxiliary)!!};
-  const auxiliary1 = document.querySelector('#auxiliary1');
-  const auxiliary2 =document.querySelector('#auxiliary2');
-
-  const initPeriodo = document.querySelector('#training_init');
-  const endPeriodo = document.querySelector('#training_repeat');
-  const diaDaSemana = document.querySelector('#day_select');
-  const diaDaSemanaView = document.querySelector('#day_select_view');
-  const numTreino = document.querySelector("#num_treino");
-
-  inputLocal.onchange = () => {
-      optionLocal.selectedIndex = "0";
-  }
-
-  initPeriodo.onchange = () => {
-      try {
-        const [year, month, day] = initPeriodo.value.split('-');
-        const date = new Date(year, month-1, day);
-        const day2 = getDay(date.getDay());
-        diaDaSemanaView.value = day2[0];
-        diaDaSemana.value = day2[1];
-        training_repeat.disabled = false;
-        training_repeat.setAttribute("min", `${year}-${month}-${day}`);
-      } catch (error) {
-        training_repeat.disabled = true;
-        training_repeat.removeAttribute("min");
-      }
-  }
-
-  endPeriodo.onchange = () => {
-    const [initYear, initMonth, initDay] = initPeriodo.value.split('-');
-    const initDate = new Date(initYear, initMonth-1, initDay);
-
-    const [endYear, endMonth, endDay] = endPeriodo.value.split('-');
-    const endDate = new Date(endYear, endMonth-1, endDay);
-
-    console.log(endDate.getTime() - initDate.getTime());
-
-    const timeDiff = Math.abs(endDate.getTime() - initDate.getTime());
-    const diffDays = Math.trunc(Math.ceil(timeDiff / (1000 * 3600 * 24)) / 7 + 1);
-    numTreino.value = `${diffDays}`;
-  }
-
-  function getDay(index){
-      switch (index){
-        case 1:
-            return ['Segunda-Feira', 'mo']
-        case 2:
-            return ['Terça-Feira', 'tu']
-        case 3:
-            return ['Quarta-Feira', 'we']
-        case 4:
-            return ['Quinta-Feira', 'th']
-        case 5:
-            return ['Sexta-Feira', 'fr']
-        case 6:
-            return ['Sabado', 'sa']
-        case 0:
-            return ['Domingo', 'su']
-      }
-  }
-
-  function handleAuxiliaries(id){
-    if(!id){
-        auxiliaryForm.classList.remove('hide');
-        auxiliaryTitle.textContent = "Ajudantes:";
-        return;
-    }
-    const [teamNeedAuxiliary] =   teams_can_have_auxiliary.filter(team => team.id == id);
-    if(!teamNeedAuxiliary){
-        auxiliary1.value= null;
-        auxiliary2.value= null;
-        auxiliaryTitle.textContent = "Essa turma não necessita de ter ajudantes!";
-        auxiliaryForm.classList.add('hide');
-    } else {
-        auxiliaryForm.classList.remove('hide');
-        auxiliaryTitle.textContent = "Ajudantes:";
-    }
-  }
-
-  team.onchange = () => {
-    handleAuxiliaries(team.value);
-  }
-
-  optionLocal.onchange = () => {
-      if(!optionLocal.value) {
-          return;
-      }
-      const [local] = locals.filter((local) => local.id == optionLocal.value);
-      inputLocal.value = local.description;
-  }
-
+var locals = {!! json_encode($place) !!};
+var teams_can_have_auxiliary = {!!json_encode($teams_can_have_auxiliary)!!};
 </script>
+<script src="{{asset('js/pages/training_create.js')}}"></script>
 @endsection

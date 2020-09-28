@@ -24,27 +24,26 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <!-- Left Side Of Navbar -->
-          <ul class="navbar-nav mr-auto">
-            <li><a class="nav-link{{Request::is('dashboard') ? ' active' : ''}}" href="/">Dashboard</a></li>
-            @role('admin')
-            <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}" href="/usuarios">Usuários</a></li>
-            <li><a class="nav-link{{Request::is('responsaveis*') ? ' active' : ''}}" href="/responsaveis">Responsáveis</a></li>
-            </li>
-            @endrole
-            
-            @can('treinador')
-            <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a>
-            <li><a class="nav-link{{Request::is('turmas*') ? ' active' : ''}}" href="/turmas">Turmas</a></li>
-            <li><a class="nav-link{{Request::is('treinos*') ? ' active' : ''}}" href="/treinos">Treinos</a></li>
-            @endcan
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto">
+                        <li><a class="nav-link{{Request::is('dashboard') ? ' active' : ''}}" href="/">Dashboard</a></li>
+                        @role('admin')
+                        <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}" href="/usuarios">Usuários</a></li>
+                        <li><a class="nav-link{{Request::is('responsaveis*') ? ' active' : ''}}" href="/responsaveis">Responsáveis</a></li>
+                        @endrole
+
+                        @can('treinador')
+                        <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a>
+                        <li><a class="nav-link{{Request::is('turmas*') ? ' active' : ''}}" href="/turmas">Turmas</a></li>
+                        <li><a class="nav-link{{Request::is('limiteDeFalta*') ? ' active' : ''}}" href="{{route('fault.show')}}">Limite de Falta</a></li>
+                        <li><a class="nav-link{{Request::is('treinos*') ? ' active' : ''}}" href="/treinos">Treinos</a></li>
+                        <li><a class="nav-link{{Request::is('frequencias*') ? ' active' : ''}}" href="{{ route('frequency.index') }}">Frequencias</a></li>
+                        @endcan
 
                         @can('financeiro')
-                        <li><a class="nav-link{{Request::is('movimentacoes*') ? ' active' : ''}}"
-                                href="/movimentacoes">Movimentações</a></li>
-                        <li><a class="nav-link{{Request::is('patrocinadores*') ? ' active' : ''}}"
-                                href="/patrocinadores">Patrocinadores</a></li>
+                        <li><a class="nav-link{{Request::is('movimentacoes*') ? ' active' : ''}}" href="/movimentacoes">Movimentações</a></li>
+                        <li><a class="nav-link{{Request::is('patrocinadores*') ? ' active' : ''}}" href="/patrocinadores">Patrocinadores</a></li>
                         @endcan
                     </ul>
 
@@ -82,13 +81,21 @@
             </div>
             @endif
 
-            @isset($message_warning)
+            @if(isset($message_warning) || Session::has('warning'))
             <div class="container">
                 <div class="alert alert-warning" role="alert">
-                    {!! $message_warning !!}
+                    {!! isset($message_warning) ? $message_warning : Session::get("warning") !!}
                 </div>
             </div>
-            @endisset
+            @endif
+
+            @if(isset($message_failure) || Session::has('failure'))
+            <div class="container">
+                <div class="alert alert-danger" role="alert">
+                    {!! isset($message_failure) ? $message_failure : Session::get("failure") !!}
+                </div>
+            </div>
+            @endif
 
             @yield('content')
         </main>

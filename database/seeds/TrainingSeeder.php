@@ -15,10 +15,10 @@ class TrainingSeeder extends Seeder
      {
         factory(Local::class, 5)->create();
 
-        $this->createTraining(6,1,1,new DateTime('2020-11-02'), "19:00", "20:00", "segunda");
-        $this->createTraining(6,1,2,new DateTime('2020-11-03'), "19:30", "20:30", "terca");
-        $this->createTraining(6,1,1,new DateTime('2020-11-04'), "20:00", "21:00", "quarta");
-        $this->createTraining(6,1,3,new DateTime('2020-11-05'), "19:00", "20:00", "quinta");
+        $this->createTraining(6,1,1,new DateTime('2020-11-02'), "19:00", "20:00", "Segunda-Feira");
+        $this->createTraining(6,1,2,new DateTime('2020-11-03'), "19:30", "20:30", "Terça-Feira");
+        $this->createTraining(6,1,1,new DateTime('2020-11-04'), "20:00", "21:00", "Quarta-Feira");
+        $this->createTraining(6,1,3,new DateTime('2020-11-05'), "19:00", "20:00", "Quinta-Feira");
      }
 
      public function createTraining($trainerID, $teamID, $localID, $date, $timeInit, $timeEnd,$weekDay)

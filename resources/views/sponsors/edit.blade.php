@@ -13,23 +13,23 @@
         </div>
 
         <div class="card-body">
-          <form action="/patrocinadores/{{$sponsors->id}}" method="post">
+          <form action="/patrocinadores/{{ $sponsors->id }}" method="post">
             @csrf
             @method('PUT')
             <div class="form-group">
               <label for="cnpj">CNPJ</label>
-              <input type="text" class="form-control{{$errors->has('cnpj') ? ' border-danger' : '' }}" id="cnpj" name="cnpj" value="{{$sponsors->cnpj ?? old('cnpj')}}">
-              <small class="form-text text-danger">{!! $errors->first('cnpj') !!}</small>
+              <input type="text" class="form-control{{ $errors->has('cnpj') ? ' border-danger' : '' }}" id="cnpj" name="cnpj" value="{{ $sponsors->cnpj ?? old('cnpj') }}">
+              <small class="form-text text-danger">{ !! $errors->first('cnpj') !!}</small>
             </div>
             <div class="form-group">
               <label for="name">Nome</label>
-              <input type="text" class="form-control{{$errors->has('name') ? ' border-danger' : '' }}" id="name" name="name" value="{{$sponsors->name ?? old('name')}}">
-              <small class="form-text text-danger">{!! $errors->first('name') !!}</small>
+              <input type="text" class="form-control{{ $errors->has('name') ? ' border-danger' : '' }}" id="name" name="name" value="{{ $sponsors->name ?? old('name') }}">
+              <small class="form-text text-danger">{ !! $errors->first('name') !!}</small>
             </div>
             <div class="form-group">
               <label for="email">Email</label>
-              <input type="text" class="form-control{{$errors->has('email') ? ' border-danger' : '' }}" id="email" name="email" value="{{$sponsors->email ?? old('email')}}">
-              <small class="form-text text-danger">{!! $errors->first('email') !!}</small>
+              <input type="text" class="form-control{{ $errors->has('email') ? ' border-danger' : '' }}" id="email" name="email" value="{{ $sponsors->email ?? old('email') }}">
+              <small class="form-text text-danger">{ !! $errors->first('email') !! }</small>
             </div>
             <input class="btn btn-primary mt-4" type="submit" value="Atualizar patrocinador">
           </form>
