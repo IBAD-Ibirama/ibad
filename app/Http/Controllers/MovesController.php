@@ -76,11 +76,11 @@ class MovesController extends Controller
         $moves = Moves::find($id);
 
         $request->validate([
-            'description' => 'required',
-            'date' => 'required',
-            'value' => 'required',
-            'type' => 'required',
-            'specification' => 'required'
+            'description' => 'required|string',
+            'date' => 'required|date',
+            'value' => 'required|numeric',
+            'type' => 'required|string',
+            'specification' => 'required|string',
         ]);
 
         $moves->update([

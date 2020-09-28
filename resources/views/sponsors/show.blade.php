@@ -14,9 +14,9 @@
         </div>
 
         <div class="card-body">
-          <p><b>CNPJ: </b>{{$sponsors->cnpj}}</p>
-          <p><b>Nome: </b> {{$sponsors->name}}</p>
-          <p><b>Email: </b> {{$sponsors->email}}</p>
+          <p><b>CNPJ: </b>{{ $sponsors->cnpj }}</p>
+          <p><b>Nome: </b> {{ $sponsors->name }}</p>
+          <p><b>Email: </b> {{ $sponsors->email }}</p>
         </div>
       </div>
       @else
