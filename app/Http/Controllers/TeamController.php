@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use App\Team;
 use App\TeamLevel;
 use Illuminate\Http\Request;
@@ -74,10 +75,16 @@ class TeamController extends Controller
                 [
                     'users.name as name',
                     'users.id as id',
-                    'athletes.id as athleste_id'
+                    'athletes.id as athlete_id'
                 ])
             ->join('users', 'athletes.user_id', '=', 'users.id')
             ->where('athletes.team_id', '=', $team->id)
+            ->whereNotExists(function($query)
+            {
+                $query->select(DB::raw(1))
+                      ->from('withdrawals')
+                      ->whereRaw('withdrawals.athlete_id = athletes.id');
+            })
             ->orderBy('users.name')
             ->get();
         $team->athletes = $athletes;
@@ -118,14 +125,33 @@ class TeamController extends Controller
         ]);
     }
 
-    public function destroy(int $teamID)
+    public function destroy(Request $request, int $teamID)
     {
         $team = Team::find($teamID);
+        $trainings = $team->trainings()->orderBy('date', 'asc')->where('date', '>=', date('Y-m-d'))->get();
+        $trainigsNoRealized = false;
+
+        foreach ($trainings as $training) {
+            if(count($training->frequencies()->get()) == 0){
+                $trainigsNoRealized = true;
+                break;
+            }
+        }
+
+        if($trainigsNoRealized){
+            $teamName = $team->name;
+            session()->flash('warning', "Não é possivel apagar turma <b>" . $teamName . "</b> devido a treino pendente.");
+            return Redirect::back();
+        }
+
         $athletes = $team->athletes()->get();
 
-        foreach ($athletes as $athlete){
-            $athlete->team()->dissociate();
-            $athlete->save();
+        $athletes = $team->athletes;
+        if($athletes != null){
+            foreach ($athletes as $athlete){
+                $athlete->team()->dissociate();
+                $athlete->save();
+            }
         }
 
         $teamName = $team->name;

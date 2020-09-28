@@ -20,6 +20,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1",
         "spatie/laravel-permission": "3.6",
+        "tplaner/when": "^3.0",
         "wgenial/numeroporextenso": "^3.0"
     },
     "require-dev": {
