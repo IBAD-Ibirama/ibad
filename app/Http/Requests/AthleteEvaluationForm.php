@@ -54,31 +54,8 @@ class AthleteEvaluationForm extends FormRequest
             $evaluation->realization_date = $this->realization_date;
             $evaluation->save();
     
-            $evaluation->physicalTests()->delete();
-            foreach($this->physicalTests as $physicalTest) {
-                if(!empty($physicalTest['value'])) {
-                    $evaluationPhysicalTest = new AthleteEvaluationPhysicalTest();
-                    $evaluationPhysicalTest->physical_test_id = $physicalTest['id'];
-                    $evaluationPhysicalTest->value = $physicalTest['value'];
-                    if($evaluation->physicalTests()->where('physical_test_id', $evaluationPhysicalTest->physical_test_id)->count() > 0) {
-                        throw new Exception('A avaliação não pode ter testes físicos duplicados.');
-                    }
-                    $evaluation->physicalTests()->save($evaluationPhysicalTest);
-                }
-            }
-            
-            $evaluation->bodyIndexes()->delete();
-            foreach($this->bodyIndexes as $bodyIndex) {
-                if(!empty($bodyIndex['value'])) {
-                    $evaluationBodyIndex = new AthleteEvaluationBodyIndex();
-                    $evaluationBodyIndex->body_index_id = $bodyIndex['id'];
-                    $evaluationBodyIndex->value = $bodyIndex['value'];
-                    if($evaluation->bodyIndexes()->where('body_index_id', $evaluationBodyIndex->body_index_id)->count() > 0) {
-                        throw new Exception('A avaliação não pode ter índices corporais duplicados.');
-                    }
-                    $evaluation->bodyIndexes()->save($evaluationBodyIndex);
-                }
-            }
+            $this->persistPhysicalTests($evaluation);
+            $this->persistBodyIndexes($evaluation);
 
             if($evaluation->physicalTests()->count() == 0 && $evaluation->bodyIndexes()->count() == 0) {
                 throw new Exception('Nenhuma avaliação foi inserida.');
@@ -89,6 +66,48 @@ class AthleteEvaluationForm extends FormRequest
         catch(Exception $exception) {
             DB::rollback();
             throw $exception;
+        }
+    }
+
+    /**
+     * Persist evaluation's physical tests.
+     * 
+     * @param \App\AthleteEvaluation $evaluation
+     */
+    private function persistPhysicalTests(AthleteEvaluation $evaluation)
+    {
+        $evaluation->physicalTests()->delete();
+        foreach($this->physicalTests as $physicalTest) {
+            if(!empty($physicalTest['value'])) {
+                $evaluationPhysicalTest = new AthleteEvaluationPhysicalTest();
+                $evaluationPhysicalTest->physical_test_id = $physicalTest['id'];
+                $evaluationPhysicalTest->value = $physicalTest['value'];
+                if($evaluation->physicalTests()->where('physical_test_id', $evaluationPhysicalTest->physical_test_id)->count() > 0) {
+                    throw new Exception('A avaliação não pode ter testes físicos duplicados.');
+                }
+                $evaluation->physicalTests()->save($evaluationPhysicalTest);
+            }
+        }
+    }
+
+    /**
+     * Persist evaluation's body indexes.
+     * 
+     * @param \App\AthleteEvaluation $evaluation
+     */
+    private function persistBodyIndexes(AthleteEvaluation $evaluation)
+    {
+        $evaluation->bodyIndexes()->delete();
+        foreach($this->bodyIndexes as $bodyIndex) {
+            if(!empty($bodyIndex['value'])) {
+                $evaluationBodyIndex = new AthleteEvaluationBodyIndex();
+                $evaluationBodyIndex->body_index_id = $bodyIndex['id'];
+                $evaluationBodyIndex->value = $bodyIndex['value'];
+                if($evaluation->bodyIndexes()->where('body_index_id', $evaluationBodyIndex->body_index_id)->count() > 0) {
+                    throw new Exception('A avaliação não pode ter índices corporais duplicados.');
+                }
+                $evaluation->bodyIndexes()->save($evaluationBodyIndex);
+            }
         }
     }
 }
