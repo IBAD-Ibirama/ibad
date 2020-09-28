@@ -24,7 +24,12 @@ class Athlete extends Model
     {
         return $this->hasMany(Frequency::class, 'athlete_id', 'id');
     }
-
+  
+    public function evaluations()
+    {
+        return $this->hasMany(AthleteEvaluation::class);
+    }
+  
     public function responsibles()
     {
         return $this->belongsToMany('App\Responsible');

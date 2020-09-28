@@ -17,12 +17,11 @@
                         @foreach($trainings as $training)
                         <li class="list-group-item">
                             <a href="{{ route('training.show', $training->id) }}" title="Consultar">
-                                {{ $training->team ? $training->team->name : "Sem Turma" }} -
-                                {{ (new DateTime(substr($training->date,0,10)))->format('d/m/Y')}} -
-                                {{ $training->week_day }} -
-                                {{ $training->time_init}} as {{ $training->time_end}}
+                                {{ $training->description() }}
                             </a>
                             <div class="float-right flex">
+                                <a class="btn btn-sm btn-outline-primary mr-2" href={{ route('plannings.index', ['team' => $training->team, $training]) }}>Plano de Atividades</a>
+                                
                                 <a class="btn btn-sm btn-light mr-2"
                                     href="{{ route('training.edit', $training->id) }}">Editar</a>
                                 <form style="display: inline" action="{{ route('training.destroy', $training->id) }}"
