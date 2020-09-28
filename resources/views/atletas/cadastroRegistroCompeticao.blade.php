@@ -31,7 +31,7 @@
                             
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="competition">Competicao</label>
+                                    <label for="competition">Competição</label>
                                     <select class="form-control" id="competition" name="competition"></select>
                                 </div>
                                 <div class="form-group">
@@ -195,7 +195,6 @@
         select.addEventListener('change', function() {
             let optionSelected = this.options[this.selectedIndex]; //pega o option selecionado
             //pega a competição q foi seleciona no select
-            debugger
             let obj = competitions.find(competition => competition.id == optionSelected.value);
 
             var data = new Date(obj.date);

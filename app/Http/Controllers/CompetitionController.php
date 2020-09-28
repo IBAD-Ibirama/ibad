@@ -78,22 +78,23 @@ class CompetitionController extends Controller
     public function update(Request $request) {
 
         $request->validate([
-            'id'=> 'required',
+            'id' => 'required',
             'date' => 'required',
             'descricao' => 'required',
             'competition_level' => 'required',
             'place' => 'required'
-        ] );
-        $competition=Competition::find($request->id);
-        $competition->date              = $request->date;
-        $competition->place             = $request->place;
-        $competition->descricao       = $request->descricao;
-        $competition->competition_level = $request->competition_level;
-        if(!$competition->save()) {
-            dd('Erro ao Alterar');
-            
-        }
-        return redirect()->action('CompetitionController@index');
+        ]);
+        
+        $competition = Competition::find($request->id);
+        $competition->update([
+             'date' => $request->date
+            ,'place' => $request->place
+            ,'descricao' => $request->description
+            ,'competition_level' => $request->competition_level
+        ]);
+        return $this->index()->with([
+            'message_success' => "O atleta foi atualizado com sucesso"
+        ]);
     }
 
     /**
@@ -103,7 +104,6 @@ class CompetitionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(String $id) {
-        $id;
         $competition = Competition::find($id);
         
         if ($competition->delete()) {

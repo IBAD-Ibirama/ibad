@@ -36,7 +36,7 @@
                             <small class="form-text text-muted">Informe a descrição da competição</small>
                         </div>
                         <div class="form-group">
-                            <label for="competition_level">Nivel da Competicao</label>
+                            <label for="competition_level">Nível da Competicao</label>
                             <select name="competition_level" id="competition_level" required>
                                 <option value="1">Alto</option>
                                 <option value="2">Médio</option>

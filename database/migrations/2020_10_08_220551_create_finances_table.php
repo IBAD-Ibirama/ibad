@@ -13,7 +13,7 @@ class CreateFinancesTable extends Migration
      */
     public function up() {
         Schema::create('finances', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->integer('year');
             $table->boolean('janeiro');
             $table->boolean('fevereiro');

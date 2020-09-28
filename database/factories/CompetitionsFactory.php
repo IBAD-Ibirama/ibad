@@ -9,7 +9,7 @@ $factory->define(Competition::class, function (Faker $faker) {
     return [
          'date' => $faker->dateTime
         ,'place' => $faker->address
-        ,'descricao' => $faker->paragraph
+        ,'description' => $faker->paragraph
         ,'competition_level' => $faker->randomElement([1, 2, 3]),
     ];
 });
