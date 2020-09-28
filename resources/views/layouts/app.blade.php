@@ -29,39 +29,21 @@
                     <ul class="navbar-nav mr-auto">
                         <li><a class="nav-link{{Request::is('dashboard') ? ' active' : ''}}" href="/">Dashboard</a></li>
                         @role('admin')
-                        <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}"
-                                href="/usuarios">Usuários</a></li>
-                        <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a>
-                        <li><a class="nav-link{{Request::is('limiteDeFalta*') ? ' active' : ''}}"
-                                href="{{route('fault.show')}}">Limite de Falta</a>
-                        </li>
+                        <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}" href="/usuarios">Usuários</a></li>
+                        <li><a class="nav-link{{Request::is('responsaveis*') ? ' active' : ''}}" href="/responsaveis">Responsáveis</a></li>
                         @endrole
 
-
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <!-- Left Side Of Navbar -->
-          <ul class="navbar-nav mr-auto">
-            <li><a class="nav-link{{ Request::is('dashboard') ? ' active' : '' }}" href="/">Dashboard</a></li>
-            @role('admin')
-            <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}" href="/usuarios">Usuários</a></li>
-            <li><a class="nav-link{{Request::is('responsaveis*') ? ' active' : ''}}" href="/responsaveis">Responsáveis</a></li>
-            </li>
-            @endrole
-
-            @can('treinador')
-            <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a>
-            <li><a class="nav-link{{Request::is('turmas*') ? ' active' : ''}}" href="/turmas">Turmas</a></li>
-            <li><a class="nav-link{{Request::is('treinos*') ? ' active' : ''}}" href="/treinos">Treinos</a></li>
-            <li><a class="nav-link{{Request::is('frequencias*') ? ' active' : ''}}"href="{{ route('frequency.index') }}">Frequências</a></li>
-            @endcan
-
+                        @can('treinador')
+                        <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a>
+                        <li><a class="nav-link{{Request::is('turmas*') ? ' active' : ''}}" href="/turmas">Turmas</a></li>
+                        <li><a class="nav-link{{Request::is('limiteDeFalta*') ? ' active' : ''}}" href="{{route('fault.show')}}">Limite de Falta</a></li>
+                        <li><a class="nav-link{{Request::is('treinos*') ? ' active' : ''}}" href="/treinos">Treinos</a></li>
+                        <li><a class="nav-link{{Request::is('frequencias*') ? ' active' : ''}}" href="{{ route('frequency.index') }}">Frequencias</a></li>
+                        @endcan
 
                         @can('financeiro')
-                        <li><a class="nav-link{{Request::is('movimentacoes*') ? ' active' : ''}}"
-                                href="/movimentacoes">Movimentações</a></li>
-                        <li><a class="nav-link{{Request::is('patrocinadores*') ? ' active' : ''}}"
-                                href="/patrocinadores">Patrocinadores</a></li>
+                        <li><a class="nav-link{{Request::is('movimentacoes*') ? ' active' : ''}}" href="/movimentacoes">Movimentações</a></li>
+                        <li><a class="nav-link{{Request::is('patrocinadores*') ? ' active' : ''}}" href="/patrocinadores">Patrocinadores</a></li>
                         @endcan
                     </ul>
 
@@ -107,16 +89,13 @@
             </div>
             @endif
 
-
-    <main class="py-4">
-      @if ( isset( $message_success) || Session::has( 'success'))
-      <div class="container">
-        <div class="alert alert-success" role="alert">
-          {!! isset($message_success) ? $message_success : Session::get("success") !!}
-        </div>
-      </div>
-      @endif
-
+            @if(isset($message_failure) || Session::has('failure'))
+            <div class="container">
+                <div class="alert alert-danger" role="alert">
+                    {!! isset($message_failure) ? $message_failure : Session::get("failure") !!}
+                </div>
+            </div>
+            @endif
 
             @yield('content')
         </main>
