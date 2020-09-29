@@ -84,7 +84,7 @@
     const onShowCollapseChart = collapseChart => {
       const chartBody = collapseChart.querySelector('.card-body');
       if(!chartBody.childElementCount) {
-        const chartUrl = (collapseChart.getAttribute('data-type') == 'body-index') ? '@chart("evolucao-atleta-ajax-indices-corporais")' : '@chart("evolucao-atleta-ajax-testes-fisicos")';
+        const chartUrl = (collapseChart.getAttribute('data-type') == 'body-index') ? '{{ route('charts.evolucao-atleta-ajax-indices-corporais') }}' : '{{ route('charts.evolucao-atleta-ajax-testes-fisicos') }}';
         new Chartisan({
           el: chartBody,
           url: `${chartUrl}?athlete={{ $athlete->id }}&id=${collapseChart.getAttribute('data-id')}`
