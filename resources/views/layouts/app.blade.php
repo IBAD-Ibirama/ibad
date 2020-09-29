@@ -27,23 +27,41 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li><a class="nav-link{{Request::is('dashboard') ? ' active' : ''}}" href="/">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link {{Request::is('dashboard') ? 'active' : ''}}" href="/">Dashboard</a></li>
                         @role('admin')
-                        <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}" href="/usuarios">Usuários</a></li>
-                        <li><a class="nav-link{{Request::is('responsaveis*') ? ' active' : ''}}" href="/responsaveis">Responsáveis</a></li>
+                        <li class="nav-item"><a class="nav-link {{Request::is('usuarios*') ? 'active' : ''}}" href="/usuarios">Usuários</a></li>
+                        <li class="nav-item"><a class="nav-link {{Request::is('responsaveis*') ? 'active' : ''}}" href="/responsaveis">Responsáveis</a></li>
                         @endrole
 
                         @can('treinador')
-                        <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a>
-                        <li><a class="nav-link{{Request::is('turmas*') ? ' active' : ''}}" href="/turmas">Turmas</a></li>
-                        <li><a class="nav-link{{Request::is('limiteDeFalta*') ? ' active' : ''}}" href="{{route('fault.show')}}">Limite de Falta</a></li>
-                        <li><a class="nav-link{{Request::is('treinos*') ? ' active' : ''}}" href="/treinos">Treinos</a></li>
-                        <li><a class="nav-link{{Request::is('frequencias*') ? ' active' : ''}}" href="{{ route('frequency.index') }}">Frequencias</a></li>
+                        <li class="nav-item dropdown">
+                            <a id="coachDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Treinador <span class="caret"></span>
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="coachDropdown">
+                                <a class="dropdown-item {{Request::is('atletas*') ? 'active' : ''}}" href="/atletas">Atletas</a>
+                                <a class="dropdown-item {{Request::is('turmas*') ? 'active' : ''}}" href="/turmas">Turmas</a>
+                                <a class="dropdown-item {{Request::is('limiteDeFalta*') ? 'active' : ''}}" href="{{route('fault.show')}}">Limite de Faltas</a>
+                                <a class="dropdown-item {{Request::is('treinos*') ? 'active' : ''}}" href="/treinos">Treinos</a>
+                                <a class="dropdown-item {{Request::is('frequencias*') ? 'active' : ''}}" href="{{ route('frequency.index') }}">Frequências</a>
+                            </div>
+                        </li>
                         @endcan
 
                         @can('financeiro')
-                        <li><a class="nav-link{{Request::is('movimentacoes*') ? ' active' : ''}}" href="/movimentacoes">Movimentações</a></li>
-                        <li><a class="nav-link{{Request::is('patrocinadores*') ? ' active' : ''}}" href="/patrocinadores">Patrocinadores</a></li>
+                        <li class="nav-item dropdown">
+                            <a id="financialDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Financeiro <span class="caret"></span>
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="financialDropdown">
+                                <a class="dropdown-item {{Request::is('movimentacoes*') ? ' active' : ''}}" href="/movimentacoes">Movimentações</a>
+                                <a class="dropdown-item {{Request::is('patrocinadores*') ? ' active' : ''}}" href="/patrocinadores">Patrocinadores</a>
+                            </div>
+                        </li>
                         @endcan
                     </ul>
 
