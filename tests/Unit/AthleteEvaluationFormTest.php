@@ -18,6 +18,22 @@ class AthleteEvaluationFormTest extends TestCase
     }
 
     /**
+     * Verifica a validação do método de regras do formulário.
+     * Todas as regras devem estar no formato de array.
+     *
+     * @return void
+     */
+    public function testRules()
+    {
+        $athleteEvaluationForm = new AthleteEvaluationForm();
+        $rules = $athleteEvaluationForm->rules();
+        $this->assertIsArray($rules);
+        foreach($rules as $rule) {
+            $this->assertIsArray($rule);
+        }
+    }
+
+    /**
      * Verifica a validação do parâmetro <b>athlete_id</b>.
      * O parâmetro <b>athlete_id</b> deve ser definido como obrigatório.
      * O parâmetro <b>athlete_id</b> deve ser definido com o tipo numérico.
@@ -30,9 +46,9 @@ class AthleteEvaluationFormTest extends TestCase
         $athleteEvaluationForm = new AthleteEvaluationForm();
         $rules = $athleteEvaluationForm->rules();
         $this->assertTrue(isset($rules['athlete_id']));
-        $this->assertStringContainsString('required', $rules['athlete_id']);
-        $this->assertStringContainsString('numeric', $rules['athlete_id']);
-        $this->assertStringContainsString('exists:athletes,id', $rules['athlete_id']);
+        $this->assertContains('required', $rules['athlete_id']);
+        $this->assertContains('numeric', $rules['athlete_id']);
+        $this->assertContains('exists:athletes,id', $rules['athlete_id']);
     }
 
     /**
@@ -45,9 +61,9 @@ class AthleteEvaluationFormTest extends TestCase
         $athleteEvaluationForm = new AthleteEvaluationForm();
         $rules = $athleteEvaluationForm->rules();
         $this->assertTrue(isset($rules['realization_date']));
-        $this->assertStringContainsString('required', $rules['realization_date']);
-        $this->assertStringContainsString('date', $rules['realization_date']);
-        $this->assertStringContainsString('before:tomorrow', $rules['realization_date']);
+        $this->assertContains('required', $rules['realization_date']);
+        $this->assertContains('date', $rules['realization_date']);
+        $this->assertContains('before:tomorrow', $rules['realization_date']);
     }
 
     /**
@@ -59,8 +75,8 @@ class AthleteEvaluationFormTest extends TestCase
     {
         $athleteEvaluationForm = new AthleteEvaluationForm();
         $rules = $athleteEvaluationForm->rules();
-        $this->assertTrue(isset($rules['physical_testes']));
-        $this->assertStringContainsString('array', $rules['physical_testes']);
+        $this->assertTrue(isset($rules['physicalTests']));
+        $this->assertContains('array', $rules['physicalTests']);
     }
 
     /**
@@ -72,8 +88,8 @@ class AthleteEvaluationFormTest extends TestCase
     {
         $athleteEvaluationForm = new AthleteEvaluationForm();
         $rules = $athleteEvaluationForm->rules();
-        $this->assertTrue(isset($rules['body_indexes']));
-        $this->assertStringContainsString('array', $rules['body_indexes']);
+        $this->assertTrue(isset($rules['bodyIndexes']));
+        $this->assertContains('array', $rules['bodyIndexes']);
     }
 
     /**
