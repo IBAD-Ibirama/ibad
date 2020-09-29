@@ -73,11 +73,18 @@
                             @endrole
 
                             @can('treinador')
-                            <li><a class="nav-link{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a>
-                            <li><a class="nav-link{{Request::is('turmas*') ? ' active' : ''}}" href="/turmas">Turmas</a></li>
-                            <li><a class="nav-link{{Request::is('limiteDeFalta*') ? ' active' : ''}}" href="{{route('fault.show')}}">Limite de Falta</a></li>
-                            <li><a class="nav-link{{Request::is('treinos*') ? ' active' : ''}}" href="/treinos">Treinos</a></li>
-                            <li><a class="nav-link{{Request::is('frequencias*') ? ' active' : ''}}" href="{{ route('frequency.index') }}">Frequencias</a></li>
+                            <li class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownTreinador" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Treinamento
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownTreinador">
+                                    <a class="nav-link dropdown-item{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a>
+                                    <a class="nav-link dropdown-item{{Request::is('turmas*') ? ' active' : ''}}" href="/turmas">Turmas</a>
+                                    <a class="nav-link dropdown-item{{Request::is('limiteDeFalta*') ? ' active' : ''}}" href="{{route('fault.show')}}">Limite de Falta</a>
+                                    <a class="nav-link dropdown-item{{Request::is('treinos*') ? ' active' : ''}}" href="/treinos">Treinos</a>
+                                    <a class="nav-link dropdown-item{{Request::is('frequencias*') ? ' active' : ''}}" href="{{ route('frequency.index') }}">Frequencias</a>
+                                </div>
+                            </li>
                             @endcan
 
                             @can('financeiro')
