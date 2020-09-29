@@ -14,17 +14,29 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->call(MovesSeeder::class);
+        $this->runProductionSeeders();
+
+        if(!App::environment('production')) {
+            $this->runDevelopmentSeeders();
+        }
+
+        Model::reguard();
+    }
+
+    private function runProductionSeeders()
+    {
         $this->call(PermissionsSeeder::class);
+        $this->call(FaultLimitSeeder::class);
+        $this->call(PhysicalTestSeeder::class);
+        $this->call(BodyIndexSeeder::class);
+    }
+
+    private function runDevelopmentSeeders()
+    {
+        $this->call(MovesSeeder::class);
         $this->call(SponsorSeeder::class);
         $this->call(AthleteSeeder::class);
         $this->call(TeamSeeder::class);
         $this->call(TeamAthleteSeeder::class);
-        $this->call(FaultLimitSeeder::class);
-        $this->call(TrainingSeeder::class);
-        $this->call(PhysicalTestSeeder::class);
-        $this->call(BodyIndexSeeder::class);
-
-        Model::reguard();
     }
 }
