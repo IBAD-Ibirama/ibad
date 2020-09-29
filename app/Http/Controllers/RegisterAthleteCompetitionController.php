@@ -26,7 +26,7 @@ class RegisterAthleteCompetitionController extends Controller
                 "users.name",
                 "competitions.date",
                 "competitions.place",
-                "competitions.descricao",
+                "competitions.description",
                 "categories.category",
                 "modalities.player_number"
             )
@@ -38,9 +38,7 @@ class RegisterAthleteCompetitionController extends Controller
             ->orderBy('competition_participation.created_at', 'desc')
             ->get();
 
-        foreach ($athletesCompetitions as $registro) {
-            $registro->date = date('d/m/Y', strtotime($registro->date));
-        }
+  
         return view('atletas.registerAthleteCompetitition', compact('athletesCompetitions'));
     }
 
@@ -67,7 +65,7 @@ class RegisterAthleteCompetitionController extends Controller
                 "users.name",
                 "competitions.id as competition_id",
                 "competitions.place",
-                "competitions.descricao",
+                "competitions.description",
                 "categories.category",
                 "modalities.player_number",
                 "modalities.id as modality_id",

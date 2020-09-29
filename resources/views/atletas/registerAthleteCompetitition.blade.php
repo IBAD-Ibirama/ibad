@@ -28,9 +28,9 @@
                             @foreach($athletesCompetitions as $competition)
                             <tr>
                                 <td>{{$competition->name}}</td>
-                                <td>{{$competition->date}}</td>
+                                <td>{{date('d/m/Y', strtotime($competition->date))}}</td>
                                 <td>{{$competition->place}}</td>
-                                <td>{{$competition->descricao}}</td>
+                                <td>{{$competition->description}}</td>
                                 <td>{{$competition->category}}</td>
                                 <td>{{$competition->player_number}}</td>
                                 <td>

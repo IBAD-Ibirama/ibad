@@ -12,6 +12,6 @@ class Competition extends Model {
      * @var string
      */
     protected $table = 'competitions';
-    protected $fillable = ['title', 'body'];
+    protected $fillable = ['title', 'body', 'date', 'place', 'description', 'competition_level'];
 
 }

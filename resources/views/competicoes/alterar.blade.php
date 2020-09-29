@@ -32,8 +32,8 @@
                             <small class="form-text text-muted">Data da realização da competição</small>
                         </div>
                         <div class="form-group">
-                            <label for="descricao">Descrição</label>
-                            <textarea class="form-control" id="descricao" name="descricao" placeholder="Informe a Descrição" required></textarea>
+                            <label for="description">Descrição</label>
+                            <textarea class="form-control" id="description" name="description" placeholder="Informe a Descrição" required></textarea>
                             <small class="form-text text-muted">Informe a descrição da competição</small>
                         </div>
                         <div class="form-group">

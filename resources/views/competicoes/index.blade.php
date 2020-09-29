@@ -44,7 +44,7 @@ use Illuminate\Support\Facades\URL;
                                 <td>{{$competition->id}}</td>
                                 <td>{{$competition->date}}</td>
                                 <td>{{$competition->place}}</td>
-                                <td>{{$competition->descricao}}</td>
+                                <td>{{$competition->description}}</td>
                                 <td>{{$competition->competition_level}}</td>
                                 <td>
                                     <div class="float-right flex">

@@ -33,12 +33,8 @@ class CompetitionController extends Controller
     }
 
     public function formAlterar(String $id = null) {
-        $competicao = null;
-        if($id != null) {
-            $competicao = Competition::find($id);
-            $competicao->created_at = null;
-            $competicao->updated_at = null;
-        }
+        $competicao = Competition::find($id);
+        
         return view('competicoes.alterar', compact('competicao'));
     }
 
@@ -50,13 +46,13 @@ class CompetitionController extends Controller
     public function create(Request $request, Competition $competition) {
         $request->validate([
             'date' => 'required',
-            'descricao' => 'required',
+            'description' => 'required',
             'competition_level' => 'required',
             'place' => 'required'
         ] );
         $competition->date              = $request->date;
         $competition->place             = $request->place;
-        $competition->descricao       = $request->descricao;
+        $competition->description       = $request->description;
         $competition->competition_level = $request->competition_level;
 
         if ($competition->save()) {
@@ -80,16 +76,16 @@ class CompetitionController extends Controller
         $request->validate([
             'id' => 'required',
             'date' => 'required',
-            'descricao' => 'required',
+            'description' => 'required',
             'competition_level' => 'required',
             'place' => 'required'
         ]);
-        
+
         $competition = Competition::find($request->id);
         $competition->update([
              'date' => $request->date
             ,'place' => $request->place
-            ,'descricao' => $request->description
+            ,'description' => $request->description
             ,'competition_level' => $request->competition_level
         ]);
         return $this->index()->with([
