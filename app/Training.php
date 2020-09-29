@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Training extends Model
 {
     protected $table = 'trainings';
-    protected $fillable = ['date'];
+    protected $fillable = ['date', 'time_init', 'time_end', 'week_day'];
 
     public function local()
     {
@@ -29,5 +29,15 @@ class Training extends Model
         return $this->hasMany(Frequency::class, 'training_id', 'id');
     }
 
+    public function plannings()
+    {
+        return $this->hasMany(Planning::class);
+    }
+
+    public function description()
+    {
+        $data = [$this->team ? $this->team->name : 'Sem Turma', date('d/m/Y', strtotime($this->date)), $this->week_day, $this->time_init, $this->time_end];
+        return sprintf('%s - %s - %s - %s às %s', ...$data);
+    }
 }
 
