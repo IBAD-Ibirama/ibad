@@ -164,4 +164,6 @@ Route::middleware('auth')->group(function () {
     Route::post('atleta/registroPraticipacaoAtleta/atualizar', 'RegisterAthleteCompetitionController@update');
     Route::get('atleta/registroPraticipacaoAtleta/remove/{id}', 'RegisterAthleteCompetitionController@destroy');
 
+    //Frequencia Atleta
+    Route::get('frequencia', 'FrequencyAthlete@index');
 });
