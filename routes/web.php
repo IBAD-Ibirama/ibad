@@ -141,4 +141,29 @@ Route::middleware('auth')->group(function () {
     Route::put('/turmas/treinos/atividades/{planning}', 'PlanningController@update')->name('plannings.update');
     Route::delete('/turmas/treinos/atividades/{planning}', 'PlanningController@destroy')->name('plannings.destroy');
 
+    Route::get('competicoes/relatorio', 'CompetitionsReportController@index');
+    Route::post('competicoes/relatorio', 'CompetitionsReportController@emit');
+    Route::get('/atleta/desempenho', 'AthletesCompetitionController@showAll');
+    Route::get('/atleta/dados', 'QueryAthelteController@show');
+    Route::get('/atleta/desempenho/{id}', 'AthletesCompetitionController@show');
+    Route::get('/financeiro', 'FinancesController@index');
+
+    //competicoes
+    Route::get('competicao', 'CompetitionController@index');
+    Route::get('competicao/cadastrar', 'CompetitionController@formCadastro');
+    Route::get('competicao/alterar/{id}', 'CompetitionController@formAlterar');
+    Route::post('competicao/atualizar', 'CompetitionController@update');
+    Route::post('competicao/criar', 'CompetitionController@create');
+    Route::get('competicao/remove/{id}', 'CompetitionController@destroy');
+
+    //Registro da participação em competição
+    Route::get('atleta/registroPraticipacaoAtleta', 'RegisterAthleteCompetitionController@index');
+    Route::get('atleta/registroPraticipacaoAtleta/registra', 'RegisterAthleteCompetitionController@formCadastrar');
+    Route::post('atleta/registroPraticipacaoAtleta/registrar', 'RegisterAthleteCompetitionController@store');
+    Route::get('atleta/registroPraticipacaoAtleta/alterar/{id}', 'RegisterAthleteCompetitionController@formAlterar');
+    Route::post('atleta/registroPraticipacaoAtleta/atualizar', 'RegisterAthleteCompetitionController@update');
+    Route::get('atleta/registroPraticipacaoAtleta/remove/{id}', 'RegisterAthleteCompetitionController@destroy');
+
+    //Frequencia Atleta
+    Route::get('frequencia', 'FrequencyAthlete@index');
 });

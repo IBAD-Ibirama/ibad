@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder
         $this->call(FaultLimitSeeder::class);
         $this->call(PhysicalTestSeeder::class);
         $this->call(BodyIndexSeeder::class);
+        $this->call(ModalitiesSeeder::class);
+        $this->call(CategoriesSeeder::class);
     }
 
     private function runDevelopmentSeeders()
@@ -38,5 +40,10 @@ class DatabaseSeeder extends Seeder
         $this->call(AthleteSeeder::class);
         $this->call(TeamSeeder::class);
         $this->call(TeamAthleteSeeder::class);
+      
+        $this->call(CompetitionsSeeder::class);
+        $this->call(PhotosSeeder::class);
+        $this->call(CompetitionParticipationSeeder::class);
+        $this->call(FinancesSeeder::class);
     }
 }

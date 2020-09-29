@@ -1,6 +1,12 @@
 <!doctype html>
+@php
+$athlete = null;
+$user = Auth::user();
+if($user){
+    $athlete = \App\Athlete::where('user_id', $user->id)->first();
+}
+@endphp
 <html lang="pt-br">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,7 +16,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 </head>
-
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
@@ -31,6 +36,39 @@
                         @role('admin')
                         <li class="nav-item"><a class="nav-link {{Request::is('usuarios*') ? 'active' : ''}}" href="/usuarios">Usuários</a></li>
                         <li class="nav-item"><a class="nav-link {{Request::is('responsaveis*') ? 'active' : ''}}" href="/responsaveis">Responsáveis</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/atleta/desempenho">Desempenho dos atletas<span class="sr-only">(current)</span></a></li>
+                        <li class="dropdown">
+                            <a id="competitionsDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Competições <span class="caret"></span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="competitionsDropdown">
+                                <a class="nav-link dropdown-item{{Request::is('competicao*') ? ' active' : ''}}" href="/competicao">Consulta de Competições<span class="sr-only">(current)</span></a>
+                                <a class="nav-link dropdown-item{{Request::is('competicoes/relatorio*') ? ' active' : ''}}" href="/competicoes/relatorio">Relatório de Competição<span class="sr-only">(current)</span></a>
+                                <a class="nav-link dropdown-item{{Request::is('atletas/registerAthleteCompetition*') ? ' active' : ''}}"" href="/atleta/registroPraticipacaoAtleta">Registrar participação do atleta<span class="sr-only">(current)</span></a>
+                            </div>
+                        </li>
+                        @endrole
+                        
+                        @role('atleta')
+                        <li class="nav-item dropdown">
+                            <a id="traineeDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Treinador <span class="caret"></span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="traineeDropdown">
+                                <a class="nav-link dropdown-item{{Request::is('frequencia*') ? ' active' : ''}}" href="/frequencia">Consulta de Frequências<span class="sr-only">(current)</span></a>
+                                <a class="nav-link dropdown-item{{Request::is('/atleta/dados*') ? ' active' : ''}}" href="/atleta/dados">Consulta de dados<span class="sr-only">(current)</span></a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/financeiro">Relatório Financeiro<span class="sr-only">(current)</span></a>
+                        </li>
+                        @if($athlete && $athlete->id)
+                        <li class="nav-item">
+                            <a class="nav-link" href="/atleta/desempenho/{{$athlete->id}}">Desempenho do atleta<span class="sr-only">(current)</span></a>
+                        </li>
+                        @endif
                         @endrole
 
                         @can('treinador')
@@ -132,5 +170,3 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     @yield('script')
 </body>
-
-</html>
