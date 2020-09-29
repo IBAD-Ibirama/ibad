@@ -18,6 +18,22 @@ class AthleteEvaluationFormTest extends TestCase
     }
 
     /**
+     * Verifica a validação do método de regras do formulário.
+     * Todas as regras devem estar no formato de array.
+     *
+     * @return void
+     */
+    public function testRules()
+    {
+        $athleteEvaluationForm = new AthleteEvaluationForm();
+        $rules = $athleteEvaluationForm->rules();
+        $this->assertIsArray($rules);
+        foreach($rules as $rule) {
+            $this->assertIsArray($rule);
+        }
+    }
+
+    /**
      * Verifica a validação do parâmetro <b>athlete_id</b>.
      * O parâmetro <b>athlete_id</b> deve ser definido como obrigatório.
      * O parâmetro <b>athlete_id</b> deve ser definido com o tipo numérico.
@@ -30,9 +46,9 @@ class AthleteEvaluationFormTest extends TestCase
         $athleteEvaluationForm = new AthleteEvaluationForm();
         $rules = $athleteEvaluationForm->rules();
         $this->assertTrue(isset($rules['athlete_id']));
-        $this->assertStringContainsString('required', $rules['athlete_id']);
-        $this->assertStringContainsString('numeric', $rules['athlete_id']);
-        $this->assertStringContainsString('exists:athletes,id', $rules['athlete_id']);
+        $this->assertContains('required', $rules['athlete_id']);
+        $this->assertContains('numeric', $rules['athlete_id']);
+        $this->assertContains('exists:athletes,id', $rules['athlete_id']);
     }
 
     /**
@@ -42,7 +58,12 @@ class AthleteEvaluationFormTest extends TestCase
      */
     public function testRealizationDateRule()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $athleteEvaluationForm = new AthleteEvaluationForm();
+        $rules = $athleteEvaluationForm->rules();
+        $this->assertTrue(isset($rules['realization_date']));
+        $this->assertContains('required', $rules['realization_date']);
+        $this->assertContains('date', $rules['realization_date']);
+        $this->assertContains('before:tomorrow', $rules['realization_date']);
     }
 
     /**
@@ -52,7 +73,10 @@ class AthleteEvaluationFormTest extends TestCase
      */
     public function testPhysicalTestsRule()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $athleteEvaluationForm = new AthleteEvaluationForm();
+        $rules = $athleteEvaluationForm->rules();
+        $this->assertTrue(isset($rules['physicalTests']));
+        $this->assertContains('array', $rules['physicalTests']);
     }
 
     /**
@@ -62,7 +86,10 @@ class AthleteEvaluationFormTest extends TestCase
      */
     public function testBodyIndexesRule()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $athleteEvaluationForm = new AthleteEvaluationForm();
+        $rules = $athleteEvaluationForm->rules();
+        $this->assertTrue(isset($rules['bodyIndexes']));
+        $this->assertContains('array', $rules['bodyIndexes']);
     }
 
     /**

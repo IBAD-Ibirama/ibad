@@ -25,9 +25,9 @@ class PlanningForm extends FormRequest
     public function rules()
     {
         return [
-            'training_id' => 'required|numeric',
-            'name' => 'required|max:50',
-            'description' => 'required|max:200'
+            'training_id' => ['required', 'numeric', 'exists:trainings,id'],
+            'name'        => ['required', 'min:3', 'max:50', 'alpha_dash'],
+            'description' => ['required', 'min:3', 'max:200']
         ];
     }
 
