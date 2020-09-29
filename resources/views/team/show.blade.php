@@ -10,7 +10,10 @@
             <div class="card">
                 <div class="card-header row w-100 align-items-start justify-content-between" style="margin: 0;">
                     <span>Detalhes da turma</span>
-                    <a class='btn btn-success btn-sm' href="/turmas">Voltar</a>
+                    <div>
+                        <a class='btn btn-primary btn-sm' href="/turma/{{$team->id}}/desistencias">Desistências</a>
+                        <a class='btn btn-success btn-sm' href="/turmas">Voltar</a>
+                    </div>
                 </div>
 
                 <div class="card-body">
@@ -33,11 +36,11 @@
                     <ul class="list-group">
                         @forelse($team->athletes as $athlete)
                         <li class="list-group-item">
-                            <a href="/usuarios/{{$athlete->id}}" title="Consultar">{{$athlete->name}}</a>
+                            <a href="/atletas/{{$athlete->athlete_id}}" title="Consultar">{{$athlete->name}}</a>
 
                             <div class="float-right flex">
                                 <form style="display: inline"
-                                    action="{{ route('team.dematriculate', ['team' => $team->id, 'athlete' => $athlete->athleste_id]) }}"
+                                    action="{{ route('team.dematriculate', ['team' => $team->id, 'athlete' => $athlete->athlete_id]) }}"
                                     method="post">
                                     @csrf
                                     @method('DELETE')

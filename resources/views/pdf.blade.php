@@ -50,25 +50,25 @@
             <th>Tipo</th>
             <th>Especificação</th>
         </tr>
-        @foreach($moves as $move)
-        <tr class='{{$move->type}}'>
-            <td>{{$move->description}}</td>
-            <td>{{$move->date}}</td>
-            <td>R${{$move->value}}</td>
-            <td>{{$move->type}}</td>
-            <td>{{$move->specification}}</td>
+        @foreach ( $moves as $move )
+        <tr class='{{ $move->type }}'>
+            <td>{{ $move->description }}</td>
+            <td>{{ $move->date }}</td>
+            <td>R${{ $move->value }}</td>
+            <td>{{ $move->type }}</td>
+            <td>{{ $move->specification }}</td>
         </tr>
         @endforeach
     </table>
     <footer>
         <div>
             <span>Total de entradas: </span>
-            <span>R${{$totalDeposit}},00</span>
+            <span>R${{ $totalDeposit }},00</span>
         </div>
 
         <div>
             <span>Total de saídas: </span>
-            <span>R${{$totalOutflows}},00</span>
+            <span>R${{ $totalOutflows }},00</span>
         </div>
     </footer>
 

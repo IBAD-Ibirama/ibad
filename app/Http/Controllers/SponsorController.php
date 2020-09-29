@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Sponsor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use App\Sponsor;
+
 
 class SponsorController extends Controller
 {
@@ -25,9 +26,9 @@ class SponsorController extends Controller
     public function store(Request $request)
     {
         $validated = $this->validate($request, [
-            'cnpj' => 'required|unique:sponsors',
-            'name' => 'nullable|string',
-            'email' => 'nullable|string'
+            'cnpj' => 'required|min:18|unique:sponsors',
+            'name' => 'required|string',
+            'email' => 'required|string'
         ]);
 
         Sponsor::create($validated);
@@ -60,9 +61,9 @@ class SponsorController extends Controller
         $sponsor = Sponsor::find($id);
 
         $request->validate([
-            'cnpj' => 'required',
-            'name' => 'nullable|string',
-            'email' => 'nullable|string'
+            'cnpj' => 'required|min:18',
+            'name' => 'required|string',
+            'email' => 'required|string'
         ]);
 
         $sponsor->update([

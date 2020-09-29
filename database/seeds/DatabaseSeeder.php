@@ -46,6 +46,9 @@ class DatabaseSeeder extends Seeder {
         $this->call(PhotosSeeder::class);
         $this->call(CompetitionParticipationSeeder::class);
         $this->call(FinancesSeeder::class);
+        
+        $this->call(PhysicalTestSeeder::class);
+        $this->call(BodyIndexSeeder::class);
     }
 
 }

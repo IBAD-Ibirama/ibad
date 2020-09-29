@@ -17,9 +17,9 @@ class CreateFrequenciesTable extends Migration
             $table->id();
             $table->boolean('presence')->default(true);
             $table->bigInteger('athlete_id');
-            $table->foreign('athlete_id')->references('id')->on('athletes');
+            $table->foreign('athlete_id')->references('id')->on('athletes')->onDelete('cascade');
             $table->bigInteger('training_id');
-            $table->foreign('training_id')->references('id')->on('trainings');
+            $table->foreign('training_id')->references('id')->on('trainings')->onDelete('cascade');;
             $table->timestamps();
         });
     }

@@ -18,18 +18,18 @@
             @csrf
             <div class="form-group">
               <label for="cnpj">CNPJ</label>
-              <input type="text" class="form-control{{$errors->has('name') ? ' border-danger' : '' }}" id="cnpj" name="cnpj" value="{{old('cnpj')}}">
+              <input type="text" class="form-control{{ $errors->has('name') ? ' border-danger' : '' }}" id="cnpj" name="cnpj" value="{{ old('cnpj') }}">
               <small class="form-text text-danger">{!! $errors->first('cnpj') !!}</small>
             </div>
             <div class="form-group">
               <label for="value">Nome</label>
-              <input type="value" class="form-control{{$errors->has('name') ? ' border-danger' : '' }}" id="name" name="name" value="">
-              <small class="form-text text-danger">{!! $errors->first('name') !!}</small>
+              <input type="value" class="form-control{{ $errors->has('name') ? ' border-danger' : '' }}" id="name" name="name" value="">
+              <small class="form-text text-danger">{ !! $errors->first('name') !!}</small>
             </div>
             <div class="form-group">
               <label for="email">Email</label>
-              <input type="text" class="form-control{{$errors->has('email') ? ' border-danger' : '' }}" id="email" name="email" value="{{old('email')}}">
-              <small class="form-text text-danger">{!! $errors->first('email') !!}</small>
+              <input type="text" class="form-control{{ $errors->has('email') ? ' border-danger' : '' }}" id="email" name="email" value="{{ old('email') }}">
+              <small class="form-text text-danger">{ !! $errors->first('email') !! }</small>
             </div>
             <input class="btn btn-primary mt-4" type="submit" value="Salvar registro">
           </form>
