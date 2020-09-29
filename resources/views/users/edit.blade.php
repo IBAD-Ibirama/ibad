@@ -42,7 +42,7 @@
               <select name="permission" id="permission" class="form-control">
                 @foreach($roles as $role)
 
-                <option value="{{ $role }}" {{ $user_roles[0] == $role ? 'selected' : '' }}>{{ $role }}</option>
+                <option value="{{ $role }}" {{ $role_name == $role ? 'selected' : '' }}>{{ $role }}</option>
 
 
                 @endforeach

@@ -69,13 +69,13 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $user_roles = $user->getRoleNames();
+        $role_name = $user->firstRoleName();
         $all_roles = Role::all()->pluck('name');
 
         return view('users.edit')->with([
             'users' => $user,
             'roles' => $all_roles,
-            'user_roles' => $user_roles
+            'role_name' => $role_name
         ]);
     }
 
@@ -101,7 +101,9 @@ class UserController extends Controller
                         'password' => Hash::make($request->newpassword),
                     ]);
 
-                    $user->removeRole($user->getRoleNames()[0]);
+                    if($roleName = $user->firstRoleName()) {
+                        $user->removeRole($roleName);
+                    }
                     $user->assignRole($request->permission);
 
                     return $this->index()->with([
@@ -120,7 +122,9 @@ class UserController extends Controller
             'email' => $request->email,
         ]);
 
-        $user->removeRole($user->getRoleNames()[0]);
+        if($roleName = $user->firstRoleName()) {
+            $user->removeRole($roleName);
+        }
         $user->assignRole($request->permission);
 
         return $this->index()->with([
