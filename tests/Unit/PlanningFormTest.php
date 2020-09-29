@@ -18,6 +18,22 @@ class PlanningFormTest extends TestCase
     }
 
     /**
+     * Verifica a validação do método de regras do formulário.
+     * Todas as regras devem estar no formato de array.
+     *
+     * @return void
+     */
+    public function testRules()
+    {
+        $planningForm = new PlanningForm();
+        $rules = $planningForm->rules();
+        $this->assertIsArray($rules);
+        foreach($rules as $rule) {
+            $this->assertIsArray($rule);
+        }
+    }
+
+    /**
      * Verifica a validação do parâmetro <b>training_id</b>.
      * O parâmetro <b>training_id</b> deve ser definido como obrigatório.
      * O parâmetro <b>training_id</b> deve ser definido com o tipo numérico.
@@ -30,9 +46,9 @@ class PlanningFormTest extends TestCase
         $planningForm = new PlanningForm();
         $rules = $planningForm->rules();
         $this->assertTrue(isset($rules['training_id']));
-        $this->assertStringContainsString('required', $rules['training_id']);
-        $this->assertStringContainsString('numeric', $rules['training_id']);
-        $this->assertStringContainsString('exists:trainings,id', $rules['training_id']);
+        $this->assertContains('required', $rules['training_id']);
+        $this->assertContains('numeric', $rules['training_id']);
+        $this->assertContains('exists:trainings,id', $rules['training_id']);
     }
 
     /**
@@ -49,10 +65,10 @@ class PlanningFormTest extends TestCase
         $planningForm = new PlanningForm();
         $rules = $planningForm->rules();
         $this->assertTrue(isset($rules['name']));
-        $this->assertStringContainsString('required', $rules['name']);
-        $this->assertStringContainsString('min:3', $rules['name']);
-        $this->assertStringContainsString('max:50', $rules['name']);
-        $this->assertStringContainsString('alpha_dash', $rules['name']);
+        $this->assertContains('required', $rules['name']);
+        $this->assertContains('min:3', $rules['name']);
+        $this->assertContains('max:50', $rules['name']);
+        $this->assertContains('alpha_dash', $rules['name']);
     }
 
     /**
@@ -68,9 +84,9 @@ class PlanningFormTest extends TestCase
         $planningForm = new PlanningForm();
         $rules = $planningForm->rules();
         $this->assertTrue(isset($rules['description']));
-        $this->assertStringContainsString('required', $rules['description']);
-        $this->assertStringContainsString('min:3', $rules['description']);
-        $this->assertStringContainsString('max:200', $rules['description']);
+        $this->assertContains('required', $rules['description']);
+        $this->assertContains('min:3', $rules['description']);
+        $this->assertContains('max:200', $rules['description']);
     }
 
     /**

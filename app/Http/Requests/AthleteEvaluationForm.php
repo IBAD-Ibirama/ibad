@@ -29,14 +29,14 @@ class AthleteEvaluationForm extends FormRequest
     public function rules()
     {
         return [
-            'athlete_id' => 'required|numeric',
-            'realization_date' => 'required|date',
-            'physicalTests' => 'array',
-            'physicalTests.*.id' => 'required|numeric',
-            'physicalTests.*.value' => 'nullable|numeric|min:0',
-            'bodyIndexes' => 'array',
-            'bodyIndexes.*.id' => 'required|numeric',
-            'bodyIndexes.*.value' => 'nullable|numeric|min:0'
+            'athlete_id'            => ['required', 'numeric', 'exists:athletes,id'],
+            'realization_date'      => ['required', 'date', 'before:tomorrow'],
+            'physicalTests'         => ['array'],
+            'physicalTests.*.id'    => ['required', 'numeric'],
+            'physicalTests.*.value' => ['nullable', 'numeric', 'min:0'],
+            'bodyIndexes'           => ['array'],
+            'bodyIndexes.*.id'      => ['required', 'numeric'],
+            'bodyIndexes.*.value'   => ['nullable', 'numeric', 'min:0']
         ];
     }
 
