@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
 
         $this->runProductionSeeders();
 
-        if(App::environment('local')) {
+        if(!App::environment('production')) {
             $this->runDevelopmentSeeders();
         }
 
