@@ -28,20 +28,13 @@
                             <li><a class="nav-link{{Request::is('dashboard') ? ' active' : ''}}" href="/">Dashboard</a></li>
                             @role('admin')
                             <li><a class="nav-link{{Request::is('usuarios*') ? ' active' : ''}}" href="/usuarios">Usuários</a></li>
-                            <li class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" id="dropdownCompeticoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Atletas
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownCompeticoes">
-                                    <a class="nav-link dropdown-item{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Consulta de Atletas</a>
-                                </div>
-                            </li>
+                            <li class="nav-item"><a class="nav-link {{Request::is('responsaveis*') ? 'active' : ''}}" href="/responsaveis">Responsáveis</a></li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/atleta/desempenho">Desempenho dos atletas<span class="sr-only">(current)</span></a>
                             </li>
                             <li></li>
                             <li class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" id="dropdownCompeticoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button class="btn nav-link dropdown-toggle" type="button" id="dropdownCompeticoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Competições
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownCompeticoes">
@@ -53,8 +46,8 @@
                             @endrole
 
                             @role('atleta')
-                            <li class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" id="dropdownCompeticoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <li class="nav-item dropdown">
+                                <button class="btn nav-link dropdown-toggle" type="button" id="dropdownCompeticoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Atletas
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownCompeticoes">
@@ -73,9 +66,9 @@
                             @endrole
 
                             @can('treinador')
-                            <li class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" id="dropdownTreinador" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Treinamento
+                            <li class="nav-item dropdown">
+                                <button class="btn nav-link dropdown-toggle" type="button" id="dropdownTreinador" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Treinador
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownTreinador">
                                     <a class="nav-link dropdown-item{{Request::is('atletas*') ? ' active' : ''}}" href="/atletas">Atletas</a>
@@ -88,8 +81,15 @@
                             @endcan
 
                             @can('financeiro')
-                            <li><a class="nav-link{{Request::is('movimentacoes*') ? ' active' : ''}}" href="/movimentacoes">Movimentações</a></li>
-                            <li><a class="nav-link{{Request::is('patrocinadores*') ? ' active' : ''}}" href="/patrocinadores">Patrocinadores</a></li>
+                            <li class="nav-item dropdown">
+                                <button class="btn nav-link dropdown-toggle" type="button" id="dropdownTreinador" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Financeiro
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="financialDropdown">
+                                    <a class="dropdown-item {{Request::is('movimentacoes*') ? ' active' : ''}}" href="/movimentacoes">Movimentações</a>
+                                    <a class="dropdown-item {{Request::is('patrocinadores*') ? ' active' : ''}}" href="/patrocinadores">Patrocinadores</a>
+                                </div>
+                            </li>
                             @endcan
                         </ul>
 
