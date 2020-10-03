@@ -67,13 +67,6 @@
 @endsection
 
 @section('script')
-<!-- Charting library -->
-<script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
-<!-- Chartisan -->
-<script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
-<!-- Bootstrap -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
 <script>
 (function(document) {
 

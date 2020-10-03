@@ -11,15 +11,21 @@
     },
     "devDependencies": {
         "axios": "^0.19",
+        "bootstrap": "^4.0.0",
         "cross-env": "^7.0",
-        "laravel-mix": "^5.0.1",
+        "jquery": "^3.2",
+        "laravel-mix": "^5.0.5",
         "lodash": "^4.17.13",
+        "popper.js": "^1.12",
         "resolve-url-loader": "^3.1.0",
         "sass": "^1.15.2",
         "sass-loader": "^8.0.0",
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "@chartisan/echarts": "^2.2.3",
+        "echarts": "^4.9.0",
+        "jquery-mask-plugin": "^1.14.16",
         "lightbox2": "^2.11.3"
     }
 }
