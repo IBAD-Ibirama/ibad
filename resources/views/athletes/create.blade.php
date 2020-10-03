@@ -116,12 +116,10 @@
 @endsection
 
 @section('script')
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" defer></script>
 <script>
   $(document).ready(function() {
     $('#telephone').mask('(00)00000-0000');
     $('#rg').mask('0.000.000');
   });
-
 </script>
 @endsection

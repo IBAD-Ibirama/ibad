@@ -52,7 +52,7 @@ setDay();
 
   function handleAuxiliaries(id){
     if(!id){
-        auxiliaryForm.classList.remove('hide');
+        auxiliaryForm.classList.remove('d-none');
         auxiliaryTitle.textContent = "Ajudantes:";
         return;
     }
@@ -61,9 +61,9 @@ setDay();
         auxiliary1.value= null;
         auxiliary2.value= null;
         auxiliaryTitle.textContent = "Essa turma não necessita ajudantes!";
-        auxiliaryForm.classList.add('hide');
+        auxiliaryForm.classList.add('d-none');
     } else {
-        auxiliaryForm.classList.remove('hide');
+        auxiliaryForm.classList.remove('d-none');
         auxiliaryTitle.textContent = "Ajudantes:";
     }
   }
